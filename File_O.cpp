@@ -9,7 +9,7 @@ using namespace std;
 #include <cstdio>
 
 
-void File_O::file_input()
+void File_O::Input()
 {
     do
     {
@@ -23,11 +23,11 @@ void File_O::file_input()
         {
             return;
         }
-    } while (file_check(path) != 1);
+    } while (Check(path) != 1);
     _getch();
 }
 
-void File_O::file_new()
+void File_O::New()
 {
     cout << "Введите название нового файла (без расширения): ";
     string path;
@@ -35,11 +35,11 @@ void File_O::file_new()
 
     //проверка введеного имени файла на наличие "txt"
 
-    if (file_check(path) == 1)   //проверка на существование такого файла в памяти
+    if (Check(path) == 1)   //проверка на существование такого файла в памяти
     {
         //файл с таким названием существует, создать копию и создать чистый файл или затереть текущий
         cout << "Файл с таким названием уже существует\n1) Создать копию файла и переименовать (" << path + "_1.txt)" << "\n2) Удалить текущую версию файла " << path;
-        item_num = 2;
+        /*item_num = 2;
         input_number();
         if (menu_number == 1)
         {
@@ -54,11 +54,11 @@ void File_O::file_new()
         {
             ofstream fout(path); //создание объекта класса ofstream для записи
             fout.close();   //закрытие фалйа
-        }
+        }*/
                 
     }
     
-    if (file_check(path) == 1)
+    if (Check(path) == 1)
     {
         //файл успешно создан, заполнение информации о кинотеатре
     }
@@ -69,7 +69,7 @@ void File_O::file_new()
 
 }
 
-int File_O::file_check(string path)
+int File_O::Check(string path)
 {
     ifstream f1;
 
@@ -93,7 +93,7 @@ int File_O::file_check(string path)
 
 
 
-void File_O::file_read(string path)
+void File_O::Read(string path)
 {
     ifstream file(path);
 
@@ -103,9 +103,9 @@ void File_O::file_read(string path)
     string temp;
 
     //заполнение информации о кинотеатре
-    getline(file, name);    //чтение названия кинотеатра
-    getline(file, adress);    //чтение адреса кинотеатра
-    getline(file, kassirs[0]);     //чтения ФИО кассиров
+    //getline(file, name);    //чтение названия кинотеатра
+    //getline(file, adress);    //чтение адреса кинотеатра
+    //getline(file, kassirs[0]);     //чтения ФИО кассиров
 
 
     //разложение количества кассиров на массив ???
@@ -113,7 +113,7 @@ void File_O::file_read(string path)
     getline(file, temp);
 
     //заполнение информации о фильмах
-    do
+    /*do
     {
         getline(file, filmi[i].name);
         getline(file, filmi[i].duration);
@@ -139,11 +139,11 @@ void File_O::file_read(string path)
         i++;
     } while (i < kol_vo_filmov);
 
-    //cout << filmi[0].duration;        //тест
+    //cout << filmi[0].duration;        //тест*/
    
 }
 
-int File_O::file_check_compound(string path)        //проверка форматирования текстового файла
+int File_O::CheckCompound(string path)        //проверка форматирования текстового файла
 {
     char* str = new char[1024];
     int i = 0;
@@ -157,7 +157,7 @@ int File_O::file_check_compound(string path)        //проверка форматирования те
     delete str;
     if ((i - 3) % 124 == 0)            //форматирование верно
     {
-        kol_vo_filmov = (i - 4) / 123;
+        kol_vo_film = (i - 4) / 123;
         return 1;
  
     }

@@ -21,13 +21,16 @@
     <ClCompile Include="Menu.cpp">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
-    <ClCompile Include="Cinema.cpp">
+    <ClCompile Include="Program.cpp">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
     <ClCompile Include="File_O.cpp">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
-    <ClCompile Include="Kinoteatr.cpp">
+    <ClCompile Include="Cinema.cpp">
+      <Filter>Исходные файлы</Filter>
+    </ClCompile>
+    <ClCompile Include="Film.cpp">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
   </ItemGroup>
@@ -35,13 +38,16 @@
     <ClInclude Include="Menu.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
-    <ClInclude Include="Cinema.h">
+    <ClInclude Include="DEL_Cinema.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
     <ClInclude Include="File_O.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
-    <ClInclude Include="Kinoteatr.h">
+    <ClInclude Include="Cinema.h">
+      <Filter>Файлы заголовков</Filter>
+    </ClInclude>
+    <ClInclude Include="Film.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
   </ItemGroup>

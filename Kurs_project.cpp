@@ -5,7 +5,7 @@
 #include <windows.h>
 #include "Menu.h"
 #include "File_O.h"
-#include "Kinoteatr.h"
+#include "Cinema.h"
 #include "Cinema.h"
 #include <conio.h>
 using namespace std;
@@ -18,13 +18,13 @@ int main()
 
 	Menu nem;
 	File_O file_stream;
-	Kinoteatr kinoteatr;
+	Cinema cinema;
 	
 	//Menu menu1("Для просмотра списка фильмов нажмите '1'.\nДля входа в режим администратора нажмите '2'.\nДля выхода нажмите 'esc'.\n\n", 2);
 	//menu1.print();
 	//menu1.input_number();
 	
-	do
+	/*do
 	{
 		do
 		{
@@ -87,6 +87,6 @@ int main()
 		}
 	} while (nem.menu_number != 0);
 
-    //std::cout << "Hello World!\n";
+    //std::cout << "Hello World!\n";*/
 	
 }
