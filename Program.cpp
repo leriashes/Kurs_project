@@ -4,18 +4,19 @@
 #include <string>
 #include <windows.h>
 #include <conio.h>
+#include "Program.h"
 #include "Menu.h"
 #include "File_O.h"
 #include "Cinema.h"
 using namespace std;
 
-void main()
+void Program::Start(Cinema cinema)
 {
 	SetConsoleCP(1251);
 	SetConsoleOutputCP(1251);
+
 	Menu menu;
 	File_O file_stream;
-	Cinema cinema;
 
 	//Menu menu1("Для просмотра списка фильмов нажмите '1'.\nДля входа в режим администратора нажмите '2'.\nДля выхода нажмите 'esc'.\n\n", 2);
 	//menu1.print();

@@ -147,7 +147,7 @@
     <ClCompile Include="Menu.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="DEL_Cinema.h" />
+    <ClInclude Include="Program.h" />
     <ClInclude Include="File_O.h" />
     <ClInclude Include="Cinema.h" />
     <ClInclude Include="Film.h" />

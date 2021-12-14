@@ -3,22 +3,16 @@
 #include <locale.h>
 #include <string>
 #include <windows.h>
+#include <conio.h>
 #include "Menu.h"
 #include "File_O.h"
-#include "Cinema.h"
-#include "Cinema.h"
-#include <conio.h>
+#include "Program.h"
 using namespace std;
 
 int main()
 {
-
-	SetConsoleCP(1251);
-	SetConsoleOutputCP(1251);
-
-	Menu nem;
-	File_O file_stream;
 	Cinema cinema;
+	Program::Start(cinema);
 	
 	//Menu menu1("Для просмотра списка фильмов нажмите '1'.\nДля входа в режим администратора нажмите '2'.\nДля выхода нажмите 'esc'.\n\n", 2);
 	//menu1.print();

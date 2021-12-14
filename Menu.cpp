@@ -26,14 +26,14 @@ void Menu::Start()
 {
 	system("cls");
 	cout << "Для просмотра списка фильмов нажмите '1'.\nДля входа в режим администратора нажмите '2'.\nДля выхода нажмите 'esc'.\n\n";
-	item = 2;
+	items_number = 2;
 }
 
 void Menu::Cashier() 
 {
 	cout << "name_kinofeatre";
 	cout << "1) Просмотр списка фильмов\n2) Вход в режим администратора\n\nESC - Выход";
-	item = 2;
+	items_number = 2;
 }
 
 void Menu::Print()
@@ -79,12 +79,12 @@ void Menu::ChooseFile(int k)
 	if (k == 1)
 	{
 		cout << "\n3)Создание нового файла\n\nESC - выход";
-		item = 3;
+		items_number = 3;
 	}
 	else
 	{
 		cout << "\n\nESC - выход";
-		item = 2;
+		items_number = 2;
 	}
 	
 }
