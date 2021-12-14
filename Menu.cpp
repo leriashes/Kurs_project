@@ -59,7 +59,7 @@ void Menu::input_number()
 	} while (menu_number < 0 || menu_number > item_num);
 }
 
-void spisok_kino(Kinoteatr kinoteatr)
+void Menu::spisok_kino(Kinoteatr kinoteatr)
 {
 	cout << "Список фильмов:\n\n";
 	for (int i = 0; i < kinoteatr.kol_vo_filmov; i++)
