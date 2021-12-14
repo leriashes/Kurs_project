@@ -1,5 +1,7 @@
 #pragma once
 #include "Cinema.h"
+#include "File_O.h"
+
 class Menu
 {
 private:
@@ -16,7 +18,7 @@ public:
 	void Start();
 	void Print();
 	void ChooseItem();
-	void ChooseFile(int k);	//перенести в файл?  убрать k?
+	void File(int k);	//перенести в файл?  убрать k?
 	void FilmList(Cinema cinema);
 
 	int GetItem();

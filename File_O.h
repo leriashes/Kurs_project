@@ -2,6 +2,7 @@
 #define _CRT_SECURE_NO_WARNINGS
 #include <fstream>
 #include <string>
+#include "Cinema.h";
 using namespace std;
 
 class File_O
@@ -9,14 +10,15 @@ class File_O
 	
 public:
 	int error;
-	int kol_vo_film;
+	int kol_vo_film;	//перенести в кинотеатр?
 	string path;
-	
 
-	void Input();		//ввод пути для файла
+	void InputPath();		//ввод пути для файла
 	void New();	//создание нового файла   ??????
-	int Check(string path);	//проверка на сущестование
-	void Read(string path);
-	int CheckCompound(string path);	//проверка форматирования файла
+	bool CheckPath();	//проверка на сущестование
+	void Read(Cinema& cinema);
+	bool CheckCompound();	//проверка форматирования файла
+
+	friend class Menu;
 };
 

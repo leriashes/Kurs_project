@@ -66,19 +66,21 @@ void Menu::ChooseItem()
 void Menu::FilmList(Cinema cinema)
 {
 	cout << "Список фильмов:\n\n";
-	/*for (int i = 0; i < cinema.kol_vo_film; i++)
+	for (int i = 0; i < cinema.films_number; i++)
 	{
-		cout << i + 1 << ") " << kinoteatr.filmi[i].name << " (" << kinoteatr.filmi[i].age << ")\n";
-	}*/
+		cout << i + 1 << ") " << cinema.films[i].name << " (" << cinema.films[i].age << ")\n";
+	}
 	_getch();
 }
 
-void Menu::ChooseFile(int k)
+
+//две функции без k ?????????????????????????????????
+void Menu::File(int k)
 {
 	cout << "1) Открыть файл по умолчанию в домашнем каталоге (\"kino_v_teatre\")\n2) Открыть файл по заданному пути";
 	if (k == 1)
 	{
-		cout << "\n3)Создание нового файла\n\nESC - выход";
+		cout << "\n3) Создание нового файла\n\nESC - выход";
 		items_number = 3;
 	}
 	else
@@ -87,6 +89,7 @@ void Menu::ChooseFile(int k)
 		items_number = 2;
 	}
 	
+	return;
 }
 
 int Menu::GetItem()

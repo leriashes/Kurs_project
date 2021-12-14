@@ -23,5 +23,7 @@ private:
 	void InputName();	//Ввод название кинотеатра
 	void InputCashier();	//ввод ФИО кассира
 
+	friend class File_O;
+	friend class Menu;
 };
 

@@ -5,7 +5,7 @@ void Cinema::InputName()
 	name = "";
 	do
 	{
-		cout << "Введите название кинотеатра:";
+		cout << "Введите название кинотеатра: ";
 		cin >> name;
 		cout << "\n";
 	} while (name == "");

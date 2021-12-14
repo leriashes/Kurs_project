@@ -28,25 +28,23 @@ void Program::Start(Cinema cinema)
 		do
 		{
 			system("cls");
-			menu.ChooseFile(2);
+			menu.File(2);
 			menu.ChooseItem();
 			if (menu.GetItem() == 1)	//файл с кинотеатром указан по default
 			{
 				file_stream.path = "kino_v_teatre.txt";
-				if (file_stream.CheckCompound(file_stream.path) == 1)		//проверка файла на внутренее форматирование
+				if (file_stream.CheckCompound())		//проверка файла на внутренее форматирование
 				{
-					file_stream.Read(file_stream.path);	//чтение фильмов в массивчик
+					file_stream.Read(cinema);	//чтение фильмов в массивчик
 				}
-
-				_getch();
-
 			}
 			else if (menu.GetItem() == 2)	//ввод своего имени файла с кинотеатром
 			{
-				file_stream.Input();
+				file_stream.InputPath();
 			}
 
-		} while (file_stream.Check(file_stream.path) != 1);
+		} while (!file_stream.CheckPath());
+
 		menu.Start();
 		menu.ChooseItem();
 
@@ -55,6 +53,7 @@ void Program::Start(Cinema cinema)
 			menu.Cashier();
 			if (menu.GetItem() == 1)
 			{
+				menu.FilmList(cinema);
 				//открытие меню со списком фильмов
 			}
 		}
@@ -62,17 +61,17 @@ void Program::Start(Cinema cinema)
 		{
 			//администратор
 			//ввод пароля администратора
-			menu.ChooseFile(1);
+			menu.File(1);
 			menu.ChooseItem();
 
 			if (menu.GetItem() == 1)
 			{
 				file_stream.path = "kino_v_teatre.txt";
-				file_stream.Check(file_stream.path);
+				file_stream.CheckPath();
 			}
 			else if (menu.GetItem() == 2)
 			{
-				file_stream.Input();
+				file_stream.InputPath();
 
 			}
 			else if (menu.GetItem() == 3)
