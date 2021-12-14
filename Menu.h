@@ -1,4 +1,5 @@
 #pragma once
+#include "Kinoteatr.h"
 class Menu
 {
 public:
@@ -15,5 +16,6 @@ public:
 	void start_menu();
 	void print();
 	void input_number();
-	void file_choice();
+	void file_choice(int k);
+	void spisok_kino(Kinoteatr kinoteatr);
 };
