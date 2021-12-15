@@ -69,8 +69,8 @@ void File_O::New()
     {
         //файл не создан, изменение файла
     }
-
 }
+
 
 bool File_O::CheckPath()
 {
@@ -119,7 +119,6 @@ void File_O::Read(Cinema& cinema)
 
     //разложение количества кассиров на массив ???
 
-    getline(file, temp);
 
     //заполнение информации о фильмах
     do
@@ -131,18 +130,36 @@ void File_O::Read(Cinema& cinema)
         getline(file, cinema.films[i].main_role);
         getline(file, cinema.films[i].rejisser);
         
-        getline(file, temp);
+		getline(file, temp);
 
         for (j = 0; j < 9; j++)
         {
+			//egor
+            getline(file, temp);
+            getline(file, cinema.films[i].price[j]);
+            getline(file, cinema.films[i].time[j]);
+            getline(file, cinema.films[i].rand[j]);
+            //(*kinoteatr).filmi[i].rand[j] = (*kinoteatr).filmi[i].rand[j][0] + "\0";
+            //egor
+
+			//lera
             getline(file, (cinema.films[i].time[j]));
             getline(file, (cinema.films[i].price[j]));
+			//lera
             for (int k = 0; k < 10; k++)
             {
                 getline(file, temp);
-				cinema.films[i].mesta[j] = cinema.films[i].mesta[j] + temp;
+				cinema.films[i].mesta[j] = cinema.films[i].mesta[j] + temp;		//lera
+
+				//egor
+                cinema.films[i].mesta[j] = cinema.films[i].mesta[j] + temp;
             }
-            getline(file, temp);
+            if (cinema.films[i].rand[j][0] == '0')
+            {
+                cinema.films[i].mesta[j] = cinema.NewHall(i, j);
+				//egor
+            }
+            //_getch();   //тест
         }
         i++;
     } while (i < kol_vo_film);
@@ -166,10 +183,11 @@ bool File_O::CheckCompound()        //проверка форматирования текстового файла
     base.close();
     delete[] str;
 
-    if ((i - 3) % 124 == 0)            //форматирование верно
+    if ((i - 3) % 133 == 0)            //форматирование верно
     {
-        kol_vo_film = (i - 4) / 123;
+        kol_vo_film = (i - 3) / 133;
 		result = true;
+
     }
     else               //форматирование неверно, в файле имеются ошибки
     {

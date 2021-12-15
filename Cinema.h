@@ -22,6 +22,7 @@ private:
 public:
 	void InputName();	//Ввод название кинотеатра
 	void InputCashier();	//ввод ФИО кассира
+	string NewHall(int number_film, int number);
 
 	void NameOut();
 

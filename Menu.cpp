@@ -2,19 +2,27 @@
 #include "Menu.h"
 #include <iostream>
 #include <conio.h>
+#include "Time.h"
+
 using namespace std;
 
 Menu::Menu()
 { 
-	text = "Menu text";
 	items_number = 0;
 	item = 0;
 	admin = false;
 }
 
-Menu::Menu(string text, int items_number)
+/*
+Menu::Menu(const char* menu_text, int item_num)
 {
-	this->text = text;
+	strcpy(this->menu_text, menu_text);
+	this->menu_text[511] = '\0';
+	this->item_num = item_num;
+}*/
+
+Menu::Menu(int items_number)
+{
 	this->items_number = items_number;
 	item = 0;
 	admin = false;
@@ -50,14 +58,9 @@ void Menu::Admin()
 	//меню администратора
 }
 
-void Menu::Print()
-{
-	cout << text;
-}
-
 void Menu::ChooseItem()
 {
-	do 
+	do
 	{
 		item = -1;
 
@@ -84,7 +87,116 @@ void Menu::FilmList()
 	{
 		cout << i + 1 << ") " << cinema->films[i].name << " (" << cinema->films[i].age << ")\n";
 	}
-	_getch();
+	cout << "\n\nВыберите фильм (введите номер) ";
+	items_number = cinema->films_number;
+}
+
+
+
+void Menu::Description()
+{
+	
+	const time_t tm = time(nullptr);
+
+	char buf[64];
+	strftime(buf, std::size(buf), "%d.%m.%Y", localtime(&tm));
+	std::cout << buf << std::endl;
+			
+
+	std::time_t t = std::time(0);   // get time now
+	std::tm* now = std::localtime(&t);
+	std::cout << (now->tm_year + 1900) << '-' << (now->tm_mon + 1) << '-' << now->tm_mday << "\n";
+	
+	
+
+	system("cls");
+
+	
+	
+	/*
+	cout << "yesterday : " << convTime(yesterday) << endl;
+	cout << "present   : " << convTime(present) << endl;
+	cout << "tommorow  : " << convTime(tommorow) << endl;
+	*/
+	Time uni;
+	//uni.date_ret(0);
+	uni.convTime(tm);
+	
+	cout << "\n\nНазвание: " << cinema->films[item - 1].name;
+	cout << "\n\nОписание: " << cinema->films[item - 1].short_description;
+	cout << "\n\nПродолжительность: " << cinema->films[item - 1].duration;
+	cout << "\n\nРежиссер(-ы): " << cinema->films[item - 1].rejisser;
+	cout << "\n\nВ главных ролях: " << cinema->films[item - 1].main_role;
+	
+	
+	int k;
+	int n;
+	if (num_time < 0)
+	{
+		cout << "\n\nРасписание сеансов:";
+		if (num_day < 0)
+		{
+			k = 0;
+			n = 3;
+		}
+		else
+		{
+			k = num_day - 1;
+			n = num_day;
+		}
+
+		for (int i = k; i < n; i++)
+		{
+			//cout << "\n\n" << uni.date_ret(i) << "   Время   Цена билета";
+
+			for (int j = 0; j < 3; j++)
+			{
+
+				cout << "\n                " << cinema->films[num_film - 1].time[3 * i + j] << "    " << cinema->films[num_film - 1].price[3 * i + j] << " руб.";
+			}
+		}
+
+		if (num_day < 0)
+		{
+
+			//cout << "\n\n1) " << uni.date_ret(0) << "\n2) " << uni.date_ret(1) << "\n3) " << uni.date_ret(2) << "\n\nВыберите дату: ";
+		}
+		else
+		{
+			cout << "\n\n";
+			for (int i = 0; i < 3; i++)
+			{
+				cout << "\n" << (i + 1) << ") " << cinema->films[(num_film - 1)].time[(num_day - 1) * 3 + i];
+			}
+			cout << "\n\nВыберите время: ";
+		}
+		items_number = 3;
+	}
+	/*else
+	{
+		//cout << kinoteatr.filmi[num_film - 1].mesta[(num_day - 1) * 3 + (num_time - 1)];	//тест
+		cout << "\n\n A B C D E F G H I J";
+		for (int i = 0; i < 10; i++)
+		{
+			cout << "\n" << (i + 1) << "  ";
+			for (int j = 0; j < 10; j++)
+			{
+				if (kinoteatr.filmi[(num_film - 1)].mesta[(num_day - 1) * +(num_time - 1)][i * 10 + j] == '0')	//место свободно
+				{
+					cout << "- ";
+				}
+				else if (kinoteatr.filmi[(num_film - 1)].mesta[(num_day - 1) * +(num_time - 1)][i * 10 + j] == '1')	//место забронировано
+				{
+					cout << "? ";
+				}
+				else if (kinoteatr.filmi[(num_film - 1)].mesta[(num_day - 1) * +(num_time - 1)][i * 10 + j] == '2')	//место выкуплено
+				{
+					cout << "X ";
+				}
+			}
+		}
+		cout << "\n\nВведите место: ";
+	}*/
 }
 
 
