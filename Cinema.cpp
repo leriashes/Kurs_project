@@ -25,3 +25,11 @@ void Cinema::InputCashier()
 	
 	//присваивание кассиру
 }
+
+void Cinema::NameOut()
+{
+	system("cls");
+	cout << "Кинотеатр '" << name << "'\n\n";
+
+	return;
+}

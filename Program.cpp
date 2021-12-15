@@ -18,6 +18,7 @@ void Program::Start(Cinema cinema)
 	Menu menu;
 	File_O file_stream;
 
+	menu.cinema = &cinema;
 	//Menu menu1("Для просмотра списка фильмов нажмите '1'.\nДля входа в режим администратора нажмите '2'.\nДля выхода нажмите 'esc'.\n\n", 2);
 	//menu1.print();
 	//menu1.input_number();
@@ -45,17 +46,14 @@ void Program::Start(Cinema cinema)
 
 		} while (!file_stream.CheckPath());
 
-		menu.Start();
+		menu.Cashier();
 		menu.ChooseItem();
 
+		//переделать в режим кассира
 		if (menu.GetItem() == 1)
 		{
-			menu.Cashier();
-			if (menu.GetItem() == 1)
-			{
-				menu.FilmList(cinema);
-				//открытие меню со списком фильмов
-			}
+ 			cinema.NameOut();
+			menu.FilmList();
 		}
 		else if (menu.GetItem() == 2)
 		{
@@ -72,15 +70,11 @@ void Program::Start(Cinema cinema)
 			else if (menu.GetItem() == 2)
 			{
 				file_stream.InputPath();
-
 			}
 			else if (menu.GetItem() == 3)
 			{
 				//создание нового файла
 			}
-
 		}
 	} while (menu.GetItem() != 0);
-
-	//std::cout << "Hello World!\n";
 }

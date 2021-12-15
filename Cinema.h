@@ -19,9 +19,11 @@ private:
 
 	Film films[10];
 	
-
+public:
 	void InputName();	//Ввод название кинотеатра
 	void InputCashier();	//ввод ФИО кассира
+
+	void NameOut();
 
 	friend class File_O;
 	friend class Menu;

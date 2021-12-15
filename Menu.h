@@ -10,16 +10,18 @@ private:
 	string text;
 
 public:
+	Cinema* cinema;
+
 	Menu();
 	Menu(string menu_text,  int item_num);
 	~Menu();
 
 	void Cashier();
-	void Start();
+	//void Start();
 	void Print();
 	void ChooseItem();
 	void File(int k);	//перенести в файл?  убрать k?
-	void FilmList(Cinema cinema);
+	void FilmList();
 
 	int GetItem();
 };

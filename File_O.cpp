@@ -15,7 +15,8 @@ void File_O::InputPath()
     {
         do
         {
-            cout << "\n0 - возврат в меню\n\n¬ведите путь к файлу с информацией о кинотеатре: ";
+			system("cls");
+            cout << "0 - возврат в меню\n\n¬ведите путь к файлу с информацией о кинотеатре: ";
 
             cin >> path;
         } while (path == "");
@@ -77,13 +78,16 @@ bool File_O::CheckPath()
     ifstream f1;
 
     f1.open(path);
-    if (!(f1.is_open())) {
-        cout << "‘айл не найден";
+    if (!(f1.is_open())) 
+	{
+        cout << "\n‘айл не найден\n";
+		_getch();
         //создание файла, заполнение всех данных
 
     }
-    else {
-        cout << "‘айл найден!";
+    else 
+	{
+        //cout << "‘айл найден!";
         result = true;
     }
 

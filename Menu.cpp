@@ -22,16 +22,16 @@ Menu::~Menu()
 {
 }
 
-void Menu::Start()
+/*void Menu::Start()
 {
-	system("cls");
+	cinema->NameOut();
 	cout << "Для просмотра списка фильмов нажмите '1'.\nДля входа в режим администратора нажмите '2'.\nДля выхода нажмите 'esc'.\n\n";
 	items_number = 2;
-}
+}*/
 
 void Menu::Cashier() 
 {
-	cout << "name_kinofeatre";
+	cinema->NameOut();
 	cout << "1) Просмотр списка фильмов\n2) Вход в режим администратора\n\nESC - Выход";
 	items_number = 2;
 }
@@ -63,31 +63,32 @@ void Menu::ChooseItem()
 }
 
 // ПЕРЕНЕСТИ ВЫВОД СПИСКА В КИНОТЕАТР
-void Menu::FilmList(Cinema cinema)
+void Menu::FilmList()
 {
 	cout << "Список фильмов:\n\n";
-	for (int i = 0; i < cinema.films_number; i++)
+	for (int i = 0; i < cinema->films_number; i++)
 	{
-		cout << i + 1 << ") " << cinema.films[i].name << " (" << cinema.films[i].age << ")\n";
+		cout << i + 1 << ") " << cinema->films[i].name << " (" << cinema->films[i].age << ")\n";
 	}
 	_getch();
 }
 
 
-//две функции без k ?????????????????????????????????
+//две функции без k ????????????????????????????????? создать статичсекую переменную
 void Menu::File(int k)
 {
+	system("cls");
+
+	items_number = 2;
+
 	cout << "1) Открыть файл по умолчанию в домашнем каталоге (\"kino_v_teatre\")\n2) Открыть файл по заданному пути";
 	if (k == 1)
 	{
-		cout << "\n3) Создание нового файла\n\nESC - выход";
+		cout << "\n3) Создание нового файла";
 		items_number = 3;
 	}
-	else
-	{
-		cout << "\n\nESC - выход";
-		items_number = 2;
-	}
+
+	cout << "\n\nESC - выход";
 	
 	return;
 }
