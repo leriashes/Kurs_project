@@ -4,6 +4,7 @@
 #include <conio.h>
 #include "Time.h"
 
+
 using namespace std;
 
 Menu::Menu()
@@ -82,6 +83,9 @@ void Menu::ChooseItem()
 // ПЕРЕНЕСТИ ВЫВОД СПИСКА В КИНОТЕАТР?
 void Menu::FilmList()
 {
+	system("cls");
+	cout << "********name_kinofeatre!!!*******\n\n";
+	cout << "0) Возврат в меню\n\n";
 	cout << "Список фильмов:\n\n";
 	for (int i = 0; i < cinema->films_number; i++)
 	{

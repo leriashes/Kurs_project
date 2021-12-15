@@ -70,6 +70,7 @@ void File_O::New()
         //файл не создан, изменение файла
     }
 }
+*/
 
 
 bool File_O::CheckPath()
