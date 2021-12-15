@@ -66,7 +66,8 @@ void Program::Start(Cinema cinema)
 
 				// сделать выход из режима администратора
 				menu.admin = true;
-				menu.File();
+				menu.Admin();
+				//menu.File();
 				menu.ChooseItem();
 
 				if (menu.GetItem() == 1)
@@ -82,6 +83,32 @@ void Program::Start(Cinema cinema)
 				{
 					//создание нового файла
 				}
+				else if (menu.GetItem() == 4)
+				{
+					//создание нового файла
+				}
+				else if (menu.GetItem() == 5)
+				{
+					//создание нового файла
+				}
+				else if (menu.GetItem() == 6)
+				{
+					//создание нового файла
+				}
+				else if (menu.GetItem() == 7)
+				{
+					//создание нового файла
+				}
+				else if (menu.GetItem() == 8)
+				{
+					//создание нового файла
+				}
+				else if (menu.GetItem() == 0)
+				{
+					menu.admin = false;
+					//изменение 
+				}
+
 			}
 		} while (menu.GetItem() != 0);
 	}

@@ -18,6 +18,7 @@ public:
 	~Menu();
 
 	void Cashier();
+	void Admin();
 	//void Start();
 	void Print();
 	void ChooseItem();

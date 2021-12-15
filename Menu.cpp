@@ -38,6 +38,18 @@ void Menu::Cashier()
 	items_number = 2;
 }
 
+void Menu::Admin()
+{
+	if (admin)
+	{
+		cinema->NameOut();
+		File();
+		cout << "4) Добавление или удаление фильма\n5) Редактирование информации о фильме\n6) Добавление или удаление промокода\n7) Аннулирование билета\n8) Редактирование информации о кинотеатре\n\nESC - Выход из режима администратора";
+		items_number = 8;
+	}
+	//меню администратора
+}
+
 void Menu::Print()
 {
 	cout << text;
@@ -91,8 +103,8 @@ void Menu::File()
 		cout << "\n3) Создание нового файла";
 		items_number = 3;
 	}
-
-	cout << "\n\nESC - выход";
+	else
+		cout << "\n\nESC - выход";
 	
 	return;
 }
