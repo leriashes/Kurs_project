@@ -10,7 +10,7 @@
 #include <conio.h>
 using namespace std;
 
-void start()
+/*void start()
 {
 	SetConsoleCP(1251);
 	SetConsoleOutputCP(1251);
@@ -83,4 +83,4 @@ void start()
 	} while (nem.menu_number != 0);
 
 	//std::cout << "Hello World!\n";
-}
+}*/

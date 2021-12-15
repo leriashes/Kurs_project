@@ -4,89 +4,79 @@
 #include <string>
 #include <windows.h>
 #include "Menu.h"
+
 #include "File_O.h"
 #include "Kinoteatr.h"
-#include "Cinema.h"
 #include <conio.h>
 using namespace std;
 
 int main()
 {
-
+	//std::cout << "Hello World!\n";
 	SetConsoleCP(1251);
 	SetConsoleOutputCP(1251);
-
-	Menu nem;
 	File_O file_stream;
+	Menu Menu;
 	Kinoteatr kinoteatr;
-	
-	//Menu menu1("Для просмотра списка фильмов нажмите '1'.\nДля входа в режим администратора нажмите '2'.\nДля выхода нажмите 'esc'.\n\n", 2);
-	//menu1.print();
-	//menu1.input_number();
-	
 	do
 	{
-		do
+		system("cls");
+		Menu.File_choice(2);
+		Menu.Input_number();
+		if (Menu.menu_number == 2)	//ввод своего имени файла с кинотеатром
 		{
 			system("cls");
-			nem.file_choice(2);
-			nem.input_number();
-			if (nem.menu_number == 1)	//файл с кинотеатром указан по default
-			{
-				file_stream.path = "kino_v_teatre.txt\0";
-				if (file_stream.file_check_compound(file_stream.path) == 1)		//проверка файла на внутренее форматирование
-				{
-					file_stream.file_read(file_stream.path);	//чтение фильмов в массивчик
-				}
-				//_getch();	//тест
-			}
-			else if (nem.menu_number == 2)	//ввод своего имени файла с кинотеатром
-			{
-				file_stream.file_input();
-			}
-		} while (file_stream.file_check(file_stream.path) != 1);
+			file_stream.File_input();
+		}
 
-
-		nem.start_menu();
-		nem.input_number();
-		
-		if (nem.menu_number == 1)
+		file_stream.path = "kino_v_teatre.txt\0";
+		if (file_stream.File_check())	//проверка на существование файла с таким названием
 		{
-			nem.user_kassir();
-			nem.input_number();
-			if (nem.menu_number == 1)
+			if (file_stream.File_check_compound(&kinoteatr.kol_vo_filmov) == 1)		//проверка файла на внутренее форматирование
 			{
-				nem.spisok_kino(kinoteatr);
-
-				//открытие меню со списком фильмов
+				//cout << kinoteatr.kol_vo_filmov;	//тест
+				//cout << "Проверку прошел!";	//тест
+				file_stream.File_read(&kinoteatr);	//чтение фильмов в массивчик
 			}
 		}
-		else if (nem.menu_number == 2)
+		//_getch();	//тест
+		//cout << kinoteatr.filmi[0].name;
+		//_getch();
+	} while (file_stream.File_check() != 1);
+
+	/// 
+	/// ДОБАВИТЬ ДЛЯ ВСЕХ РЕЖИМОВ ВОЗМОЖНОСТЬ СМЕНЫ ТЕКСТОВИКА С БАЗОЙ
+	/// 
+	/// 
+
+	Menu.User_kassir();
+	Menu.Input_number();
+	do
+	{
+		if (Menu.menu_number == 1)
 		{
-			//администратор
-			//ввод пароля администратора
-			nem.file_choice(1);
-			nem.input_number();
+			Menu.Spisok_kino(kinoteatr);	//Выбор фильма для посещения
+			Menu.Input_number();
+			Menu.num_film = Menu.menu_number;
+			Menu.num_day = -1;
+			if (Menu.menu_number != 0)	//переход к описанию фильма
+			{
+				Menu.num_time = -1;
+				Menu.Opisanie(kinoteatr);	//ввод даты посещения
+				Menu.Input_number();
+				Menu.num_day = Menu.menu_number;	//день на покупку/бронь билета
 
-			if (nem.menu_number == 1)
-			{
-				string path;
-				path = "kino_v_teatre.txt\0";
-				file_stream.file_check(path);
-			}
-			else if (nem.menu_number == 2)
-			{
-				file_stream.file_input();
+				Menu.Opisanie(kinoteatr);	//ввод времени посещения
+				Menu.Input_number();
+				Menu.num_time = Menu.menu_number;
 
+				Menu.Opisanie(kinoteatr);	//вывод мест в кинотеатре
+				///
+				///обработка введеного места
+				///
+				/// 
+				_getch();
 			}
-			else if (nem.menu_number == 3)
-			{
-				//создание нового файла
-			}
-			
 		}
-	} while (nem.menu_number != 0);
-
-    //std::cout << "Hello World!\n";
-	
+	} while (Menu.menu_number != 0);
 }

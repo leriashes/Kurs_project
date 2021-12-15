@@ -12,7 +12,7 @@ public:
 	string kassirs[5];	//кассиры кинотеатра
 	string inn;		//данные для чека
 	string rnm;		//данные для чека
-	
+
 	int kol_vo_filmov;	//количество фильмов в прокате
 
 	struct film
@@ -26,12 +26,13 @@ public:
 		string price[9];	//стоимость билета
 		string time[9];	//время сеанса
 		string mesta[9];	//места в зале
+		string rand[9];
 	};
 	film filmi[10];
-	
 
-	void new_name();	//Ввод название кинотеатра
-	void new_kassir();	//ввод ФИО кассира
 
+	void New_name();	//Ввод название кинотеатра
+	void New_kassir();	//ввод ФИО кассира
+	string New_zal(int number_film, int number);		//генерация заполненности зала
 };
 

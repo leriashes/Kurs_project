@@ -9,7 +9,7 @@ using namespace std;
 #include <cstdio>
 
 
-void File_O::file_input()
+void File_O::File_input()
 {
     do
     {
@@ -23,10 +23,11 @@ void File_O::file_input()
         {
             return;
         }
-    } while (file_check(path) != 1);
+    } while (File_check() != 1);
     _getch();
 }
 
+/*
 void File_O::file_new()
 {
     cout << "Введите название нового файла (без расширения): ";
@@ -55,9 +56,9 @@ void File_O::file_new()
             ofstream fout(path); //создание объекта класса ofstream для записи
             fout.close();   //закрытие фалйа
         }
-                
+
     }
-    
+
     if (file_check(path) == 1)
     {
         //файл успешно создан, заполнение информации о кинотеатре
@@ -66,22 +67,22 @@ void File_O::file_new()
     {
         //файл не создан, изменение файла
     }
-
 }
+*/
 
-int File_O::file_check(string path)
+int File_O::File_check()
 {
     ifstream f1;
 
     f1.open(path);
     if (!(f1.is_open())) {
-        cout << "Файл не найден";
+        //cout << "Файл не найден"; //тест
         return 2;
         //создание файла, заполнение всех данных
 
     }
     else {
-        cout << "Файл найден!";
+        //cout << "Файл найден!"; //тест
         return 1;
     }
 
@@ -93,7 +94,7 @@ int File_O::file_check(string path)
 
 
 
-void File_O::file_read(string path)
+void File_O::File_read(Kinoteatr *kinoteatr)
 {
     ifstream file(path);
 
@@ -103,47 +104,55 @@ void File_O::file_read(string path)
     string temp;
 
     //заполнение информации о кинотеатре
-    getline(file, name);    //чтение названия кинотеатра
-    getline(file, adress);    //чтение адреса кинотеатра
-    getline(file, kassirs[0]);     //чтения ФИО кассиров
+    getline(file, (*kinoteatr).name);    //чтение названия кинотеатра
+    getline(file, (*kinoteatr).adress);    //чтение адреса кинотеатра
+    getline(file, (*kinoteatr).kassirs[0]);     //чтения ФИО кассиров
 
 
     //разложение количества кассиров на массив ???
 
-    getline(file, temp);
 
     //заполнение информации о фильмах
     do
     {
-        getline(file, filmi[i].name);
-        getline(file, filmi[i].duration);
-        getline(file, filmi[i].age);
-        getline(file, filmi[i].short_description);
-        getline(file, filmi[i].main_role);
-        getline(file, filmi[i].rejisser);
-        
         getline(file, temp);
+        getline(file, (*kinoteatr).filmi[i].name);
+        getline(file, (*kinoteatr).filmi[i].duration);
+        getline(file, (*kinoteatr).filmi[i].age);
+        getline(file, (*kinoteatr).filmi[i].short_description);
+        getline(file, (*kinoteatr).filmi[i].main_role);
+        getline(file, (*kinoteatr).filmi[i].rejisser);
+        
+        
 
         for (j = 0; j < 9; j++)
         {
-            getline(file, (filmi[i].time[j]));
-            getline(file, (filmi[i].price[j]));
+            getline(file, temp);
+            getline(file, ((*kinoteatr).filmi[i].price[j]));
+            getline(file, ((*kinoteatr).filmi[i].time[j]));
+            getline(file, (*kinoteatr).filmi[i].rand[j]);
+            //(*kinoteatr).filmi[i].rand[j] = (*kinoteatr).filmi[i].rand[j][0] + "\0";
+            
             for (int k = 0; k < 10; k++)
             {
                 getline(file, temp);
-                filmi[i].mesta[j] = filmi[i].mesta[j] + temp;
+                (*kinoteatr).filmi[i].mesta[j] = (*kinoteatr).filmi[i].mesta[j] + temp;
             }
-            getline(file, temp);
+            if (kinoteatr->filmi[i].rand[j][0] == '0')
+            {
+                (*kinoteatr).filmi[i].mesta[j] = kinoteatr->New_zal(i, j);
+            }
+            //_getch();   //тест
         }
-        getline(file, temp);
+        //getline(file, temp);
         i++;
-    } while (i < kol_vo_filmov);
+    } while (i < (*kinoteatr).kol_vo_filmov);
 
     //cout << filmi[0].duration;        //тест
-   
+
 }
 
-int File_O::file_check_compound(string path)        //проверка форматирования текстового файла
+int File_O::File_check_compound(int* kol_vo)        //проверка форматирования текстового файла
 {
     char* str = new char[1024];
     int i = 0;
@@ -155,11 +164,11 @@ int File_O::file_check_compound(string path)        //проверка форматирования те
     }
     base.close();
     delete str;
-    if ((i - 3) % 124 == 0)            //форматирование верно
+    if ((i - 3) % 133 == 0)            //форматирование верно
     {
-        kol_vo_filmov = (i - 4) / 123;
+        *kol_vo = (i - 3) / 133;
         return 1;
- 
+
     }
     else               //форматирование неверно, в файле имеются ошибки
     {
