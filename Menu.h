@@ -7,9 +7,10 @@ class Menu
 private:
 	int items_number;
 	int item;
-	string text;
+	string text;	//???? где используется
 
 public:
+	bool admin;
 	Cinema* cinema;
 
 	Menu();
@@ -20,7 +21,7 @@ public:
 	//void Start();
 	void Print();
 	void ChooseItem();
-	void File(int k);	//перенести в файл?  убрать k?
+	void File();	//перенести в файл?  убрать k?
 	void FilmList();
 
 	int GetItem();

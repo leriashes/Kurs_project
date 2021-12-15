@@ -19,62 +19,70 @@ void Program::Start(Cinema cinema)
 	File_O file_stream;
 
 	menu.cinema = &cinema;
-	//Menu menu1("Для просмотра списка фильмов нажмите '1'.\nДля входа в режим администратора нажмите '2'.\nДля выхода нажмите 'esc'.\n\n", 2);
-	//menu1.print();
-	//menu1.input_number();
 
+	//ввод пути к БД
 	do
 	{
-		//ввод пути к БД
+		system("cls");
+		menu.File();
+		menu.ChooseItem();
+		if (menu.GetItem() == 1)	//файл с кинотеатром указан по default
+		{
+			file_stream.path = "kino_v_teatre.txt";
+			if (file_stream.CheckCompound())		//проверка файла на внутренее форматирование
+			{
+				file_stream.Read(cinema);	//чтение фильмов в массивчик
+			}
+		}
+		else if (menu.GetItem() == 2)	//ввод своего имени файла с кинотеатром
+		{
+			file_stream.InputPath();
+		}
+
+	} while (menu.GetItem() != 0 && !file_stream.CheckPath());
+
+	if (menu.GetItem() != 0)
+	{
 		do
 		{
-			system("cls");
-			menu.File(2);
-			menu.ChooseItem();
-			if (menu.GetItem() == 1)	//файл с кинотеатром указан по default
+
+			if (!menu.admin)
 			{
-				file_stream.path = "kino_v_teatre.txt";
-				if (file_stream.CheckCompound())		//проверка файла на внутренее форматирование
+				menu.Cashier();
+				menu.ChooseItem();
+			}
+
+			//переделать в режим кассира
+			if (menu.GetItem() == 1 && !menu.admin)
+			{
+				cinema.NameOut();
+				menu.FilmList();
+			}
+			else if (menu.GetItem() == 2 || menu.admin)
+			{
+				//администратор
+				//ввод пароля администратора
+
+
+				// сделать выход из режима администратора
+				menu.admin = true;
+				menu.File();
+				menu.ChooseItem();
+
+				if (menu.GetItem() == 1)
 				{
-					file_stream.Read(cinema);	//чтение фильмов в массивчик
+					file_stream.path = "kino_v_teatre.txt";
+					file_stream.CheckPath();
+				}
+				else if (menu.GetItem() == 2)
+				{
+					file_stream.InputPath();
+				}
+				else if (menu.GetItem() == 3)
+				{
+					//создание нового файла
 				}
 			}
-			else if (menu.GetItem() == 2)	//ввод своего имени файла с кинотеатром
-			{
-				file_stream.InputPath();
-			}
-
-		} while (!file_stream.CheckPath());
-
-		menu.Cashier();
-		menu.ChooseItem();
-
-		//переделать в режим кассира
-		if (menu.GetItem() == 1)
-		{
- 			cinema.NameOut();
-			menu.FilmList();
-		}
-		else if (menu.GetItem() == 2)
-		{
-			//администратор
-			//ввод пароля администратора
-			menu.File(1);
-			menu.ChooseItem();
-
-			if (menu.GetItem() == 1)
-			{
-				file_stream.path = "kino_v_teatre.txt";
-				file_stream.CheckPath();
-			}
-			else if (menu.GetItem() == 2)
-			{
-				file_stream.InputPath();
-			}
-			else if (menu.GetItem() == 3)
-			{
-				//создание нового файла
-			}
-		}
-	} while (menu.GetItem() != 0);
+		} while (menu.GetItem() != 0);
+	}
 }

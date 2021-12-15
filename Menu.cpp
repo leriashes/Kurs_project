@@ -9,6 +9,7 @@ Menu::Menu()
 	text = "Menu text";
 	items_number = 0;
 	item = 0;
+	admin = false;
 }
 
 Menu::Menu(string text, int items_number)
@@ -16,6 +17,7 @@ Menu::Menu(string text, int items_number)
 	this->text = text;
 	this->items_number = items_number;
 	item = 0;
+	admin = false;
 }
 
 Menu::~Menu()
@@ -62,7 +64,7 @@ void Menu::ChooseItem()
 	} while (item < 0 || item > items_number);
 }
 
-// ПЕРЕНЕСТИ ВЫВОД СПИСКА В КИНОТЕАТР
+// ПЕРЕНЕСТИ ВЫВОД СПИСКА В КИНОТЕАТР?
 void Menu::FilmList()
 {
 	cout << "Список фильмов:\n\n";
@@ -75,14 +77,16 @@ void Menu::FilmList()
 
 
 //две функции без k ????????????????????????????????? создать статичсекую переменную
-void Menu::File(int k)
+void Menu::File()
 {
 	system("cls");
+	if (admin)
+		cinema->NameOut();
 
 	items_number = 2;
 
 	cout << "1) Открыть файл по умолчанию в домашнем каталоге (\"kino_v_teatre\")\n2) Открыть файл по заданному пути";
-	if (k == 1)
+	if (admin)
 	{
 		cout << "\n3) Создание нового файла";
 		items_number = 3;
