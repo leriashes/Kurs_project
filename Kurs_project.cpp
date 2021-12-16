@@ -18,39 +18,106 @@ int main()
 	Cinema cinema;
 	Menu menu;
 	File_O file_stream;
+	bool f;
 
-	Program::Start(cinema);
-	
-	//Menu menu1("Для просмотра списка фильмов нажмите '1'.\nДля входа в режим администратора нажмите '2'.\nДля выхода нажмите 'esc'.\n\n", 2);
-	//menu1.print();
-	//menu1.input_number();
-	
+	menu.cinema = &cinema;
+
+	//ввод пути к БД
 	do
 	{
-
 		system("cls");
 		menu.File();
 		menu.ChooseItem();
-		if (menu.GetItem() == 2)	//ввод своего имени файла с кинотеатром
+		if (menu.GetItem() == 1)	//файл с кинотеатром указан по default
 		{
-			system("cls");
-			file_stream.InputPath();
-		}
-
-		file_stream.path = "kino_v_teatre.txt\0";
-		if (file_stream.CheckPath())	//проверка на существование файла с таким названием
-		{
+			file_stream.path = "kino_v_teatre.txt";
 			if (file_stream.CheckCompound())		//проверка файла на внутренее форматирование
 			{
-				//cout << kinoteatr.kol_vo_filmov;	//тест
-				//cout << "Проверку прошел!";	//тест
 				file_stream.Read(cinema);	//чтение фильмов в массивчик
 			}
 		}
-		//_getch();	//тест
-		//cout << kinoteatr.filmi[0].name;
-		//_getch();
-	} while (!file_stream.CheckPath());
+		else if (menu.GetItem() == 2)	//ввод своего имени файла с кинотеатром
+		{
+			file_stream.InputPath();
+		}
+
+	} while (menu.GetItem() != 0 && !file_stream.CheckPath());
+
+	if (menu.GetItem() != 0)
+	{
+		do
+		{
+			f = false;
+			if (!menu.admin)
+			{
+				menu.Cashier();
+				menu.ChooseItem();
+			}
+
+			//переделать в режим кассира
+			if (menu.GetItem() == 1 && !menu.admin)
+			{
+				cinema.NameOut();
+				menu.FilmList();
+				_getch();
+			}
+			else if (menu.GetItem() == 2 || menu.admin)
+			{
+				//администратор
+				//ввод пароля администратора
+
+
+				// сделать выход из режима администратора
+				menu.admin = true;
+				menu.Admin();
+				//menu.File();
+				menu.ChooseItem();
+
+				if (menu.GetItem() == 1)
+				{
+					file_stream.path = "kino_v_teatre.txt";
+					file_stream.CheckPath();
+				}
+				else if (menu.GetItem() == 2)
+				{
+					file_stream.InputPath();
+				}
+				else if (menu.GetItem() == 3)
+				{
+					//создание нового файла
+				}
+				else if (menu.GetItem() == 4)
+				{
+					//создание нового файла
+				}
+				else if (menu.GetItem() == 5)
+				{
+					//создание нового файла
+				}
+				else if (menu.GetItem() == 6)
+				{
+					//создание нового файла
+				}
+				else if (menu.GetItem() == 7)
+				{
+					//создание нового файла
+				}
+				else if (menu.GetItem() == 8)
+				{
+					//создание нового файла
+				}
+				else if (menu.GetItem() == 0)
+				{
+					menu.admin = false;
+					f = true;
+					//изменение 
+				}
+
+			}
+		} while (menu.GetItem() != 0 || f);
+	}
+
+	
 
 	/// 
 	/// ДОБАВИТЬ ДЛЯ ВСЕХ РЕЖИМОВ ВОЗМОЖНОСТЬ СМЕНЫ ТЕКСТОВИКА С БАЗОЙ
