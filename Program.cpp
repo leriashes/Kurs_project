@@ -12,12 +12,11 @@ using namespace std;
 
 void Program::Start(Cinema cinema)
 {
-	SetConsoleCP(1251);
-	SetConsoleOutputCP(1251);
+	 
 
 	Menu menu;
 	File_O file_stream;
-
+	
 	menu.cinema = &cinema;
 
 	//ввод пути к БД
@@ -57,6 +56,7 @@ void Program::Start(Cinema cinema)
 			{
 				cinema.NameOut();
 				menu.FilmList();
+				_getch();
 			}
 			else if (menu.GetItem() == 2 || menu.admin)
 			{

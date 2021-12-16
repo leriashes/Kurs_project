@@ -12,45 +12,52 @@ using namespace std;
 
 int main()
 {
+	SetConsoleCP(1251);
+	SetConsoleOutputCP(1251);
+
 	Cinema cinema;
+	Menu menu;
+	File_O file_stream;
+
 	Program::Start(cinema);
 	
 	//Menu menu1("Для просмотра списка фильмов нажмите '1'.\nДля входа в режим администратора нажмите '2'.\nДля выхода нажмите 'esc'.\n\n", 2);
 	//menu1.print();
 	//menu1.input_number();
 	
-	/*do
+	do
 	{
+
 		system("cls");
-		Menu.File_choice(2);
-		Menu.Input_number();
-		if (Menu.menu_number == 2)	//ввод своего имени файла с кинотеатром
+		menu.File();
+		menu.ChooseItem();
+		if (menu.GetItem() == 2)	//ввод своего имени файла с кинотеатром
 		{
 			system("cls");
-			file_stream.File_input();
+			file_stream.InputPath();
 		}
 
 		file_stream.path = "kino_v_teatre.txt\0";
-		if (file_stream.File_check())	//проверка на существование файла с таким названием
+		if (file_stream.CheckPath())	//проверка на существование файла с таким названием
 		{
-			if (file_stream.File_check_compound(&kinoteatr.kol_vo_filmov) == 1)		//проверка файла на внутренее форматирование
+			if (file_stream.CheckCompound())		//проверка файла на внутренее форматирование
 			{
 				//cout << kinoteatr.kol_vo_filmov;	//тест
 				//cout << "Проверку прошел!";	//тест
-				file_stream.File_read(&kinoteatr);	//чтение фильмов в массивчик
+				file_stream.Read(cinema);	//чтение фильмов в массивчик
 			}
 		}
 		//_getch();	//тест
 		//cout << kinoteatr.filmi[0].name;
 		//_getch();
-	} while (file_stream.File_check() != 1);
+	} while (!file_stream.CheckPath());
 
 	/// 
 	/// ДОБАВИТЬ ДЛЯ ВСЕХ РЕЖИМОВ ВОЗМОЖНОСТЬ СМЕНЫ ТЕКСТОВИКА С БАЗОЙ
 	/// 
 	/// 
 
-	Menu.User_kassir();
+	/*Menu.User_kassir();
 	Menu.Input_number();
 	do
 	{
@@ -79,8 +86,6 @@ int main()
 				_getch();
 			}
 		}
-	} while (nem.menu_number != 0);
-
-    //std::cout << "Hello World!\n";*/
+	} while (nem.menu_number != 0);*/
 	
 }

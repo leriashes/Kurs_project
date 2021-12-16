@@ -70,7 +70,6 @@ void File_O::New()
         //файл не создан, изменение файла
     }
 }
-*/
 
 
 bool File_O::CheckPath()
@@ -117,7 +116,7 @@ void File_O::Read(Cinema& cinema)
 	//???? читаем только одного ?????
     getline(file, cinema.cashiers[0]);     //чтения ФИО кассиров
 
-
+	getline(file, temp);
     //разложение количества кассиров на массив ???
 
 
@@ -144,13 +143,13 @@ void File_O::Read(Cinema& cinema)
             //egor
 
 			//lera
-            getline(file, (cinema.films[i].time[j]));
-            getline(file, (cinema.films[i].price[j]));
+           /* getline(file, (cinema.films[i].time[j]));
+            getline(file, (cinema.films[i].price[j]));*/
 			//lera
             for (int k = 0; k < 10; k++)
             {
                 getline(file, temp);
-				cinema.films[i].mesta[j] = cinema.films[i].mesta[j] + temp;		//lera
+				//cinema.films[i].mesta[j] = cinema.films[i].mesta[j] + temp;		//lera
 
 				//egor
                 cinema.films[i].mesta[j] = cinema.films[i].mesta[j] + temp;
