@@ -65,6 +65,8 @@ int main()
 					menu.Description();
 					_getch();
 				}
+				else
+					f = true;
 			}
 			else if (menu.GetItem() == 2 || menu.admin)
 			{

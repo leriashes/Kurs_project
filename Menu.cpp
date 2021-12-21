@@ -135,7 +135,7 @@ void Menu::ChooseFilm()
 
 void Menu::Description()
 {
-	
+	system("cls");
 	const time_t tm = time(nullptr);
 
 	char buf[64];
@@ -149,7 +149,7 @@ void Menu::Description()
 	
 	
 
-	system("cls");
+	//system("cls");
 
 	
 	
@@ -159,7 +159,7 @@ void Menu::Description()
 	cout << "tommorow  : " << convTime(tommorow) << endl;
 	*/
 	Time uni;
-	//uni.date_ret(0);
+	uni.date_ret(0);
 	uni.convTime(tm);
 	
 	cout << "\n\nНазвание: " << cinema->films[num_film - 1].name;
@@ -187,7 +187,7 @@ void Menu::Description()
 
 		for (int i = k; i < n; i++)
 		{
-			//cout << "\n\n" << uni.date_ret(i) << "   Время   Цена билета";
+			cout << "\n\n" << uni.date_ret(i) << "   Время   Цена билета";
 
 			for (int j = 0; j < 3; j++)
 			{
@@ -199,7 +199,7 @@ void Menu::Description()
 		if (num_day < 0)
 		{
 
-			//cout << "\n\n1) " << uni.date_ret(0) << "\n2) " << uni.date_ret(1) << "\n3) " << uni.date_ret(2) << "\n\nВыберите дату: ";
+			cout << "\n\n1) " << uni.date_ret(0) << "\n2) " << uni.date_ret(1) << "\n3) " << uni.date_ret(2) << "\n\nВыберите дату: ";
 		}
 		else
 		{
