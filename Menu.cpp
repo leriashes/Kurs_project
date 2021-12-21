@@ -187,7 +187,7 @@ void Menu::Description()
 
 		for (int i = k; i < n; i++)
 		{
-			//cout << "\n\n" << uni.date_ret(i) << "   Время   Цена билета";
+			cout << "\n\n" << uni.date_ret(i) << "   Время   Цена билета";
 
 			for (int j = 0; j < 3; j++)
 			{
@@ -199,7 +199,7 @@ void Menu::Description()
 		if (num_day < 0)
 		{
 
-			//cout << "\n\n1) " << uni.date_ret(0) << "\n2) " << uni.date_ret(1) << "\n3) " << uni.date_ret(2) << "\n\nВыберите дату: ";
+			cout << "\n\n1) " << uni.date_ret(0) << "\n2) " << uni.date_ret(1) << "\n3) " << uni.date_ret(2) << "\n\nВыберите дату: ";
 		}
 		else
 		{
@@ -212,7 +212,8 @@ void Menu::Description()
 		}
 		items_number = 3;
 	}
-	/*else
+	/*
+	else
 	{
 		//cout << kinoteatr.filmi[num_film - 1].mesta[(num_day - 1) * 3 + (num_time - 1)];	//тест
 		cout << "\n\n A B C D E F G H I J";
@@ -221,22 +222,23 @@ void Menu::Description()
 			cout << "\n" << (i + 1) << "  ";
 			for (int j = 0; j < 10; j++)
 			{
-				if (kinoteatr.filmi[(num_film - 1)].mesta[(num_day - 1) * +(num_time - 1)][i * 10 + j] == '0')	//место свободно
+				if (cinema->films[(num_film - 1)].mesta[(num_day - 1) * +(num_time - 1)][i * 10 + j] == '0')	//место свободно
 				{
 					cout << "- ";
 				}
-				else if (kinoteatr.filmi[(num_film - 1)].mesta[(num_day - 1) * +(num_time - 1)][i * 10 + j] == '1')	//место забронировано
+				else if (cinema->films[(num_film - 1)].mesta[(num_day - 1) * +(num_time - 1)][i * 10 + j] == '1')	//место забронировано
 				{
 					cout << "? ";
 				}
-				else if (kinoteatr.filmi[(num_film - 1)].mesta[(num_day - 1) * +(num_time - 1)][i * 10 + j] == '2')	//место выкуплено
+				else if (cinema->films[(num_film - 1)].mesta[(num_day - 1) * +(num_time - 1)][i * 10 + j] == '2')	//место выкуплено
 				{
 					cout << "X ";
 				}
 			}
 		}
 		cout << "\n\nВведите место: ";
-	}*/
+	}
+	*/
 }
 
 

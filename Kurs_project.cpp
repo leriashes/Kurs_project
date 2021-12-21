@@ -60,9 +60,20 @@ int main()
 				cinema.NameOut();
 				menu.FilmList();
 				menu.ChooseFilm();
+				menu.num_day = -1;
 				if (menu.GetItem() != 0)
 				{
-					menu.Description();
+					//menu.Description();
+					menu.num_time = -1;
+					menu.Description();	//ввод даты посещения
+					menu.ChooseItem();
+					menu.num_day = menu.GetItem();	//день на покупку/бронь билета
+
+					menu.Description();	//ввод времени посещения
+					menu.ChooseItem();
+					menu.num_time = menu.GetItem();
+
+					menu.Description();	//вывод мест в кинотеатре
 					_getch();
 				}
 			}

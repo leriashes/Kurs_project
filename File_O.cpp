@@ -27,7 +27,7 @@ void File_O::InputPath()
         }
 
     } while (!CheckPath());
-    _getch();
+    //_getch();
 }
 
 void File_O::New()
@@ -116,13 +116,13 @@ void File_O::Read(Cinema& cinema)
 	//???? читаем только одного ?????
     getline(file, cinema.cashiers[0]);     //чтения ФИО кассиров
 
-	getline(file, temp);
     //разложение количества кассиров на массив ???
 
 
     //заполнение информации о фильмах
     do
     {
+        getline(file, temp);
         getline(file, cinema.films[i].name);
         getline(file, cinema.films[i].duration);
         getline(file, cinema.films[i].age);
@@ -130,7 +130,6 @@ void File_O::Read(Cinema& cinema)
         getline(file, cinema.films[i].main_role);
         getline(file, cinema.films[i].rejisser);
         
-		getline(file, temp);
 
         for (j = 0; j < 9; j++)
         {
