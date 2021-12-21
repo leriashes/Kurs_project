@@ -24,6 +24,7 @@ void Cinema::InputCashier()
 	} while (full_name == "");
 	
 	//присваивание кассиру
+	return;
 }
 
 void Cinema::NameOut()

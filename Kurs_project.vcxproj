@@ -139,7 +139,6 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="Program.cpp" />
     <ClCompile Include="File_O.cpp" />
     <ClCompile Include="Cinema.cpp" />
     <ClCompile Include="Film.cpp" />
@@ -148,7 +147,6 @@
     <ClCompile Include="Time.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Program.h" />
     <ClInclude Include="File_O.h" />
     <ClInclude Include="Cinema.h" />
     <ClInclude Include="Film.h" />

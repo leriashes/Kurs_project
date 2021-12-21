@@ -95,7 +95,43 @@ void Menu::FilmList()
 	items_number = cinema->films_number;
 }
 
+void Menu::ChooseFilm()
+{
+	num_film = 0;
+	char symbol;
 
+	do
+	{
+		symbol = _getch();
+
+		if (symbol >= '0' && symbol <= '9')
+		{
+			if (num_film * 10 + symbol - 48 <= cinema->films_number)
+			{
+				if (symbol >= '1' || symbol == '0' && num_film > 0)
+				{
+					num_film = num_film * 10 + symbol - 48;
+					printf("%c", symbol);
+				}
+				else
+				{ 
+					num_film = 0;
+					break;
+				}
+			}
+		}
+		else if (symbol == '\b' && num_film > 0)
+		{
+			num_film /= 10;
+			printf("\b \b");
+		}
+
+	} while (symbol != 13 || num_film <= 0);
+
+	item = num_film;
+
+	return;
+}
 
 void Menu::Description()
 {
@@ -126,11 +162,11 @@ void Menu::Description()
 	//uni.date_ret(0);
 	uni.convTime(tm);
 	
-	cout << "\n\nНазвание: " << cinema->films[item - 1].name;
-	cout << "\n\nОписание: " << cinema->films[item - 1].short_description;
-	cout << "\n\nПродолжительность: " << cinema->films[item - 1].duration;
-	cout << "\n\nРежиссер(-ы): " << cinema->films[item - 1].rejisser;
-	cout << "\n\nВ главных ролях: " << cinema->films[item - 1].main_role;
+	cout << "\n\nНазвание: " << cinema->films[num_film - 1].name;
+	cout << "\n\nОписание: " << cinema->films[num_film - 1].short_description;
+	cout << "\n\nПродолжительность: " << cinema->films[num_film - 1].duration;
+	cout << "\n\nРежиссер(-ы): " << cinema->films[num_film - 1].rejisser;
+	cout << "\n\nВ главных ролях: " << cinema->films[num_film - 1].main_role;
 	
 	
 	int k;

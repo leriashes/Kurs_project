@@ -134,39 +134,26 @@ void File_O::Read(Cinema& cinema)
 
         for (j = 0; j < 9; j++)
         {
-			//egor
             getline(file, temp);
             getline(file, cinema.films[i].price[j]);
             getline(file, cinema.films[i].time[j]);
             getline(file, cinema.films[i].rand[j]);
-            //(*kinoteatr).filmi[i].rand[j] = (*kinoteatr).filmi[i].rand[j][0] + "\0";
-            //egor
-
-			//lera
-           /* getline(file, (cinema.films[i].time[j]));
-            getline(file, (cinema.films[i].price[j]));*/
-			//lera
+           
             for (int k = 0; k < 10; k++)
             {
                 getline(file, temp);
-				//cinema.films[i].mesta[j] = cinema.films[i].mesta[j] + temp;		//lera
-
-				//egor
                 cinema.films[i].mesta[j] = cinema.films[i].mesta[j] + temp;
             }
             if (cinema.films[i].rand[j][0] == '0')
             {
                 cinema.films[i].mesta[j] = cinema.NewHall(i, j);
-				//egor
             }
-            //_getch();   //тест
         }
         i++;
     } while (i < kol_vo_film);
 
 	cinema.films_number = i;
-    //cout << filmi[0].duration;        //тест*/
-   
+ 
 }
 
 bool File_O::CheckCompound()        //проверка форматирования текстового файла

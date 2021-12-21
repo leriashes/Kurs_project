@@ -5,9 +5,7 @@
 #include <windows.h>
 #include <conio.h>
 #include "Menu.h"
-
 #include "File_O.h"
-#include "Program.h"
 using namespace std;
 
 int main()
@@ -43,6 +41,8 @@ int main()
 
 	} while (menu.GetItem() != 0 && !file_stream.CheckPath());
 
+
+	// ДЛЯ ВЫХОДА ИЗ ПРОГРАММЫ СДЕЛАТЬ ДРУГОЙ КОД!
 	if (menu.GetItem() != 0)
 	{
 		do
@@ -59,7 +59,12 @@ int main()
 			{
 				cinema.NameOut();
 				menu.FilmList();
-				_getch();
+				menu.ChooseFilm();
+				if (menu.GetItem() != 0)
+				{
+					menu.Description();
+					_getch();
+				}
 			}
 			else if (menu.GetItem() == 2 || menu.admin)
 			{
