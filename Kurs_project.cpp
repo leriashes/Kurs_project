@@ -76,6 +76,8 @@ int main()
 					menu.Description();	//вывод мест в кинотеатре
 					_getch();
 				}
+				else
+					f = true;
 			}
 			else if (menu.GetItem() == 2 || menu.admin)
 			{

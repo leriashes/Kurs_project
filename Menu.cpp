@@ -135,7 +135,7 @@ void Menu::ChooseFilm()
 
 void Menu::Description()
 {
-	
+	system("cls");
 	const time_t tm = time(nullptr);
 
 	char buf[64];
@@ -149,7 +149,7 @@ void Menu::Description()
 	
 	
 
-	system("cls");
+	//system("cls");
 
 	
 	
@@ -159,7 +159,7 @@ void Menu::Description()
 	cout << "tommorow  : " << convTime(tommorow) << endl;
 	*/
 	Time uni;
-	//uni.date_ret(0);
+	uni.date_ret(0);
 	uni.convTime(tm);
 	
 	cout << "\n\nНазвание: " << cinema->films[num_film - 1].name;
