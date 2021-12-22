@@ -39,100 +39,110 @@ int main()
 			file_stream.InputPath();
 		}
 
-	} while (menu.GetItem() != 0 && !file_stream.CheckPath());
+	} while (menu.GetItem() == 0 || !file_stream.CheckPath());
 
+	f = true; 
 
-	// ДЛЯ ВЫХОДА ИЗ ПРОГРАММЫ СДЕЛАТЬ ДРУГОЙ КОД!
-	if (menu.GetItem() != 0)
+	while (true)
 	{
-		do
+		if (!menu.admin && f)
 		{
-			f = false;
-			if (!menu.admin)
-			{
-				menu.Cashier();
-				menu.ChooseItem();
-			}
+			menu.Cashier();
+			menu.ChooseItem();
+			menu.Clear();
+		}
 
-			//переделать в режим кассира
-			if (menu.GetItem() == 1 && !menu.admin)
+		if ((menu.GetItem() == 1 || menu.GetItem() == 0 && !f) && !menu.admin)
+		{
+			cinema.NameOut();
+			if (menu.num_film == 0)
 			{
-				cinema.NameOut();
 				menu.FilmList();
 				menu.ChooseFilm();
-				menu.num_day = -1;
-				if (menu.GetItem() != 0)
+			}
+
+			if (menu.num_film == 0)
+				f = true;
+			else
+			{
+				if (menu.num_day == 0)
 				{
-					//menu.Description();
-					menu.num_time = -1;
 					menu.Description();	//ввод даты посещения
 					menu.ChooseItem();
-					menu.num_day = menu.GetItem();	//день на покупку/бронь билета
+					menu.num_day = menu.GetItem();
+				}
 
+				if (menu.num_day != 0 && menu.num_time == 0)
+				{
 					menu.Description();	//ввод времени посещения
 					menu.ChooseItem();
 					menu.num_time = menu.GetItem();
+				}
 
+				if (menu.num_time != 0)
+				{
 					menu.Description();	//вывод мест в кинотеатре
 					_getch();
 				}
-				else
-					f = true;
+
+				f = menu.GetItem() != 0;
 			}
-			else if (menu.GetItem() == 2 || menu.admin)
+			
+		}
+		else if (menu.GetItem() == 2 && f || menu.admin)
+		{
+			//администратор
+			//ввод пароля администратора
+
+
+			// сделать выход из режима администратора
+			menu.admin = true;
+			menu.Admin();
+			//menu.File();
+			menu.ChooseItem();
+
+			if (menu.GetItem() == 1)
 			{
-				//администратор
-				//ввод пароля администратора
-
-
-				// сделать выход из режима администратора
-				menu.admin = true;
-				menu.Admin();
-				//menu.File();
-				menu.ChooseItem();
-
-				if (menu.GetItem() == 1)
-				{
-					file_stream.path = "kino_v_teatre.txt";
-					file_stream.CheckPath();
-				}
-				else if (menu.GetItem() == 2)
-				{
-					file_stream.InputPath();
-				}
-				else if (menu.GetItem() == 3)
-				{
-					//создание нового файла
-				}
-				else if (menu.GetItem() == 4)
-				{
-					//создание нового файла
-				}
-				else if (menu.GetItem() == 5)
-				{
-					//создание нового файла
-				}
-				else if (menu.GetItem() == 6)
-				{
-					//создание нового файла
-				}
-				else if (menu.GetItem() == 7)
-				{
-					//создание нового файла
-				}
-				else if (menu.GetItem() == 8)
-				{
-					//создание нового файла
-				}
-				else if (menu.GetItem() == 0)
-				{
-					menu.admin = false;
-					f = true;
-					//изменение 
-				}
-
+				file_stream.path = "kino_v_teatre.txt";
+				file_stream.CheckPath();
 			}
-		} while (menu.GetItem() != 0 || f);
+			else if (menu.GetItem() == 2)
+			{
+				file_stream.InputPath();
+			}
+			else if (menu.GetItem() == 3)
+			{
+				//создание нового файла
+			}
+			else if (menu.GetItem() == 4)
+			{
+				//создание нового файла
+			}
+			else if (menu.GetItem() == 5)
+			{
+				//создание нового файла
+			}
+			else if (menu.GetItem() == 6)
+			{
+				//создание нового файла
+			}
+			else if (menu.GetItem() == 7)
+			{
+				//создание нового файла
+			}
+			else if (menu.GetItem() == 8)
+			{
+				//создание нового файла
+			}
+			else if (menu.GetItem() == 0)
+			{
+				menu.admin = false;
+				f = true;
+				//изменение 
+			}
+
+		}
+
 	}
 
 	

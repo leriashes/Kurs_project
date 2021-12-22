@@ -3,8 +3,6 @@
 #include <iostream>
 #include <conio.h>
 #include "Time.h"
-
-
 using namespace std;
 
 Menu::Menu()
@@ -12,8 +10,8 @@ Menu::Menu()
 	items_number = 0;
 	item = 0;
 	admin = false;
-
-	//инициализация остальных
+	num_day = num_film = num_time = 0;
+	cinema = NULL;
 }
 
 /*
@@ -29,18 +27,13 @@ Menu::Menu(int items_number)
 	this->items_number = items_number;
 	item = 0;
 	admin = false;
+	num_day = num_film = num_time = 0;
+	cinema = NULL;
 }
 
 Menu::~Menu()
 {
 }
-
-/*void Menu::Start()
-{
-	cinema->NameOut();
-	cout << "Для просмотра списка фильмов нажмите '1'.\nДля входа в режим администратора нажмите '2'.\nДля выхода нажмите 'esc'.\n\n";
-	items_number = 2;
-}*/
 
 void Menu::Cashier() 
 {
@@ -72,6 +65,7 @@ void Menu::ChooseItem()
 
 		if (symbol == 27)
 		{
+			Escape();
 			item = 0;
 		}
 		else if (symbol >= '1' && symbol <= '9')
@@ -136,16 +130,16 @@ void Menu::ChooseFilm()
 void Menu::Description()
 {
 	system("cls");
+	Time uni;
 	const time_t tm = time(nullptr);
 
-	char buf[64];
-	strftime(buf, std::size(buf), "%d.%m.%Y", localtime(&tm));
-	std::cout << buf << std::endl;
+	/*char buf[64];
+	strftime(buf, size(buf), "%d.%m.%Y", localtime(&tm));
+	cout << buf << endl;*/
 			
-
-	std::time_t t = std::time(0);   // get time now
-	std::tm* now = std::localtime(&t);
-	std::cout << (now->tm_year + 1900) << '-' << (now->tm_mon + 1) << '-' << now->tm_mday << "\n";
+	//time_t t = time(0);
+	std::tm* now = localtime(&tm); //было localtime(&t)
+	cout << (now->tm_year + 1900) << '-' << (now->tm_mon + 1) << '-' << now->tm_mday << "\n";
 	
 	
 
@@ -154,13 +148,13 @@ void Menu::Description()
 	
 	
 	/*
-	cout << "yesterday : " << convTime(yesterday) << endl;
-	cout << "present   : " << convTime(present) << endl;
-	cout << "tommorow  : " << convTime(tommorow) << endl;
+	cout << "yesterday : " << ConvTime(yesterday) << endl;
+	cout << "present   : " << ConvTime(present) << endl;
+	cout << "tommorow  : " << ConvTime(tommorow) << endl;
 	*/
-	Time uni;
-	uni.date_ret(0);
-	uni.convTime(tm);
+	
+	//uni.DateRet(0);
+	//uni.ConvTime(tm);
 	
 	cout << "\n\nНазвание: " << cinema->films[num_film - 1].name;
 	cout << "\n\nОписание: " << cinema->films[num_film - 1].short_description;
@@ -171,10 +165,10 @@ void Menu::Description()
 	
 	int k;
 	int n;
-	if (num_time < 0)
+	if (num_time == 0)
 	{
 		cout << "\n\nРасписание сеансов:";
-		if (num_day < 0)
+		if (num_day == 0)
 		{
 			k = 0;
 			n = 3;
@@ -187,7 +181,7 @@ void Menu::Description()
 
 		for (int i = k; i < n; i++)
 		{
-			cout << "\n\n" << uni.date_ret(i) << "   Время   Цена билета";
+			cout << "\n\n" << uni.DateRet(i) << "   Время   Цена билета";
 
 			for (int j = 0; j < 3; j++)
 			{
@@ -196,10 +190,10 @@ void Menu::Description()
 			}
 		}
 
-		if (num_day < 0)
+		if (num_day == 0)
 		{
 
-			cout << "\n\n1) " << uni.date_ret(0) << "\n2) " << uni.date_ret(1) << "\n3) " << uni.date_ret(2) << "\n\nВыберите дату: ";
+			cout << "\n\n1) " << uni.DateRet(0) << "\n2) " << uni.DateRet(1) << "\n3) " << uni.DateRet(2) << "\n\nВыберите дату: ";
 		}
 		else
 		{
@@ -212,7 +206,6 @@ void Menu::Description()
 		}
 		items_number = 3;
 	}
-	/*
 	else
 	{
 		//cout << kinoteatr.filmi[num_film - 1].mesta[(num_day - 1) * 3 + (num_time - 1)];	//тест
@@ -237,8 +230,24 @@ void Menu::Description()
 			}
 		}
 		cout << "\n\nВведите место: ";
+
+
 	}
-	*/
+}
+
+void Menu::Escape()
+{
+	system("cls");
+	cout << "Вы уверены что хотите выйти? \nДа - esc, нет - любая клавиша.";
+	char choice = _getch();
+	if (choice == 27)
+		exit(0);
+	return;
+}
+
+void Menu::Clear()
+{
+	num_day = num_film = num_time = 0;
 }
 
 

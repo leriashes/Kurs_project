@@ -25,12 +25,15 @@ public:
 
 	void Cashier();
 	void Admin();
-	//void Start();
+
 	void ChooseItem();
 	void ChooseFilm();
 	void File();	//перенести в файл?  убрать k?
-	void FilmList();
-	void Description();
+	void FilmList();	//в фильм
+	void Description();	//в фильм или в заказ?
+
+	void Escape();
+	void Clear();
 
 	int GetItem();
 };

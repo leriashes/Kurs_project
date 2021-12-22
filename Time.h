@@ -15,7 +15,7 @@ class Time
 
 
 public:
-	string date_ret(int n);
-	string convTime(time_t t);
+	string DateRet(int n);
+	string ConvTime(time_t t);
 };
 

@@ -47,7 +47,7 @@ string Cinema::NewHall(int number_film, int number)
 	//cout << filmi[number_film].mesta[number];	//тест
 	//cout << filmi[number_film].mesta[(number_d - 1) * 3 + (number_t - 1)];	//тест
 	//_getch();
-	return (temp);
+	return temp;
 }
 
 /*void start()
