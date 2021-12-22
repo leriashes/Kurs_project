@@ -6,6 +6,7 @@
 #include <cstring>
 #include <cstdio>
 #include "File_O.h";
+#include "windows.h"
 using namespace std;
 
 
@@ -145,9 +146,8 @@ void File_O::Read(Cinema& cinema)
             }
             if (cinema.films[i].rand[j][0] == '0')
             {
-                cout << "соя";
-                _getch();
                 cinema.films[i].mesta[j] = cinema.NewHall();
+                Sleep(100);
             }
         }
         i++;

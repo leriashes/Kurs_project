@@ -6,8 +6,20 @@
 #include <conio.h>
 #include "Menu.h"
 #include "File_O.h"
+#include <thread>
 using namespace std;
 
+
+
+bool loadingComplete;
+void PrintLoading()
+{
+	do
+	{
+		std::cout << '.';
+		std::this_thread::sleep_for(0.5s);
+	} while (!loadingComplete);
+}
 int main()
 {
 	SetConsoleCP(1251);
@@ -31,7 +43,16 @@ int main()
 			file_stream.path = "kino_v_teatre.txt";
 			if (file_stream.CheckCompound())		//проверка файла на внутренее форматирование
 			{
-				file_stream.Read(cinema);	//чтение фильмов в массивчик
+				system("cls");
+				cout << "Происходит считывание данных из файла. \n\nОжидайте...";
+				std::thread t(PrintLoading);
+
+				loadingComplete = false;
+				file_stream.Read(cinema);
+				loadingComplete = true;
+				t.join();
+				//cout << "Происходит считывание данных из файла. \n\nОжидайте...";
+				//file_stream.Read(cinema);	//чтение фильмов в массивчик
 			}
 		}
 		else if (menu.GetItem() == 2)	//ввод своего имени файла с кинотеатром
