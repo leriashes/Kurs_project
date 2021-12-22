@@ -237,7 +237,10 @@ void Menu::Description()
 
 void Menu::Escape()
 {
-	system("cls");
+	if (cinema->name != "")
+		cinema->NameOut();
+	else
+		system("cls");
 	cout << "Вы уверены что хотите выйти? \nДа - esc, нет - любая клавиша.";
 	char choice = _getch();
 	if (choice == 27)

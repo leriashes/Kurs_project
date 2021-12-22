@@ -82,6 +82,8 @@ int main()
 				if (menu.num_time != 0)
 				{
 					menu.Description();	//вывод мест в кинотеатре
+
+
 					_getch();
 				}
 
