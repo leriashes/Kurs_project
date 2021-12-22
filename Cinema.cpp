@@ -1,4 +1,5 @@
 #include "Cinema.h"
+#include "conio.h"
 
 void Cinema::InputName()
 {
@@ -35,7 +36,7 @@ void Cinema::NameOut()
 	return;
 }
 
-string Cinema::NewHall(int number_film, int number)
+string Cinema::NewHall()
 {
 	string temp;
 	srand(time(NULL));
