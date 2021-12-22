@@ -28,5 +28,6 @@ public:
 
 	friend class File_O;
 	friend class Menu;
+	friend class Order;
 };
 

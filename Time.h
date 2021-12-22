@@ -5,17 +5,13 @@
 #include <chrono>
 #include <ctime>  
 #include <iostream>
-
 #include <cstdlib>
 using namespace std;
+
 class Time
 {
-	string week[7] = { "ом", "бр", "яп", "вр", "ор", "яа", "бя" };
-
-
-
 public:
-	string DateRet(int n);
-	string ConvTime(time_t t);
+	static string RetDate(int n);
+	static string ConvTime(time_t t);
 };
 

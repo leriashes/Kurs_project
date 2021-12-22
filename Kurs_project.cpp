@@ -5,6 +5,7 @@
 #include <windows.h>
 #include <conio.h>
 #include "Menu.h"
+#include "Order.h"
 #include "File_O.h"
 using namespace std;
 
@@ -14,11 +15,12 @@ int main()
 	SetConsoleOutputCP(1251);
 
 	Cinema cinema;
+	Order order;
 	Menu menu;
 	File_O file_stream;
-	bool f;
+	bool f, n;
 
-	menu.cinema = &cinema;
+	order.cinema = menu.cinema = &cinema;
 
 	//ввод пути к БД
 	do
@@ -38,38 +40,54 @@ int main()
 		{
 			file_stream.InputPath();
 		}
+		else if (menu.GetItem() == 3)
+		{
+			//вход в режим администратора
+		}
 
 	} while (menu.GetItem() == 0 || !file_stream.CheckPath());
 
 	f = true; 
+	n = false;
 
 	while (true)
 	{
-		if (!menu.admin && f)
+  		if (!menu.admin && f && menu.num_film == 0)
 		{
 			menu.Cashier();
 			menu.ChooseItem();
 			menu.Clear();
 		}
 
-		if ((menu.GetItem() == 1 || menu.GetItem() == 0 && !f) && !menu.admin)
+ 		if ((menu.GetItem() == 1 || menu.GetItem() <= 0 && !f || n) && !menu.admin)
 		{
+			n = true;
 			cinema.NameOut();
-			if (menu.num_film == 0)
+			if (menu.num_film <= 0)
 			{
 				menu.FilmList();
 				menu.ChooseFilm();
+				order.film = menu.num_film;
+
+				if (menu.num_film == 0)
+					f = true;
+				else if (menu.num_film == -1)
+					f = false;
 			}
 
-			if (menu.num_film == 0)
-				f = true;
-			else
+			if (menu.num_film > 0)
 			{
-				if (menu.num_day == 0)
+				f = false;
+
+				if (menu.num_day <= 0)
 				{
 					menu.Description();	//ввод даты посещения
 					menu.ChooseItem();
 					menu.num_day = menu.GetItem();
+					order.day = menu.num_day;
+
+					if (menu.num_day == -1)
+						menu.num_day = 0;
 				}
 
 				if (menu.num_day != 0 && menu.num_time == 0)
@@ -77,17 +95,25 @@ int main()
 					menu.Description();	//ввод времени посещения
 					menu.ChooseItem();
 					menu.num_time = menu.GetItem();
+					order.time = menu.num_time;
+
+					if (menu.num_time == -1)
+						menu.num_time = 0;
 				}
 
 				if (menu.num_time != 0)
 				{
-					menu.Description();	//вывод мест в кинотеатре
+					//вывод мест в кинотеатре
+					if (order.ChoosePlace())
+						menu.num_time = 0;
+					else
+						menu.Clear();
+					//order.PrintInfo();
 
-
-					_getch();
+					//_getch();
 				}
 
-				f = menu.GetItem() != 0;
+				//f = menu.GetItem() != 0;
 			}
 			
 		}

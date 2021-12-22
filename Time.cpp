@@ -1,6 +1,6 @@
 #include "Time.h"
 
-string Time::DateRet(int n)
+string Time::RetDate(int n)
 {
 	time_t days[3];	//today, tommorow, day after tommorow
 
@@ -13,6 +13,7 @@ string Time::DateRet(int n)
 
 string Time::ConvTime(time_t t)
 {
+	string week[7] = { "ÏÍ", "ÂÒ", "ÑĞ", "×Ò", "ÏÒ", "ÑÁ", "ÂÑ" };
 	tm* ptm = gmtime(&t);
 	string result = week[ptm->tm_wday - 1] + " " + to_string(ptm->tm_mday) + "." + to_string(ptm->tm_mon + 1) + "." + to_string(ptm->tm_year + 1900);
 	return result;
