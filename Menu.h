@@ -34,6 +34,7 @@ public:
 
 	void Escape();
 	void Clear();
+	void ChangeProkat();
 
 	int GetItem();
 };

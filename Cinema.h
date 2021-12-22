@@ -7,6 +7,9 @@ using namespace std;
 
 class Cinema
 {
+public:
+	int films_number;	//количество фильмов в прокате
+
 private:
 	string name;	//название кинотеатра
 	string adress;	//адрес кинотеатра
@@ -15,16 +18,32 @@ private:
 	string inn;		//данные для чека
 	string rnm;		//данные для чека
 	
-	int films_number;	//количество фильмов в прокате
+	
 
 	Film films[10];
 	
 public:
-	void InputName();	//Ввод название кинотеатра
-	void InputCashier();	//ввод ФИО кассира
-	string NewHall();
+	void ChangeName();	//измение названия кинотеатра
+	void ChangeAdress();	//измение адреса кинотеатра
+	void ChangeInn();		//изменение ИНН кинотеатра
+	void ChangeRnm();		//изменение РНМ кинотеатра
+	void ChangeCashier();	//изменение кассиров
+	void check_cash();
 
-	void NameOut();
+	void DelFilm(int num_film);
+	void ChangeFilm(int num_punkt, int num_film);
+	int CheckTime(int time, int num_seans, int duration);
+	void TimeAuto(int duration);
+
+	void InputName();	//Ввод названия кинотеатра
+	void InputCashier();	//ввод ФИО кассира
+	void InputINN();		//ввод ИНН
+	void InputAdress();		//ввод адреса
+	void InputRNM();		//ввод РНМ
+
+	string NewHall();	//генерация зала (посадка)
+
+	void NameOut();	//вывод названия кинотеатра
 
 	friend class File_O;
 	friend class Menu;

@@ -23,5 +23,6 @@ private:
 	friend class File_O;
 	friend class Menu;
 	friend class Order;
+	friend class Cinema;
 };
 

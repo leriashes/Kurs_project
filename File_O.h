@@ -14,11 +14,12 @@ public:
 	string path;
 
 	void InputPath();		//ввод пути для файла
-	void New();	//создание нового файла   ??????
+	void New(Cinema& cinema);	//создание нового файла   ??????
 	bool CheckPath();	//проверка на сущестование
 	void Read(Cinema& cinema);
 	bool CheckCompound();	//проверка форматирования файла
 	void Write(Cinema cinema);	//запись всех данных в файл
+	void Clean();
 
 	friend class Menu;
 };
