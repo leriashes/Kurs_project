@@ -212,7 +212,6 @@ void Menu::Description()
 		}
 		items_number = 3;
 	}
-	/*
 	else
 	{
 		//cout << kinoteatr.filmi[num_film - 1].mesta[(num_day - 1) * 3 + (num_time - 1)];	//тест
@@ -238,7 +237,6 @@ void Menu::Description()
 		}
 		cout << "\n\n¬ведите место: ";
 	}
-	*/
 }
 
 

@@ -145,7 +145,9 @@ void File_O::Read(Cinema& cinema)
             }
             if (cinema.films[i].rand[j][0] == '0')
             {
-                cinema.films[i].mesta[j] = cinema.NewHall(i, j);
+                cout << "соя";
+                _getch();
+                cinema.films[i].mesta[j] = cinema.NewHall();
             }
         }
         i++;
