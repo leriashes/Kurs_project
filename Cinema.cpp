@@ -1,14 +1,41 @@
 #include "Cinema.h"
 #include "conio.h"
 
+void Cinema::ChangeName()
+{
+	cout << "Текущее название кинотеатра: " << name << "\n\n";
+	InputName();
+	
+}
+
+void Cinema::ChangeAdress()
+{
+	cout << "Текущий адес кинотеатра: " << adress << "\n\n";
+	InputAdress();
+}
+
+void Cinema::ChangeCashier()
+{
+	system("cls");
+	cout << "1) " << cashiers[0] << "\n2) " << cashiers[1];
+	_getch();
+}
+
+void Cinema::check_cash()
+{
+	cout << cashiers[0] << "\n";
+	cout << cashiers[1] << "\n";
+	cout << cashiers[2] << "\n";
+	cout << cashiers[3] << "\n";
+}
+
 void Cinema::InputName()
 {
-	name = "";
+	//name = "";
 	do
 	{
 		cout << "Введите название кинотеатра: ";
-		cin >> name;
-		cout << "\n";
+		getline(cin, name);
 	} while (name == "");
 }
 
@@ -18,14 +45,42 @@ void Cinema::InputCashier()
 	
 	do
 	{
+
 		cout << "Введите ФИО кассира: ";
-		cin >> full_name;
-		cout << "\n";
+		getline(cin, full_name);
 		//проверка на существование данного кассира в базе???
 	} while (full_name == "");
 	
 	//присваивание кассиру
 	return;
+}
+
+void Cinema::InputINN()
+{
+	do
+	{
+		system("cls");
+		cout << "Введите ИНН кинотеатра: ";
+		getline(cin, inn);
+	} while (inn == "");
+}
+
+void Cinema::InputAdress()
+{
+	do
+	{
+		cout << "Введите адрес кинотеатра: ";
+		getline(cin, adress);
+	} while (adress == "");
+}
+
+void Cinema::InputRNM()
+{
+	do
+	{
+		cout << "Введите РНМ: ";
+		getline(cin, rnm);
+	} while (rnm == "");
 }
 
 void Cinema::NameOut()

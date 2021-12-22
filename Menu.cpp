@@ -267,7 +267,9 @@ void Menu::File()
 		items_number = 3;
 	}
 	else
+	{
 		cout << "\n\nESC - выход";
+	}
 	
 	return;
 }

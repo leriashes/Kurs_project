@@ -18,11 +18,10 @@ void File_O::InputPath()
         {
 			system("cls");
             cout << "0 - возврат в меню\n\nВведите путь к файлу с информацией о кинотеатре: ";
-
             cin >> path;
         } while (path == "");
 
-        if (path == "0")
+        if (path == "0\0")
         {
             return;
         }
@@ -116,8 +115,38 @@ void File_O::Read(Cinema& cinema)
 
 	//???? читаем только одного ?????
     getline(file, cinema.cashiers[0]);     //чтения ФИО кассиров
+    getline(file, cinema.inn);     //чтение ИНН
+    getline(file, cinema.rnm);     //чтение РНМ
+    
 
+
+    int kolvo_cashiers = 0;
     //разложение количества кассиров на массив ???
+    for (int y = 0; y < cinema.cashiers[0].length(); y++)
+    {
+        if (cinema.cashiers[0][y] == ',')
+        {
+            kolvo_cashiers++;
+        }
+    }
+    int u = 0;
+    int tre;
+    for (int y = 1; y < kolvo_cashiers; y++)
+    {
+        for (; u < cinema.cashiers[0].length(); u++)
+        {
+            if (cinema.cashiers[0][u] != ',')
+            {
+                cinema.cashiers[y] = cinema.cashiers[y] + cinema.cashiers[0][u];
+            }
+            else
+            {
+                tre = u;
+                u = 500;
+            }
+        }
+        u = tre;
+    }
 
 
     //заполнение информации о фильмах
@@ -152,8 +181,9 @@ void File_O::Read(Cinema& cinema)
         }
         i++;
     } while (i < kol_vo_film);
-
 	cinema.films_number = i;
+
+    Write(cinema);
  
 }
 
@@ -171,9 +201,9 @@ bool File_O::CheckCompound()        //проверка форматирования текстового файла
     base.close();
     delete[] str;
 
-    if ((i - 3) % 133 == 0)            //форматирование верно
+    if ((i - 6) % 133 == 0)            //форматирование верно
     {
-        kol_vo_film = (i - 3) / 133;
+        kol_vo_film = (i - 6) / 133;
 		result = true;
 
     }
@@ -183,5 +213,83 @@ bool File_O::CheckCompound()        //проверка форматирования текстового файла
     }
 
 	return result;
+}
+
+void File_O::Write(Cinema cinema)
+{
+
+    string path_cop = path;
+    path_cop.resize(path_cop.size() - 4);
+    path_cop = path_cop + "_copy.txt\0";
+
+    //создание копии текущего файла
+    ifstream    inFile(path);
+    ofstream    outFile(path_cop);
+    outFile << inFile.rdbuf();
+    inFile.close();
+    outFile.close();
+
+    this->Clean();   //удаление всех данных из файла
+
+    //запись в файл
+    ofstream  f;
+    f.open(path);
+    if (f)
+    {
+        f << cinema.name << endl;    //запись названия кинотеатра в файл
+        f << cinema.adress << endl;  //запись адреса кинотеатра в файл
+        f << cinema.cashiers[0] << endl;    //запись кассиров
+
+        f << cinema.inn << endl;     //запись ИНН кинотеатра в файл
+        f << cinema.rnm << endl;     //запись РНМ кинотеатра в файл
+
+        for (int i = 0; i < cinema.films_number; i++)
+        {
+            f << endl;  //пустая строка
+            f << cinema.films[i].name << endl;   //запись названия фильма
+            f << cinema.films[i].duration << endl;   //запись длительность фильма
+            f << cinema.films[i].age << endl;    //запись возрастного ограничения
+            f << cinema.films[i].short_description << endl;  //запись короткого описания
+            f << cinema.films[i].main_role << endl;  //запись главных актеров фильма
+            f << cinema.films[i].rejisser << endl;   //запись режиссеров фильма
+            f << endl;  //пустая строка
+            for (int j = 0; j < 9; j++)
+            {
+                f << cinema.films[i].price[j] << endl;   //запись стоиомсти билета
+                f << cinema.films[i].time[j] << endl;   //запись времени сеанса
+                f << cinema.films[i].rand[j] << endl;   //запись точки (флажка) генерации
+
+                for (int o = 0; o < 10; o++)
+                {
+                    for (int y = 0; y < 10; y++)
+                    {
+                        f << cinema.films[i].mesta[j][y + o * 10];
+                    }
+                    f << endl;  //пустая строка
+                }
+                if (j != 8)
+                {
+                    f << endl;  //пустая строка
+                }
+            }
+        }
+        f.close();
+        const char* c = path_cop.c_str();
+        //удалить копию файла
+        remove(path_cop.c_str());
+    }
+    else
+    {
+        rename(path_cop.c_str(), path.c_str());
+        cout << "Проблемы с записью в файл";
+    }
+
+}
+
+void File_O::Clean()
+{
+    fstream ofs;
+    ofs.open(path, ios::out | ios::trunc);
+    ofs.close();
 }
 

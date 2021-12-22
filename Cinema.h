@@ -20,11 +20,23 @@ private:
 	Film films[10];
 	
 public:
-	void InputName();	//Ввод название кинотеатра
-	void InputCashier();	//ввод ФИО кассира
-	string NewHall();
+	void ChangeName();	//измение названия кинотеатра
+	void ChangeAdress();	//измение адреса кинотеатра
+	void ChangeInn();		//изменение ИНН кинотеатра
+	void ChangeRnm();		//изменение РНМ кинотеатра
+	void ChangeCashier();	//изменение кассиров
+	void check_cash();
 
-	void NameOut();
+
+	void InputName();	//Ввод названия кинотеатра
+	void InputCashier();	//ввод ФИО кассира
+	void InputINN();		//ввод ИНН
+	void InputAdress();		//ввод адреса
+	void InputRNM();		//ввод РНМ
+
+	string NewHall();	//генерация зала (посадка)
+
+	void NameOut();	//вывод названия кинотеатра
 
 	friend class File_O;
 	friend class Menu;
