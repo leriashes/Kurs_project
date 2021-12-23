@@ -152,7 +152,10 @@ int main()
 					if (order.ChoosePlace())
 						menu.num_time = 0;
 					else
+					{
+						order.ChooseAction();
 						menu.Clean();
+					}
 					//order.PrintInfo();
 
 					//_getch();

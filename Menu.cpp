@@ -220,21 +220,29 @@ void Menu::Description()
 			}
 			for (int j = 0; j < 10; j++)
 			{
-				if (cinema->films[(num_film - 1)].mesta[(num_day - 1) * +(num_time - 1)][i * 10 + j] == '0')	//место свободно
+				if (cinema->films[(num_film - 1)].mesta[(num_day - 1) * 3 + (num_time - 1)][i * 10 + j] == '0')	//место свободно
 				{
 					cout << "- ";
 				}
-				else if (cinema->films[(num_film - 1)].mesta[(num_day - 1) * +(num_time - 1)][i * 10 + j] == '1')	//место забронировано
+				else if (cinema->films[(num_film - 1)].mesta[(num_day - 1) * 3 + (num_time - 1)][i * 10 + j] == '1')	//место забронировано
 				{
 					cout << "? ";
 				}
-				else if (cinema->films[(num_film - 1)].mesta[(num_day - 1) * +(num_time - 1)][i * 10 + j] == '2')	//место выкуплено
+				else if (cinema->films[(num_film - 1)].mesta[(num_day - 1) * 3 + (num_time - 1)][i * 10 + j] == '2')	//место выкуплено
 				{
 					cout << "X ";
 				}
+				else if (cinema->films[(num_film - 1)].mesta[(num_day - 1) * 3 + (num_time - 1)][i * 10 + j] == '3')	//место выкуплено
+				{
+					cout << "O ";
+				}
 			}
 		}
+
+		cout << "\n\n  '-' - пустые места\n  '?' - зарезервированные места\n  'X' - выкупленные места\n  'O' - выбранное Вами место";
 	}
+
+	return;
 }
 
 void Menu::Escape()

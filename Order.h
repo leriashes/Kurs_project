@@ -24,5 +24,7 @@ public:
 	int ChooseRow();
 	int ChooseSeat();
 
+	void ChooseAction();
+
 	void PrintInfo();
 };
