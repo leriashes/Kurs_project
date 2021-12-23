@@ -1,6 +1,6 @@
 #pragma once
 #define _CRT_SECURE_NO_WARNINGS
-#include <iostream>;
+#include <iostream>
 #include <string>
 #include "Film.h"
 using namespace std;
@@ -25,8 +25,8 @@ private:
 public:
 	void ChangeName();	//измение названия кинотеатра
 	void ChangeAdress();	//измение адреса кинотеатра
-	void ChangeInn();		//изменение ИНН кинотеатра
-	void ChangeRnm();		//изменение РНМ кинотеатра
+	void ChangeINN();		//изменение ИНН кинотеатра
+	void ChangeRNM();		//изменение РНМ кинотеатра
 	void ChangeCashier();	//изменение кассиров
 	void check_cash();
 

@@ -14,14 +14,14 @@ void Cinema::ChangeAdress()
 	InputAdress();
 }
 
-void Cinema::ChangeInn()
+void Cinema::ChangeINN()
 {
 	system("cls");
 	cout << "Текущий ИНН: " << inn;
 	InputINN();
 }
 
-void Cinema::ChangeRnm()
+void Cinema::ChangeRNM()
 {
 	system("cls");
 	cout << "Текущий РНМ: " << rnm;
@@ -53,8 +53,6 @@ void Cinema::DelFilm(int num_film)
 	}
 	films_number = films_number - 1;
 }
-
-
 
 void Cinema::ChangeFilm(int num_punkt, int num_film)
 {
@@ -409,7 +407,8 @@ void Cinema::InputRNM()
 void Cinema::NameOut()
 {
 	system("cls");
-	cout << "Кинотеатр '" << name << "'\n\n";
+	if (name != "")
+		cout << "Кинотеатр '" << name << "'\n\n";
 
 	return;
 }

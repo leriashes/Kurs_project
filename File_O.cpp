@@ -1,11 +1,11 @@
 #define _CRT_SECURE_NO_WARNINGS
-#include <conio.h>;
+#include <conio.h>
 #include <iostream>
 #include <string>
 #include <fstream>
 #include <cstring>
 #include <cstdio>
-#include "File_O.h";
+#include "File_O.h"
 #include "windows.h"
 using namespace std;
 
@@ -27,7 +27,8 @@ void File_O::InputPath()
         }
 
     } while (!CheckPath());
-    //_getch();
+
+    return;
 }
 
 void File_O::New(Cinema &cinema)
@@ -71,6 +72,8 @@ void File_O::New(Cinema &cinema)
     {
         //файл не создан, изменение файла
     }
+
+    return;
 }
 
 
@@ -187,6 +190,7 @@ void File_O::Read(Cinema& cinema)
 
     Write(cinema);
  
+    return;
 }
 
 bool File_O::CheckCompound()        //проверка форматирования текстового файла
@@ -207,8 +211,8 @@ bool File_O::CheckCompound()        //проверка форматирования текстового файла
     {
         kol_vo_film = (i - 6) / 133;
 		result = true;
-
     }
+
 	return result;
 }
 
@@ -226,7 +230,7 @@ void File_O::Write(Cinema cinema)
     inFile.close();
     outFile.close();
 
-    this->Clean();   //удаление всех данных из файла
+    Clean();   //удаление всех данных из файла
 
     //запись в файл
     ofstream  f;
@@ -288,5 +292,7 @@ void File_O::Clean()
     fstream ofs;
     ofs.open(path, ios::out | ios::trunc);
     ofs.close();
+
+    return;
 }
 

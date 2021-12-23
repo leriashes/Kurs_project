@@ -33,7 +33,7 @@ public:
 	void Description();	//в фильм или в заказ?
 
 	void Escape();
-	void Clear();
+	void Clean();
 	void ChangeProkat();
 
 	int GetItem();

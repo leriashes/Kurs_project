@@ -14,14 +14,6 @@ Menu::Menu()
 	cinema = NULL;
 }
 
-/*
-Menu::Menu(const char* menu_text, int item_num)
-{
-	strcpy(this->menu_text, menu_text);
-	this->menu_text[511] = '\0';
-	this->item_num = item_num;
-}*/
-
 Menu::Menu(int items_number)
 {
 	this->items_number = items_number;
@@ -40,18 +32,17 @@ void Menu::Cashier()
 	cinema->NameOut();
 	cout << "1) Просмотр списка фильмов\n2) Вход в режим администратора\n\nESC - Выход";
 	items_number = 2;
+
+	return;
 }
 
 void Menu::Admin()
 {
-	if (admin)
-	{
-		cinema->NameOut();
-		File();
-		cout << "\n4) Редактирование информации о фильмах в прокате\n5) Редактирование информации о промокодах\n5) Аннулирование билета\n7) Редактирование информации о кинотеатре\n\nESC - Выход из режима администратора";
-		items_number = 7;
-	}
-	//меню администратора
+	cinema->NameOut();
+	cout << "0) Выход из режима администратора\n\n1) Открыть файл по умолчанию в домашнем каталоге (\"kino_v_teatre\")\n2) Открыть файл по заданному пути\n3) Создание нового файла\n4) Редактирование информации о фильмах в прокате\n5) Редактирование информации о промокодах\n5) Аннулирование билета\n7) Редактирование информации о кинотеатре\n";
+	items_number = 7;
+
+	return;
 }
 
 void Menu::ChooseItem()
@@ -81,7 +72,7 @@ void Menu::ChooseItem()
 // ПЕРЕНЕСТИ ВЫВОД СПИСКА В КИНОТЕАТР?
 void Menu::FilmList()
 {
-	//cout << "0) Возврат в меню\n\n";
+	cout << "0) Возврат в меню\n\n";
 	cout << "Список фильмов:\n\n";
 	for (int i = 0; i < cinema->films_number; i++)
 	{
@@ -89,6 +80,8 @@ void Menu::FilmList()
 	}
 	cout << "\n\nВыберите фильм (введите номер): ";		//????? НАДО ЛИ
 	items_number = cinema->films_number;
+
+	return;
 }
 
 void Menu::ChooseFilm()
@@ -216,10 +209,15 @@ void Menu::Description()
 	else
 	{
 		//cout << kinoteatr.filmi[num_film - 1].mesta[(num_day - 1) * 3 + (num_time - 1)];	//тест
-		cout << "\n\n A B C D E F G H I J";
+		cout << "\n\n   A B C D E F G H I J";
 		for (int i = 0; i < 10; i++)
 		{
 			cout << "\n" << (i + 1) << "  ";
+
+			if (i == 9)
+			{
+				cout << "\b";
+			}
 			for (int j = 0; j < 10; j++)
 			{
 				if (cinema->films[(num_film - 1)].mesta[(num_day - 1) * +(num_time - 1)][i * 10 + j] == '0')	//место свободно
@@ -236,9 +234,6 @@ void Menu::Description()
 				}
 			}
 		}
-		//cout << "\n\nВведите место: ";
-
-
 	}
 }
 
@@ -255,33 +250,23 @@ void Menu::Escape()
 	return;
 }
 
-void Menu::Clear()
+void Menu::Clean()
 {
 	num_day = num_film = num_time = 0;
+	return;
 }
 
 void Menu::ChangeProkat()
 {
-	system("cls");
+	cinema->NameOut();
 	cout << "1) Удаление фильма из проката\n2) Редактирование информации о фильме\n3) Добавление фильма в прокат";
 	items_number = 3;
 }
 
-
-//две функции без k ????????????????????????????????? создать статичсекую переменную
 void Menu::File()
 {
-	//system("cls");
-	if (admin)
-		cinema->NameOut();
-
 	items_number = 3;
-
-	cout << "1) Открыть файл по умолчанию в домашнем каталоге (\"kino_v_teatre\")\n2) Открыть файл по заданному пути";
-	if (admin)
-		cout << "\n3) Создание нового файла";
-	else
-		cout << "\n3) Вход в режим администратора\n\nESC - выход";
+	cout << "1) Открыть файл по умолчанию в домашнем каталоге (\"kino_v_teatre\")\n2) Открыть файл по заданному пути\n3) Вход в режим администратора\n\nESC - выход";
 	
 	return;
 }
