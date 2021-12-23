@@ -47,11 +47,11 @@ int main()
 	do
 	{
 		system("cls");
-		if (error != "\0")
+		if (file_stream.path == "0" && error != "\0")
 		{
 			cout << error << "\n\n";
 		}
-		nulik:
+
 		menu.File();
 		menu.ChooseItem();
 		
@@ -89,12 +89,12 @@ int main()
 			file_stream.InputPath();
 		}
 		//происходит проверка где-то тут!
-		if (file_stream.path != "0\0")
+		if (file_stream.path != "0")
 		{
 			if (file_stream.CheckCompound())		//проверка файла на внутренее форматирование
 			{
 				system("cls");
-				cout << "Происходит считывание данных из файла. \n\nОжидайте...";
+				cout << "Происходит считывание данных из файла. \n\nОжидайте";
 				thread t(PrintLoading);
 
 				loadingComplete = false;
@@ -110,16 +110,12 @@ int main()
 				
 			}
 		}
-		else
-		{
-			goto nulik;
-		}
 		/*else if (menu.GetItem() == 3)
 		{
 			//вход в режим администратора
 		}*/
 
-	} while (menu.GetItem() == 0 || !file_stream.CheckPath() || !file_stream.CheckCompound());
+	} while (menu.GetItem() == 0 || file_stream.path == "0" || !file_stream.CheckPath() || !file_stream.CheckCompound());
 
 	f = true; 
 	n = false;
