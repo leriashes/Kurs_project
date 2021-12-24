@@ -200,6 +200,12 @@ int Order::ChooseSeat()
 	return 0;
 }
 
+void Order::Buy()
+{
+	PrintResult();
+	return;
+}
+
 void Order::ChooseAction()
 {
 	//PrintInfo();
@@ -214,23 +220,28 @@ void Order::ChooseAction()
 		cout << "\n\nДля покупки нажмите '1'. \nДля бронирования нажмите '2'.\nДля выбора ещё одного места нажмите '3'.";
 		menu.items_number = 3;
 
-		menu.ChooseItem();
-		if (menu.GetItem() == 0)
+		do
 		{
-			cinema->films[film - 1].mesta[time - 1 + (day - 1) * 3] = cinema->films[film - 1].mesta[time - 1 + (day - 1) * 3].substr(0, (row - 1) * 10 + seat - 65) + "0" + cinema->films[film - 1].mesta[time - 1 + (day - 1) * 3].substr((row - 1) * 10 + seat - 64);
-			ChoosePlace();
-		}
-		else if (menu.GetItem() == 1)
+			menu.ChooseItem();
+			if (menu.GetItem() == 0)
+			{
+				cinema->films[film - 1].mesta[time - 1 + (day - 1) * 3] = cinema->films[film - 1].mesta[time - 1 + (day - 1) * 3].substr(0, (row - 1) * 10 + seat - 65) + "0" + cinema->films[film - 1].mesta[time - 1 + (day - 1) * 3].substr((row - 1) * 10 + seat - 64);
+				ChoosePlace();
+			}
+			else if (menu.GetItem() == 1)
+			{
+				Buy();
+			}
 			//покупка
-			;
-		else if (menu.GetItem() == 2)
-			//бронь
-			;
-		else if (menu.GetItem() == 3)
-			ChoosePlace();
-		else
-			//esc
-			;
+			else if (menu.GetItem() == 2)
+				//бронь
+				;
+			else if (menu.GetItem() == 3)
+				ChoosePlace();
+			else
+				//esc
+				;
+		} while (menu.GetItem() < 0);
 	}
 	else if (str == "1")
 	{
@@ -450,6 +461,37 @@ void Order::PrintInfo()
 
 	if (seat != 0)
 		printf("   Место: %c", seat);
+
+	return;
+}
+
+void Order::PrintResult()
+{
+	cinema->NameOut();
+
+	cout << "Фильм: " << cinema->films[film - 1].name;
+	cout << "\n\nДата: " << Time::RetDate(day - 1).erase(0, 3);
+	cout << "   Время: " << cinema->films[film - 1].time[(day - 1) * 3 + time - 1];
+		//cout << "   Цена: " << cinem[film + 10 + (den - 1) * 39 + 13 * (vremya - 1) + 12] << " руб.";
+		//cout << "   Зал: " << prokat[film + 4];
+	
+	cout << "\nМеста:";
+
+	while (cinema->films[film - 1].mesta[time - 1 + (day - 1) * 3].find("3") != string::npos)
+	{
+		row = cinema->films[film - 1].mesta[time - 1 + (day - 1) * 3].find("3");
+		cinema->films[film - 1].mesta[time - 1 + (day - 1) * 3].replace(cinema->films[film - 1].mesta[time - 1 + (day - 1) * 3].find("3"), 1, "4");
+		seat = row % 10 + 65;
+		row = row / 10 + 1;
+		cout << "\nРяд: " << row;
+		cout << "   Место: " << seat;
+
+	}
+
+	while (cinema->films[film - 1].mesta[time - 1 + (day - 1) * 3].find("4") != string::npos)
+	{
+		cinema->films[film - 1].mesta[time - 1 + (day - 1) * 3].replace(cinema->films[film - 1].mesta[time - 1 + (day - 1) * 3].find("4"), 1, "3");
+	}
 
 	return;
 }

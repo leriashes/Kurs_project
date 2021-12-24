@@ -23,8 +23,9 @@ public:
 	int ChoosePlace();
 	int ChooseRow();
 	int ChooseSeat();
-
+	void Buy();
 	void ChooseAction();
 
 	void PrintInfo();
+	void PrintResult();
 };
