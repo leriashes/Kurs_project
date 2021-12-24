@@ -217,6 +217,7 @@ void Order::ChooseAction()
 			ChoosePlace();
 		else
 			//esc
+			;
 	}
 	else if (str == "1")
 	{

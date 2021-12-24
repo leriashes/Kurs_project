@@ -159,9 +159,29 @@ void User::Admin(Cinema &cinema, File_O &file_stream)
 		}
 		else if (menu.GetItem() == 5)
 		{
-			//Добавление или удаление промокода
-			//вывод текущего списка промокодов
-			//вывод действий над данными промокодамит
+			do
+			{
+				cinema.NameOut();
+				cinema.ListPromo(0);
+				cout << "1) Удалить промокод\n2) Изменить промокод\n3) Добавить промокод";
+				menu.items_number = 3;
+				menu.ChooseItem();
+
+				if (menu.GetItem() == 1)	//удаление промокода
+				{
+					cinema.DelPromo();
+					cinema.ListPromo(0);
+				}
+				if (menu.GetItem() == 2)	//редактирование промокода
+				{
+					cinema.RedPromo();
+					cinema.ListPromo(0);
+				}
+				if (menu.GetItem() == 3)	//добавление нового промокода
+				{
+					cinema.NewPromo();
+				}
+			} while (menu.GetItem() != 0);	//???? изменить условие ????
 		}
 		else if (menu.GetItem() == 6)
 		{

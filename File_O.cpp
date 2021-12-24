@@ -122,7 +122,67 @@ void File_O::Read(Cinema& cinema)
     getline(file, cinema.cashiers[0]);     //чтения ФИО кассиров
     getline(file, cinema.inn);     //чтение ИНН
     getline(file, cinema.rnm);     //чтение РНМ
+    getline(file, cinema.promo[0][0]);     //чтение промокодов
+    /*
+    int kol_vo_promo = 0;
+    int t = 1;
+    int h = 0;
+    for (int o = 0; o < (cinema.promo[0][0]).size(); o++)
+    {
+        if (cinema.promo[0][0][o] == ',')
+        {
+            kol_vo_promo++;
+            t++;
+            h = 0;
+        }
+        else
+        {
+            cinema.promo[t][0][h] += cinema.promo[0][0][o];
+            h++;
+        }
+    }
+    */
+
+    string sep = ", ";   // строка или символ разделитель
+    size_t sep_size = sep.size();
+    string tempura;
+    string original = cinema.promo[0][0];
     
+    int h = 1;
+    while (true) {
+        tempura = original.substr(0, original.find(sep));
+        if (tempura.size() != 0)   // можно добавить доп. проверку для строк из пробелов
+        {
+            cinema.promo[h][1] = "";
+            if (tempura[tempura.size() - 2] == ' ')
+            {
+                cinema.promo[h][1] = tempura[tempura.size() - 1];       //процент скидки
+                cinema.promo[h][0] = tempura;   //вся строка, необходимо обрезать процент
+                cinema.promo[h][0].resize(cinema.promo[h][0].size() - 2);
+            }
+            else
+            {
+                cinema.promo[h][1] = cinema.promo[h][1] + tempura[tempura.size() - 2] + tempura[tempura.size() - 1];       //процент скидки
+                cinema.promo[h][0] = tempura;   //вся строка, необходимо обрезать процент
+                cinema.promo[h][0].resize(cinema.promo[h][0].size() - 3);
+            }
+            h++;
+            cinema.promo_numbers++;
+        }
+        if (tempura.size() == original.size())
+        {
+            break;
+        }
+        else 
+        {
+            original = original.substr(tempura.size() + sep_size);
+        }
+    }
+
+
+
+    getline(file, cinema.otchet_vsego);     //чтение выручки за период
+    getline(file, cinema.otchet_today);     //чтение выручки за сегодняшний день
 
 
     int kolvo_cashiers = 0;
@@ -164,7 +224,7 @@ void File_O::Read(Cinema& cinema)
         getline(file, cinema.films[i].short_description);
         getline(file, cinema.films[i].main_role);
         getline(file, cinema.films[i].rejisser);
-        
+        getline(file, cinema.films[i].number_zal);
 
         for (j = 0; j < 9; j++)
         {
@@ -207,9 +267,9 @@ bool File_O::CheckCompound()        //проверка форматирования текстового файла
     base.close();
     delete[] str;
 
-    if ((i - 6) % 133 == 0)            //форматирование верно
+    if ((i - 9) % 134 == 0)            //форматирование верно
     {
-        kol_vo_film = (i - 6) / 133;
+        kol_vo_film = (i - 9) / 134;
 		result = true;
     }
 
@@ -244,6 +304,20 @@ void File_O::Write(Cinema cinema)
         f << cinema.inn << endl;     //запись ИНН кинотеатра в файл
         f << cinema.rnm << endl;     //запись РНМ кинотеатра в файл
 
+        //f << cinema.promo[0][0] << endl;     //запись промокодов
+        
+        for (int o = 1; o <= cinema.promo_numbers; o++)
+        {
+            f << cinema.promo[o][0] << " " << cinema.promo[o][1];
+            if (o != cinema.promo_numbers)
+            {
+                f << ", ";
+            }
+        }
+        f << endl;
+        f << cinema.otchet_vsego << endl;     //запись выручки за весь период
+        f << cinema.otchet_today << endl;     //запись выручки за сегодняшний день
+
         for (int i = 0; i < cinema.films_number; i++)
         {
             f << endl;  //пустая строка
@@ -253,7 +327,9 @@ void File_O::Write(Cinema cinema)
             f << cinema.films[i].short_description << endl;  //запись короткого описания
             f << cinema.films[i].main_role << endl;  //запись главных актеров фильма
             f << cinema.films[i].rejisser << endl;   //запись режиссеров фильма
+            f << cinema.films[i].number_zal << endl;   //запись номер зала
             f << endl;  //пустая строка
+
             for (int j = 0; j < 9; j++)
             {
                 f << cinema.films[i].price[j] << endl;   //запись стоиомсти билета

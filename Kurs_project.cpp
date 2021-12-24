@@ -95,7 +95,7 @@ int main()
 
 	while (true)
 	{
-  		if (!User::GetAdmin() && f && menu.num_film == 0)
+		if (!User::GetAdmin() && f && menu.num_film == 0)
 		{
 			menu.Cashier();
 			menu.ChooseItem();
@@ -104,7 +104,7 @@ int main()
 			n = false;
 		}
 
- 		if ((menu.GetItem() == 1 || menu.GetItem() <= 0 && !f || n) && !User::GetAdmin())
+		if ((menu.GetItem() == 1 || menu.GetItem() <= 0 && !f || n) && !User::GetAdmin())
 		{
 			n = true;
 			cinema.NameOut();
@@ -163,14 +163,15 @@ int main()
 
 				//f = menu.GetItem() != 0;
 			}
-			
+
 		}
 		else if (menu.GetItem() == 2 || User::GetAdmin())
 		{
 			User::Admin(cinema, file_stream);
 		}
-	}
 
+	}
+	/// 
 	/// ДОБАВИТЬ ДЛЯ ВСЕХ РЕЖИМОВ ВОЗМОЖНОСТЬ СМЕНЫ ТЕКСТОВИКА С БАЗОЙ
 	
 	return 0;
