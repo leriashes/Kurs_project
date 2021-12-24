@@ -122,9 +122,13 @@ int main()
 				order.film = menu.num_film;
 
 				if (menu.num_film == 0)
+				{
 					f = true;
+				}
 				else if (menu.num_film == -1)
+				{
 					f = false;
+				}
 			}
 
 			if (menu.num_film > 0)
@@ -139,9 +143,13 @@ int main()
 					order.day = menu.num_day;
 
 					if (menu.num_day == -1)
+					{
 						menu.num_day = 0;
+					}
 					else if (menu.num_day == 0)
+					{
 						menu.num_film = 0;
+					}
 				}
 
 				if (menu.num_day != 0 && menu.num_time == 0)
@@ -152,19 +160,25 @@ int main()
 					order.time = menu.num_time;
 
 					if (menu.num_time == -1)
+					{
 						menu.num_time = 0;
+					}
 					else if (menu.num_time == 0)
+					{
 						menu.num_day = 0;
+					}
 				}
 
 				if (menu.num_time != 0)
 				{
 					//вывод мест в кинотеатре
 					if (order.ChoosePlace())
+					{
 						menu.num_time = 0;
+					}
 					else
 					{
-						order.ChooseAction();
+						//order.ChooseAction();
 						menu.Clean();
 					}
 				}

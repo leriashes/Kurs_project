@@ -24,7 +24,6 @@ public:
 	int ChooseRow();
 	int ChooseSeat();
 
-	void ChooseFilm();
 	void ChooseAction();
 
 	void PrintInfo();

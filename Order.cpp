@@ -1,5 +1,7 @@
+#include <algorithm>
 #include "Order.h"
 #include "Menu.h"
+using namespace std;
 
 Order::Order()
 {
@@ -46,9 +48,20 @@ int Order::ChoosePlace()
 	else if (symbol != 0)
 		ChoosePlace();
 
-	int f = 0;
+	static int f = 0;
 	if (row == 0 || seat == 0)
+	{
 		f = 1;
+
+		while (cinema->films[film - 1].mesta[time - 1 + (day - 1) * 3].find("3") != string::npos)
+		{
+			cinema->films[film - 1].mesta[time - 1 + (day - 1) * 3].replace(cinema->films[film - 1].mesta[time - 1 + (day - 1) * 3].find("3"), 1, "0");
+		}
+	}
+	else
+	{
+		ChooseAction();
+	}
 
 	return f;
 }
@@ -187,11 +200,6 @@ int Order::ChooseSeat()
 	return 0;
 }
 
-void Order::ChooseFilm()
-{
-	return;
-}
-
 void Order::ChooseAction()
 {
 	//PrintInfo();
@@ -239,9 +247,6 @@ void Order::ChooseAction()
 		cout << "\n\nМесто уже выбрано!\nДля выбора ещё одного места нажмите '1'.";
 		menu.items_number = 1;
 	}
-
-	
-	_getch();
 
 
 
