@@ -47,79 +47,75 @@ int main()
 	do
 	{
 		system("cls");
-		if (error != "\0")
+		if (file_stream.path == "0" && error != "\0")
 		{
 			cout << error << "\n\n";
 		}
-		nulik:
+
 		menu.File();
 		menu.ChooseItem();
-		
+
 		/*
-		if (menu.GetItem() == 1)	//файл с кинотеатром указан по default
+		if (menu.GetItem() == 1) //файл с кинотеатром указан по default
 		{
-			file_stream.path = "kino_v_teatre.txt";
-			if (file_stream.CheckCompound())		//проверка файла на внутренее форматирование
-			{
-				system("cls");
-				cout << "Происходит считывание данных из файла. \n\nОжидайте...";
-				thread t(PrintLoading);
-
-				loadingComplete = false;
-				file_stream.Read(cinema);
-				loadingComplete = true;
-				t.join();
-				//cout << "Происходит считывание данных из файла. \n\nОжидайте...";
-				//file_stream.Read(cinema);	//чтение фильмов в массивчик
-			}
-			else
-			{
-				system("cls");
-				error = "Данные файла \"" + file_stream.path + "\" не удовлетворяют форматированию\n\0";
-			}
-		}
-		else if (menu.GetItem() == 2)	//ввод своего имени файла с кинотеатром
-		{
-			file_stream.InputPath();
-		}
-		*/
 		file_stream.path = "kino_v_teatre.txt";
-		if (menu.GetItem() == 2)	//ввод своего имени файла с кинотеатром
+		if (file_stream.CheckCompound()) //проверка файла на внутренее форматирование
 		{
-			file_stream.InputPath();
-		}
-		//происходит проверка где-то тут!
-		if (file_stream.path != "0\0")
-		{
-			if (file_stream.CheckCompound())		//проверка файла на внутренее форматирование
-			{
-				system("cls");
-				cout << "Происходит считывание данных из файла. \n\nОжидайте...";
-				thread t(PrintLoading);
+		system("cls");
+		cout « "Происходит считывание данных из файла. \n\nОжидайте...";
+		thread t(PrintLoading);
 
-				loadingComplete = false;
-				file_stream.Read(cinema);
-				loadingComplete = true;
-				t.join();
-				//cout << "Происходит считывание данных из файла. \n\nОжидайте...";
-				//file_stream.Read(cinema);	//чтение фильмов в массивчик
-			}
-			else
-			{
-				error = "Данные файла \"" + file_stream.path + "\" не удовлетворяют форматированию\n\0";
-				
-			}
+		loadingComplete = false;
+		file_stream.Read(cinema);
+		loadingComplete = true;
+		t.join();
+		//cout « "Происходит считывание данных из файла. \n\nОжидайте...";
+		//file_stream.Read(cinema); //чтение фильмов в массивчик
 		}
 		else
 		{
-			goto nulik;
+		system("cls");
+		error = "Данные файла \"" + file_stream.path + "\" не удовлетворяют форматированию\n\0";
+		}
+		}
+		else if (menu.GetItem() == 2) //ввод своего имени файла с кинотеатром
+		{
+		file_stream.InputPath();
+		}
+		*/
+		file_stream.path = "kino_v_teatre.txt";
+		if (menu.GetItem() == 2) //ввод своего имени файла с кинотеатром 
+		{
+			file_stream.InputPath();
+		}
+		//происходит проверка где-то тут! 
+		if (file_stream.path != "0")
+		{
+			if (file_stream.CheckCompound()) //проверка файла на внутренее форматирование 
+			{
+				system("cls");
+				cout << "Происходит считывание данных из файла. \n\nОжидайте";
+				thread t(PrintLoading);
+
+				loadingComplete = false;
+				file_stream.Read(cinema);
+				loadingComplete = true;
+				t.join();
+				//cout « "Происходит считывание данных из файла. \n\nОжидайте..."; 
+				//file_stream.Read(cinema); //чтение фильмов в массивчик 
+			}
+			else
+			{
+				error = "Данные файла \"" + file_stream.path + "\" не удовлетворяют форматированию\n\0";
+
+			}
 		}
 		/*else if (menu.GetItem() == 3)
 		{
-			//вход в режим администратора
+		//вход в режим администратора
 		}*/
 
-	} while (menu.GetItem() == 0 || !file_stream.CheckPath() || !file_stream.CheckCompound());
+	} while (menu.GetItem() == 0 || file_stream.path == "0" || !file_stream.CheckPath() || !file_stream.CheckCompound());
 
 	f = true; 
 	n = false;
@@ -280,7 +276,6 @@ int main()
 						}
 
 						file_stream.Write(cinema);
-						//запись изменений в файл!!!
 					} while (menu.GetItem() != '0');
 				}
 				else if (menu.GetItem() == 3)	//добавление нового фильма в прокат
@@ -322,9 +317,29 @@ int main()
 			}
 			else if (menu.GetItem() == 5)
 			{
-				//Добавление или удаление промокода
-				//вывод текущего списка промокодов
-				//вывод действий над данными промокодамит
+				do
+				{
+					system("cls");
+					cinema.ListPromo(0);
+					cout << "1) Удалить промокод\n2) Изменить промокод\n3) Добавить промокод";
+					menu.items_number = 3;
+					menu.ChooseItem();
+
+					if (menu.GetItem() == 1)	//удаление промокода
+					{
+						cinema.DelPromo();
+						cinema.ListPromo(0);
+					}
+					if (menu.GetItem() == 2)	//редактирование промокода
+					{
+						cinema.RedPromo();
+						cinema.ListPromo(0);
+					}
+					if (menu.GetItem() == 3)	//добавление нового промокода
+					{
+						cinema.NewPromo();
+					}
+				} while (menu.GetItem() != 0);	//???? изменить условие ????
 			}
 			else if (menu.GetItem() == 6)
 			{

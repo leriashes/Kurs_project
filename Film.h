@@ -13,6 +13,7 @@ private:
 	string rejisser;//режиссеры
 	string short_description;	//краткое описание фильма
 	string main_role;	//главные роли
+	string number_zal;	//номер зала для показа
 
 	//??????????
 	string price[9];	//стоимость билета		//??????????

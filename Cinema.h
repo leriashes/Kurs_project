@@ -17,6 +17,10 @@ private:
 
 	string inn;		//данные дл€ чека
 	string rnm;		//данные дл€ чека
+	string otchet_vsego;	//сумма выручки за весь период
+	string otchet_today;	//сумма выручки за сегодн€шний день
+	string promo[10][2];	//промокоды
+	int promo_numbers = 0;
 	
 	
 
@@ -29,6 +33,16 @@ public:
 	void ChangeRnm();		//изменение –Ќћ кинотеатра
 	void ChangeCashier();	//изменение кассиров
 	void check_cash();
+
+	/// 
+	/// ѕеренести в класс USER
+	/// 
+	void ListPromo(int k);	//вывод списка промокодов
+	void DelPromo();		//удаление промокода
+	void RedPromo();		//редактирование информации о промокоде
+	void NewPromo();		//добавление нового промокода
+	string NewPromoName(string message);
+	string NewPromoValue(string message);
 
 	void DelFilm(int num_film);
 	void ChangeFilm(int num_punkt, int num_film);

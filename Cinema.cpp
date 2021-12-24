@@ -43,6 +43,141 @@ void Cinema::check_cash()
 	cout << cashiers[3] << "\n";
 }
 
+void Cinema::ListPromo(int k)
+{
+	for (int y = 1; y <= promo_numbers; y++)
+	{
+		if (k == 1)
+		{
+			cout << y << ") ";
+		}
+		cout <<  promo[y][0] << " (" + promo[y][1] << "%)\n\n";
+	}
+}
+
+void Cinema::DelPromo()
+{
+	int num;
+	system("cls");
+	ListPromo(1);		//вывод всех промокодов
+	cout << "Номер промокода для удаления: ";
+	//функция возврата в меню
+	do
+	{
+		num = _getch();
+	} while (num < '1' || num - 48 > promo_numbers);
+	for (int u = num - 48; u < promo_numbers; u++)
+	{
+		promo[u][0] = promo[u + 1][0];
+		promo[u][1] = promo[u + 1][1];
+	}
+	promo_numbers--;
+}
+
+void Cinema::RedPromo()
+{
+	int num;
+	system("cls");
+	ListPromo(1);		//вывод всех промокодов
+	cout << "Номер промокода для редактирования: ";
+	//функция возврата в меню
+	do
+	{
+		num = _getch();
+	} while (num < '1' || num - 48 > promo_numbers);
+	system("cls");
+	cout << "Промокод: \"" << promo[num - 48][0] << " (" << promo[num - 48][1] << "%)";
+	cout << "\n\n1) Название\n2) Номинал";
+	int func;
+	do
+	{
+		func = _getch();
+	} while (func != '1' && func != '2');
+	string temp = "";
+	if (func == '1')
+	{
+		string old = "Текущее название промокода \"" + promo[num - 48][0] + "\"\n\n";
+		
+		promo[num - 48][0] = NewPromoName(old);
+	}
+	else if (func == '2')
+	{
+		string old = "Текущий номинал промокода \"" + promo[num - 48][0] + "\" (" + promo[num - 48][1] + "%)\n\n";
+		promo[num - 48][1] = NewPromoValue(old);
+	}
+}
+
+void Cinema::NewPromo()
+{
+	if (promo_numbers >= 9)
+	{
+		system("cls");
+		cout << "Количество промокодов максимально. Удалите любой промокод прежде, чем добавлять новый";
+	}
+	else
+	{
+		promo_numbers++;
+		promo[promo_numbers][0] = NewPromoName("");
+		promo[promo_numbers][1] = NewPromoValue("");
+	}
+}
+
+string Cinema::NewPromoName(string message)
+{
+	string temp = "";
+	do
+	{
+		system("cls");
+		cout << message;
+		cout << "Название промокода: ";
+		getline(cin, temp);
+		for (int y = 0; y < temp.size(); y++)
+		{
+			if (temp[y] == ' ')
+			{
+				temp == "";
+			}
+		}
+	} while (temp == "");
+	return temp;
+}
+
+string Cinema::NewPromoValue(string message)
+{
+	string temp = "";
+	do
+	{
+		system("cls");
+		cout << message;
+		cout << "Введите номинал: ";
+		getline(cin, temp);
+		if (temp[temp.size() - 1] == '%' || temp[temp.size() - 1] == ' ')
+		{
+			temp.resize(temp.size() - 1);       //обрезка знака процента или пробела
+		}
+		if (temp.size() < 3 && temp[0] != '0')
+		{	//проверка на состав только из цифр или же из %%
+
+			for (int t = 0; t < temp.size(); t++)
+			{
+				if (temp[t] < '0' || temp[t] > '9')
+				{
+					temp = "";
+				}
+			}
+		}
+		else
+		{
+			temp = "";
+		}
+	} while (temp == "");
+	if (atoi(temp.c_str()) < 100)
+	{
+		return temp;
+		
+	}
+}
+
 void Cinema::DelFilm(int num_film)
 {
 	//сдвиг всех фильмов через цикл, начиная от удаляемого
