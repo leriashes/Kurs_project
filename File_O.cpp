@@ -76,7 +76,6 @@ void File_O::New(Cinema &cinema)
     return;
 }
 
-
 bool File_O::CheckPath()
 {
 	bool result = false;
@@ -102,8 +101,6 @@ bool File_O::CheckPath()
     fout.close(); // закрываем файл
     */
 }
-
-
 
 void File_O::Read(Cinema& cinema)
 {

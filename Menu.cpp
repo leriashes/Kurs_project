@@ -59,7 +59,7 @@ void Menu::ChooseItem()
 			Escape();
 			item = -1;
 		}
-		else if (symbol >= '1' && symbol <= '9')
+		else if (symbol >= '0' && symbol <= '9')
 		{
 			item = symbol - 48;
 		}

@@ -9,6 +9,7 @@ private:
 public:
 	static bool GetAdmin();
 	static bool SignIn();
-	static bool AdminLogIn();
+	static void AdminLogIn();
+	static void AdminLogOut();
 	static void Admin(Cinema& cinema, File_O& file_stream);
 };

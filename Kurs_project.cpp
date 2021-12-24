@@ -56,11 +56,15 @@ int main()
 		}
 
 		menu.File();
-		menu.ChooseItem();
+
+		do
+		{
+			menu.ChooseItem();
+		} while (menu.GetItem() == 0);
 		
 		if (menu.GetItem() == 3)
 			User::Admin(cinema, file_stream);
-		else
+		else if (menu.GetItem() > 0)
 		{
 			file_stream.path = "kino_v_teatre.txt";
 
@@ -89,7 +93,7 @@ int main()
 				}
 			}
 		}
-	} while (menu.GetItem() == 0 || file_stream.path == "0" || !file_stream.CheckPath() || !file_stream.CheckCompound());
+	} while (menu.GetItem() == -1 || file_stream.path == "0" || !file_stream.CheckPath() || !file_stream.CheckCompound());
 
 	f = n = true;
 
@@ -98,7 +102,10 @@ int main()
 		if (!User::GetAdmin() && f && menu.num_film == 0)
 		{
 			menu.Cashier();
-			menu.ChooseItem();
+			do
+			{
+				menu.ChooseItem();
+			} while (menu.GetItem() == 0);
 			menu.Clean();
 
 			n = false;
@@ -133,6 +140,8 @@ int main()
 
 					if (menu.num_day == -1)
 						menu.num_day = 0;
+					else if (menu.num_day == 0)
+						menu.num_film = 0;
 				}
 
 				if (menu.num_day != 0 && menu.num_time == 0)
@@ -144,6 +153,8 @@ int main()
 
 					if (menu.num_time == -1)
 						menu.num_time = 0;
+					else if (menu.num_time == 0)
+						menu.num_day = 0;
 				}
 
 				if (menu.num_time != 0)
@@ -156,12 +167,7 @@ int main()
 						order.ChooseAction();
 						menu.Clean();
 					}
-					//order.PrintInfo();
-
-					//_getch();
 				}
-
-				//f = menu.GetItem() != 0;
 			}
 
 		}

@@ -16,10 +16,16 @@ bool User::SignIn()
 	return true;
 }
 
-bool User::AdminLogIn()
+void User::AdminLogIn()
 {
 	admin = true;
-	return false;
+	return;
+}
+
+void User::AdminLogOut()
+{
+	admin = false;
+	return;
 }
 
 void User::Admin(Cinema &cinema, File_O &file_stream)
@@ -222,9 +228,12 @@ void User::Admin(Cinema &cinema, File_O &file_stream)
 		}
 		else if (menu.GetItem() == 0)
 		{
+			AdminLogOut();
 			//menu.admin = false;
 			//f = true;
 			//изменение 
 		}
 	}
+
+	return;
 }

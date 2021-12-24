@@ -187,6 +187,11 @@ int Order::ChooseSeat()
 	return 0;
 }
 
+void Order::ChooseFilm()
+{
+	return;
+}
+
 void Order::ChooseAction()
 {
 	//PrintInfo();
