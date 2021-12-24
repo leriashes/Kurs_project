@@ -120,6 +120,31 @@ void File_O::Read(Cinema& cinema)
 
 	//???? читаем только одного ?????
     getline(file, cinema.cashiers[0]);     //чтения ФИО кассиров
+    string sep = ", ";   // строка или символ разделитель
+    size_t sep_size = sep.size();
+    string original1 = cinema.cashiers[0];
+    string tempura1;
+    int h = 1;
+    while (true) {
+        tempura1 = original1.substr(0, original1.find(sep));
+        if (tempura1.size() != 0)   // можно добавить доп. проверку для строк из пробелов
+        {
+            cinema.cashiers[h] = "";
+            cinema.cashiers[h] = tempura1;
+            cinema.casshiers_numbers++;
+            h++;
+        }
+        if (tempura1.size() == original1.size())
+        {
+            break;
+        }
+        else
+        {
+            original1 = original1.substr(tempura1.size() + sep_size);
+        }
+    }
+
+
     getline(file, cinema.inn);     //чтение ИНН
     getline(file, cinema.rnm);     //чтение РНМ
     getline(file, cinema.promo[0][0]);     //чтение промокодов
@@ -143,12 +168,11 @@ void File_O::Read(Cinema& cinema)
     }
     */
 
-    string sep = ", ";   // строка или символ разделитель
-    size_t sep_size = sep.size();
+    
     string tempura;
     string original = cinema.promo[0][0];
     
-    int h = 1;
+    h = 1;
     while (true) {
         tempura = original.substr(0, original.find(sep));
         if (tempura.size() != 0)   // можно добавить доп. проверку для строк из пробелов
@@ -183,35 +207,7 @@ void File_O::Read(Cinema& cinema)
 
     getline(file, cinema.otchet_vsego);     //чтение выручки за период
     getline(file, cinema.otchet_today);     //чтение выручки за сегодняшний день
-
-
-    int kolvo_cashiers = 0;
-    //разложение количества кассиров на массив ???
-    for (int y = 0; y < cinema.cashiers[0].length(); y++)
-    {
-        if (cinema.cashiers[0][y] == ',')
-        {
-            kolvo_cashiers++;
-        }
-    }
-    int u = 0;
-    int tre;
-    for (int y = 1; y < kolvo_cashiers; y++)
-    {
-        for (; u < cinema.cashiers[0].length(); u++)
-        {
-            if (cinema.cashiers[0][u] != ',')
-            {
-                cinema.cashiers[y] = cinema.cashiers[y] + cinema.cashiers[0][u];
-            }
-            else
-            {
-                tre = u;
-                u = 500;
-            }
-        }
-        u = tre;
-    }
+    
 
 
     //заполнение информации о фильмах

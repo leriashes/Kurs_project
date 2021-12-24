@@ -21,7 +21,7 @@ private:
 	string otchet_today;	//сумма выручки за сегодняшний день
 	string promo[10][2];	//промокоды
 	int promo_numbers = 0;
-	
+	int casshiers_numbers = 0;
 	
 
 	Film films[10];
@@ -32,7 +32,6 @@ public:
 	void ChangeINN();		//изменение ИНН кинотеатра
 	void ChangeRNM();		//изменение РНМ кинотеатра
 	void ChangeCashier();	//изменение кассиров
-	void check_cash();
 
 	/// 
 	/// Перенести в класс USER

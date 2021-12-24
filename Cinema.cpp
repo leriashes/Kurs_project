@@ -31,16 +31,48 @@ void Cinema::ChangeRNM()
 void Cinema::ChangeCashier()
 {
 	system("cls");
-	cout << "1) " << cashiers[0] << "\n2) " << cashiers[1];
-	_getch();
-}
+	for (int i = 1; i <= casshiers_numbers; i++)
+	{
+		cout << i << ") " << cashiers[i] << "\n";
+	}
+	//cout << "1) " << cashiers[0] << "\n2) " << cashiers[1];
+	cout << "1) Добавить кассира\n2) Удалить кассира\n3) Редактировать информацию";
+	int func;
 
-void Cinema::check_cash()
-{
-	cout << cashiers[0] << "\n";
-	cout << cashiers[1] << "\n";
-	cout << cashiers[2] << "\n";
-	cout << cashiers[3] << "\n";
+	do
+	{
+		func = _getch();
+	} while (func < '0' && func > '3');
+	
+	if (func == '1')
+	{
+		casshiers_numbers++;
+		do
+		{
+			system("cls");
+			cout << "Введите данные нового кассира: ";
+			getline(cin, cashiers[casshiers_numbers]);
+		} while (cashiers[casshiers_numbers] == "");
+	}
+	else if (func == '2')
+	{
+		int number;
+		cout << "Введите порядковый номер кассира для удаления: ";
+		do
+		{
+			number = _getch();
+		} while (number < '1' && number - 48 > casshiers_numbers);
+		for (int t = number - 48; t < casshiers_numbers; t++)
+		{
+			cashiers[t] = cashiers[t + 1];
+		}
+		casshiers_numbers--;
+	}
+	else if (func == '3')
+	{
+
+	}
+	_getch();
 }
 
 void Cinema::ListPromo(int k)
