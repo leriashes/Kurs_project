@@ -128,7 +128,7 @@ void File_O::Read(Cinema& cinema)
         {
             cinema.cashiers[h] = "";
             cinema.cashiers[h] = tempura1;
-            cinema.casshiers_numbers++;
+            cinema.cashiers_number++;
             h++;
         }
         if (tempura1.size() == original1.size())
@@ -272,10 +272,10 @@ void File_O::Write(Cinema cinema)
     if (f)
     {
         f << cinema.name << endl;    //запись названия кинотеатра в файл
-        f << cinema.adress << endl;  //запись адреса кинотеатра в файл
+        f << cinema.address << endl;  //запись адреса кинотеатра в файл
         //f << cinema.cashiers[0] << endl;    //запись кассиров
 
-        for (int p = 1; p <= cinema.casshiers_numbers; p++)
+        for (int p = 1; p <= cinema.cashiers_number; p++)
         {
             f << cinema.cashiers[p];
             if (p != cinema.cashiers_number)

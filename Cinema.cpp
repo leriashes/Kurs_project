@@ -69,12 +69,12 @@ void Cinema::ChangeCashier()
 			do
 			{
 				number = _getch();
-			} while (number < '1' && number - 48 > cashier_number);
-			for (int t = number - 48; t < cashier_number; t++)
+			} while (number < '1' && number - 48 > cashiers_number);
+			for (int t = number - 48; t < cashiers_number; t++)
 			{
 				cashiers[t] = cashiers[t + 1];
 			}
-			cashier_number--;
+			cashiers_number--;
 		}
 		else
 		{
@@ -89,7 +89,7 @@ void Cinema::ListCashier(int k)
 {
 	system("cls");
 	
-	for (int i = 1; i <= cashier_number; i++)
+	for (int i = 1; i <= cashiers_number; i++)
 	{
 		if (k == 1)
 		{
