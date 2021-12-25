@@ -202,7 +202,38 @@ int Order::ChooseSeat()
 
 void Order::Buy()
 {
-	PrintResult();
+	Menu menu(3);
+	
+	do
+	{
+		PrintResult();
+		cout << "\nДля оплаты наличными нажмите '1'.\nДля оплаты картой нажмите '2'.\nДля ввода промокода нажмите '3'.";
+
+		menu.ChooseItem();
+		if (menu.GetItem() == 0)
+		{
+			while (cinema->films[film - 1].mesta[time - 1 + (day - 1) * 3].find("4") != string::npos)
+			{
+				cinema->films[film - 1].mesta[time - 1 + (day - 1) * 3].replace(cinema->films[film - 1].mesta[time - 1 + (day - 1) * 3].find("4"), 1, "3");
+			}
+			cinema->films[film - 1].mesta[time - 1 + (day - 1) * 3] = cinema->films[film - 1].mesta[time - 1 + (day - 1) * 3].substr(0, (row - 1) * 10 + seat - 65) + "0" + cinema->films[film - 1].mesta[time - 1 + (day - 1) * 3].substr((row - 1) * 10 + seat - 64);
+
+			ChooseAction();
+		}
+		else if (menu.GetItem() == 1)
+		{
+			;
+		}
+		else if (menu.GetItem() == 2)
+		{
+			PrintResult();
+		}
+		else if (menu.GetItem() == 3)
+		{
+			;
+		}
+	} while (menu.GetItem() < 0);
+
 	return;
 }
 
@@ -216,12 +247,18 @@ void Order::ChooseAction()
 	if (str == "0")
 	{
 		cinema->films[film - 1].mesta[time - 1 + (day - 1) * 3] = cinema->films[film - 1].mesta[time - 1 + (day - 1) * 3].substr(0, (row - 1) * 10 + seat - 65) + "3" + cinema->films[film - 1].mesta[time - 1 + (day - 1) * 3].substr((row - 1) * 10 + seat - 64);
+		/*
 		PrintInfo();
 		cout << "\n\nДля покупки нажмите '1'. \nДля бронирования нажмите '2'.\nДля выбора ещё одного места нажмите '3'.";
 		menu.items_number = 3;
+		*/
 
 		do
 		{
+			PrintInfo();
+			cout << "\n\nДля покупки нажмите '1'. \nДля бронирования нажмите '2'.\nДля выбора ещё одного места нажмите '3'.";
+			menu.items_number = 3;
+
 			menu.ChooseItem();
 			if (menu.GetItem() == 0)
 			{
@@ -259,153 +296,6 @@ void Order::ChooseAction()
 		menu.items_number = 1;
 	}
 
-
-
-	//Место свободно
-	/*if (a == 0 || a == 3 && t)
-	{
-		if (!cancel)
-		{
-			if (!t)
-			{
-				mesta[(ryad - 1) * 10 + mesto - 65] = 3;
-
-				num_tick += 1;
-
-				string line;
-				int r = film + 12 + 26 * (den - 1) + 13 * (den - 1) + 13 * (vremya - 1);
-				for (int i = r, k = 0; i < r + 10; i++)
-				{
-					line = prokat[i];
-					for (int j = 0; j < 10; j++, k++)
-						line[j] = mesta[k] + 48;
-					prokat[i] = line;
-				}
-			}
-
-			t = 0;
-
-			action = ch_mode("\n\nДля покупки нажмите '1'. \nДля бронирования нажмите '2'.\nДля выбора ещё одного места нажмите '3'.", 1, 1, den);
-		}
-		else
-		{
-			action = ch_mode("\n\nМесто свободно!\nДля выбора другого места нажмите '1'.", 1, 1, den);
-
-			if (action == 1 || action == -3)
-				action = -3;
-			else
-				ch_action(0);
-		}
-	}
-	//Место забронировано
-	else if (a == 1)
-	{
-		if (cancel)
-		{
-			if (!t)
-			{
-				mesta[(ryad - 1) * 10 + mesto - 65] = 3;
-
-				num_tick += 1;
-
-				string line;
-				int r = film + 12 + 26 * (den - 1) + 13 * (den - 1) + 13 * (vremya - 1);
-				for (int i = r, k = 0; i < r + 10; i++)
-				{
-					line = prokat[i];
-					for (int j = 0; j < 10; j++, k++)
-						line[j] = mesta[k] + 48;
-					prokat[i] = line;
-				}
-			}
-
-			t = 0;
-
-			action = ch_mode("\n\nДля аннулирования брони нажмите '1'. \nДля выбора ещё одного места нажмите '2'.", 1, 1, den);
-
-			if (action == 1)
-				action = 4;
-			else if (action == 2)
-				action = 3;
-		}
-		else
-		{
-			action = ch_mode("\n\nМесто уже забронировано!\nДля выбора другого места нажмите '1'.", 1, 1, den);
-
-			if (action == 1 || action == -3)
-				action = -3;
-			else
-				ch_action(0);
-		}
-	}
-	//Место оплачено
-	else if (a == 2)
-	{
-		if (cancel)
-		{
-			if (!t)
-			{
-				mesta[(ryad - 1) * 10 + mesto - 65] = 3;
-
-				num_tick += 1;
-
-				string line;
-				int r = film + 12 + 26 * (den - 1) + 13 * (den - 1) + 13 * (vremya - 1);
-				for (int i = r, k = 0; i < r + 10; i++)
-				{
-					line = prokat[i];
-					for (int j = 0; j < 10; j++, k++)
-						line[j] = mesta[k] + 48;
-					prokat[i] = line;
-				}
-			}
-
-			t = 0;
-
-			action = ch_mode("\n\nДля аннулирования покупки нажмите '1'. \nДля выбора ещё одного места нажмите '2'.", 1, 1, den);
-
-			if (action == 1)
-				action = 4;
-			else if (action == 2)
-				action = 3;
-		}
-		else
-		{
-			action = ch_mode("\n\nМесто уже оплачено!\nДля выбора другого места нажмите '1'.", 1, 1, den);
-
-			if (action == 1 || action == -3)
-				action = -3;
-			else
-				ch_action(0);
-		}
-
-	}
-	//Место уже выбрано
-	else if (a == 3)
-	{
-		action = ch_mode("\n\nМесто уже выбрано!\nДля выбора ещё одного места нажмите '1'.", 1, 1, den);
-
-		if (action == 1 || action == -3)
-			action = -3;
-		else
-			ch_action(0);
-	}
-
-	if (action > 0 && action < 5)
-		b_mesto[num_tick] = (ryad - 1) * 10 + mesto - 64;
-
-	if (action == 1)
-		pokupka();
-	else if (action == 2)
-		bron();
-	else if (action != -3 && action != 3 && action != 4)
-		ch_action(1);
-	else if (action == 4)
-		annul();
-
-	if (action == 3 || action == -3)
-		ch_place();
-
 	return;
 }
 
@@ -424,43 +314,19 @@ void Order::PrintInfo()
 	if (time != 0)
 	{
 		cout << "   Время: " << cinema->films[film - 1].time[(day - 1) * 3 + time - 1];
-		//cout << "   Цена: " << cinem[film + 10 + (den - 1) * 39 + 13 * (vremya - 1) + 12] << " руб.";
-		//cout << "   Зал: " << prokat[film + 4];
+		cout << "   Цена: " << cinema->films[film - 1].price[(day - 1) * 3 + time - 1] << " руб.";
+		cout << "   Зал: " << cinema->films[film - 1].number_zal;
 	}
 
 	if (row != 0)
-		printf("   Ряд: %d", row);
-
-	if (seat != 0)
-		printf("   Место: %c", seat);*/
-
-	return;
-}
-
-void Order::PrintInfo()
-{
-	Menu menu;
-	menu.cinema = cinema;
-	menu.num_day = day;
-	menu.num_film = film;
-	menu.num_time = time;
-	menu.Description();
-
-	if (day != 0)
-		cout << "\n\nДата: " << Time::RetDate(day - 1).erase(0, 3);
-
-	if (time != 0)
 	{
-		cout << "   Время: " << cinema->films[film - 1].time[(day - 1) * 3 + time - 1];
-		//cout << "   Цена: " << cinem[film + 10 + (den - 1) * 39 + 13 * (vremya - 1) + 12] << " руб.";
-		//cout << "   Зал: " << prokat[film + 4];
+		cout << "   Ряд: " << row;
 	}
 
-	if (row != 0)
-		printf("   Ряд: %d", row);
-
 	if (seat != 0)
-		printf("   Место: %c", seat);
+	{
+		cout << "   Место: " << seat;
+	}
 
 	return;
 }
@@ -472,10 +338,13 @@ void Order::PrintResult()
 	cout << "Фильм: " << cinema->films[film - 1].name;
 	cout << "\n\nДата: " << Time::RetDate(day - 1).erase(0, 3);
 	cout << "   Время: " << cinema->films[film - 1].time[(day - 1) * 3 + time - 1];
-		//cout << "   Цена: " << cinem[film + 10 + (den - 1) * 39 + 13 * (vremya - 1) + 12] << " руб.";
-		//cout << "   Зал: " << prokat[film + 4];
+	cout << "   Цена: " << cinema->films[film - 1].price[(day - 1) * 3 + time - 1] << " руб.";
+	cout << "   Зал: " << cinema->films[film - 1].number_zal;
 	
-	cout << "\nМеста:";
+	cout << "\n\nМеста:";
+
+	int num = 0;
+	int cost = stoi(cinema->films[film - 1].price[(day - 1) * 3 + time - 1]);
 
 	while (cinema->films[film - 1].mesta[time - 1 + (day - 1) * 3].find("3") != string::npos)
 	{
@@ -486,7 +355,11 @@ void Order::PrintResult()
 		cout << "\nРяд: " << row;
 		cout << "   Место: " << seat;
 
+		num++;
 	}
+
+	cout << "\n\nИТОГО К ОПЛАТЕ: " << num * cost << " рублей\n";
+	
 
 	while (cinema->films[film - 1].mesta[time - 1 + (day - 1) * 3].find("4") != string::npos)
 	{
