@@ -3,6 +3,7 @@
 #include <iostream>
 #include <string>
 #include "Film.h"
+#include <thread>
 using namespace std;
 
 class Cinema
@@ -23,7 +24,6 @@ private:
 	int promo_number = 0;
 	int cashiers_number = 0;
 	
-	
 
 	Film films[10];
 	
@@ -32,8 +32,9 @@ public:
 	void ChangeAdress();	//измение адреса кинотеатра
 	void ChangeINN();		//изменение ИНН кинотеатра
 	void ChangeRNM();		//изменение РНМ кинотеатра
+
 	void ChangeCashier();	//изменение кассиров
-	void check_cash();
+	void ListCashier(int k);	//вывод кассиров
 
 	/// 
 	/// Перенести в класс USER
@@ -49,12 +50,15 @@ public:
 	void ChangeFilm(int num_punkt, int num_film);
 	int CheckTime(int time, int num_seans, int duration);
 	void TimeAuto(int duration);
+	string Convert_Time(int time);
 
 	void InputName();	//Ввод названия кинотеатра
 	void InputCashier();	//ввод ФИО кассира
 	void InputINN();		//ввод ИНН
 	void InputAdress();		//ввод адреса
 	void InputRNM();		//ввод РНМ
+	void NewHallCinema(int number_film);	//генерация наполненности зала для нового фильма	
+	void PriceInput(int num_film, int num);
 
 	string NewHall();	//генерация зала (посадка)
 
