@@ -133,11 +133,19 @@ void User::Admin(Cinema &cinema, File_O &file_stream)
 					cinema.ChangeFilm(-5, cinema.films_number);		//ввод актерского состава фильма
 					cinema.ChangeFilm(-6, cinema.films_number);		//ввод режиссер фильма
 					cinema.ChangeFilm(-7, cinema.films_number);		//ввод времени сеансов
-					cout << "drop";
+					cinema.ChangeFilm(-8, cinema.films_number);		//ввод стоимости билета
+					cinema.ChangeFilm(-9, cinema.films_number);		//ввод номера зала для показа фильма
+					for (int y = 0; y < 9; y++)
+					{
+						cinema.NewHallCinema(cinema.films_number);
+					}
+
+					//cout << "drop";
 					_getch();
 					//добавление зала и времени сеансов со стоимостью
 					cinema.films_number++;
 					file_stream.Write(cinema);
+					cout << "Все было успешно записано!";
 
 				}
 				else
@@ -181,7 +189,9 @@ void User::Admin(Cinema &cinema, File_O &file_stream)
 				{
 					cinema.NewPromo();
 				}
+				file_stream.Write(cinema);
 			} while (menu.GetItem() != 0);	//???? изменить условие ????
+			
 		}
 		else if (menu.GetItem() == 6)
 		{
@@ -218,6 +228,7 @@ void User::Admin(Cinema &cinema, File_O &file_stream)
 			{
 				cinema.ChangeRNM();
 			}
+			file_stream.Write(cinema);
 			//создание нового файла
 		}
 		else if (menu.GetItem() == 0)

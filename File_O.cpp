@@ -148,26 +148,6 @@ void File_O::Read(Cinema& cinema)
     getline(file, cinema.inn);     //чтение ИНН
     getline(file, cinema.rnm);     //чтение РНМ
     getline(file, cinema.promo[0][0]);     //чтение промокодов
-    /*
-    int kol_vo_promo = 0;
-    int t = 1;
-    int h = 0;
-    for (int o = 0; o < (cinema.promo[0][0]).size(); o++)
-    {
-        if (cinema.promo[0][0][o] == ',')
-        {
-            kol_vo_promo++;
-            t++;
-            h = 0;
-        }
-        else
-        {
-            cinema.promo[t][0][h] += cinema.promo[0][0][o];
-            h++;
-        }
-    }
-    */
-
     
     string tempura;
     string original = cinema.promo[0][0];
@@ -193,6 +173,7 @@ void File_O::Read(Cinema& cinema)
             h++;
             cinema.promo_numbers++;
         }
+
         if (tempura.size() == original.size())
         {
             break;
@@ -295,8 +276,17 @@ void File_O::Write(Cinema cinema)
     {
         f << cinema.name << endl;    //запись названия кинотеатра в файл
         f << cinema.adress << endl;  //запись адреса кинотеатра в файл
-        f << cinema.cashiers[0] << endl;    //запись кассиров
+        //f << cinema.cashiers[0] << endl;    //запись кассиров
 
+        for (int p = 1; p <= cinema.casshiers_numbers; p++)
+        {
+            f << cinema.cashiers[p];
+            if (p != cinema.casshiers_numbers)
+            {
+                f << ", ";
+            }
+        }
+        f << endl;
         f << cinema.inn << endl;     //запись ИНН кинотеатра в файл
         f << cinema.rnm << endl;     //запись РНМ кинотеатра в файл
 
