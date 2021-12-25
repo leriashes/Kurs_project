@@ -609,14 +609,14 @@ void Cinema::TimeAuto(int duration)
 		{
 			cout << "\n\n\nАвтоматическое проставление времени сеансов: ";
 			cout << "\n\n1) 8:00\n2) 14:00\n3) " << (21 * 60 - duration) / 60;
-			int temp = ((21 * 60 - duration) - 21 * 60);
+			int temp =  ((21 * 60 - duration) - ((21 * 60 - duration) /  60 * 60));
 			if (temp < 10)
 			{
-				cout << "0" << temp;
+				cout << ":0" << temp;
 			}
 			else
 			{
-				cout << temp;
+				cout << ":" << temp;
 			}
 		}
 	}
