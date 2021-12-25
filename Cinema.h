@@ -12,7 +12,7 @@ public:
 
 private:
 	string name;	//название кинотеатра
-	string adress;	//адрес кинотеатра
+	string address;	//адрес кинотеатра
 	string cashiers[5];	//кассиры кинотеатра		// сделать класс кассиров с информацией о них?
 
 	string inn;		//данные дл€ чека
@@ -20,7 +20,8 @@ private:
 	string otchet_vsego;	//сумма выручки за весь период
 	string otchet_today;	//сумма выручки за сегодн€шний день
 	string promo[10][2];	//промокоды
-	int promo_numbers = 0;
+	int promo_number = 0;
+	int cashiers_number = 0;
 	
 	
 

@@ -10,7 +10,7 @@ void Cinema::ChangeName()
 
 void Cinema::ChangeAdress()
 {
-	cout << "Текущий адес кинотеатра: " << adress << "\n\n";
+	cout << "Текущий адес кинотеатра: " << address << "\n\n";
 	InputAdress();
 }
 
@@ -45,7 +45,7 @@ void Cinema::check_cash()
 
 void Cinema::ListPromo(int k)
 {
-	for (int y = 1; y <= promo_numbers; y++)
+	for (int y = 1; y <= promo_number; y++)
 	{
 		if (k == 1)
 		{
@@ -65,13 +65,13 @@ void Cinema::DelPromo()
 	do
 	{
 		num = _getch();
-	} while (num < '1' || num - 48 > promo_numbers);
-	for (int u = num - 48; u < promo_numbers; u++)
+	} while (num < '1' || num - 48 > promo_number);
+	for (int u = num - 48; u < promo_number; u++)
 	{
 		promo[u][0] = promo[u + 1][0];
 		promo[u][1] = promo[u + 1][1];
 	}
-	promo_numbers--;
+	promo_number--;
 }
 
 void Cinema::RedPromo()
@@ -84,7 +84,7 @@ void Cinema::RedPromo()
 	do
 	{
 		num = _getch();
-	} while (num < '1' || num - 48 > promo_numbers);
+	} while (num < '1' || num - 48 > promo_number);
 	system("cls");
 	cout << "Промокод: \"" << promo[num - 48][0] << " (" << promo[num - 48][1] << "%)";
 	cout << "\n\n1) Название\n2) Номинал";
@@ -109,16 +109,16 @@ void Cinema::RedPromo()
 
 void Cinema::NewPromo()
 {
-	if (promo_numbers >= 9)
+	if (promo_number >= 9)
 	{
 		system("cls");
 		cout << "Количество промокодов максимально. Удалите любой промокод прежде, чем добавлять новый";
 	}
 	else
 	{
-		promo_numbers++;
-		promo[promo_numbers][0] = NewPromoName("");
-		promo[promo_numbers][1] = NewPromoValue("");
+		promo_number++;
+		promo[promo_number][0] = NewPromoName("");
+		promo[promo_number][1] = NewPromoValue("");
 	}
 }
 
@@ -526,8 +526,8 @@ void Cinema::InputAdress()
 	do
 	{
 		cout << "Введите адрес кинотеатра: ";
-		getline(cin, adress);
-	} while (adress == "");
+		getline(cin, address);
+	} while (address == "");
 }
 
 void Cinema::InputRNM()

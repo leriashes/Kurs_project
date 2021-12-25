@@ -113,7 +113,7 @@ void File_O::Read(Cinema& cinema)
 
     //заполнение информации о кинотеатре
     getline(file, cinema.name);    //чтение названия кинотеатра
-    getline(file, cinema.adress);    //чтение адреса кинотеатра
+    getline(file, cinema.address);    //чтение адреса кинотеатра
 
 	//???? читаем только одного ?????
     getline(file, cinema.cashiers[0]);     //чтения ФИО кассиров
@@ -164,7 +164,7 @@ void File_O::Read(Cinema& cinema)
                 cinema.promo[h][0].resize(cinema.promo[h][0].size() - 3);
             }
             h++;
-            cinema.promo_numbers++;
+            cinema.promo_number++;
         }
         if (tempura.size() == original.size())
         {
@@ -295,7 +295,7 @@ void File_O::Write(Cinema cinema)
     if (f)
     {
         f << cinema.name << endl;    //запись названия кинотеатра в файл
-        f << cinema.adress << endl;  //запись адреса кинотеатра в файл
+        f << cinema.address << endl;  //запись адреса кинотеатра в файл
         f << cinema.cashiers[0] << endl;    //запись кассиров
 
         f << cinema.inn << endl;     //запись ИНН кинотеатра в файл
@@ -303,10 +303,10 @@ void File_O::Write(Cinema cinema)
 
         //f << cinema.promo[0][0] << endl;     //запись промокодов
         
-        for (int o = 1; o <= cinema.promo_numbers; o++)
+        for (int o = 1; o <= cinema.promo_number; o++)
         {
             f << cinema.promo[o][0] << " " << cinema.promo[o][1];
-            if (o != cinema.promo_numbers)
+            if (o != cinema.promo_number)
             {
                 f << ", ";
             }

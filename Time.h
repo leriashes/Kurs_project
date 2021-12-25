@@ -6,6 +6,7 @@
 #include <ctime>  
 #include <iostream>
 #include <cstdlib>
+#include <thread>
 using namespace std;
 
 class Time
@@ -13,5 +14,7 @@ class Time
 public:
 	static string RetDate(int n);
 	static string ConvTime(time_t t);
+	static bool loadingComplete;
+	static void PrintLoading();
 };
 

@@ -11,26 +11,6 @@
 #include <thread>
 using namespace std;
 
-
-
-bool loadingComplete;
-void PrintLoading()
-{
-	int i = 0;
-	do
-	{
-		std::cout << '.';
-		std::this_thread::sleep_for(0.3s);
-		i++;
-		if (i == 3)
-		{
-			i = 0;
-			cout << "\b \b\b \b\b \b";
-			std::this_thread::sleep_for(0.3s);
-		}
-	} while (!loadingComplete);
-}
-
 int main()
 {
 	SetConsoleCP(1251);
@@ -80,11 +60,11 @@ int main()
 				{
 					system("cls");
 					cout << "Идёт считывание данных из файла. \n\nОжидайте";
-					thread t(PrintLoading);
+					thread t(Time::PrintLoading);
 
-					loadingComplete = false;
+					Time::loadingComplete = false;
 					file_stream.Read(cinema);
-					loadingComplete = true;
+					Time::loadingComplete = true;
 					t.join();
 				}
 				else

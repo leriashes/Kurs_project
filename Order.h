@@ -28,4 +28,6 @@ public:
 
 	void PrintInfo();
 	void PrintResult();
+
+	void Check();
 };
