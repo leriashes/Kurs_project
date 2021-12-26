@@ -26,6 +26,7 @@ public:
 	int ChooseRow();
 	int ChooseSeat();
 	void Buy();
+	void Reserve();
 	void ChooseAction();
 
 	void PrintInfo();
