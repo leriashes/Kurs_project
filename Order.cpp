@@ -15,6 +15,7 @@ Order::Order()
 	time = 0;
 	row = 0;
 	seat = 0;
+	num = 0;
 	cinema = NULL;
 }
 
@@ -312,10 +313,7 @@ void Order::PrintInfo()
 {
 	Menu menu;
 	menu.cinema = cinema;
-	menu.num_day = day;
-	menu.num_film = film;
-	menu.num_time = time;
-	menu.Description();
+	menu.Description(*this);
 
 	if (day != 0)
 		cout << "\n\nДата: " << Time::RetDate(day - 1).erase(0, 3);
@@ -352,7 +350,7 @@ void Order::PrintResult()
 	
 	cout << "\n\nМеста:";
 
-	int num = 0;
+	num = 0;
 	int cost = stoi(cinema->films[film - 1].price[(day - 1) * 3 + time - 1]);
 
 	while (cinema->films[film - 1].mesta[time - 1 + (day - 1) * 3].find("3") != string::npos)
@@ -806,6 +804,12 @@ void Order::Check()
 		}*/
 
 	///}
+}
+
+void Order::Clean()
+{
+	day = time = film = row = seat = 0;
+	return;
 }
 
 

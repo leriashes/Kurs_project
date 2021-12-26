@@ -11,6 +11,7 @@ class Order
 private:
 	int row;
 	char seat;
+	int num;
 
 public:
 	int film;
@@ -30,4 +31,6 @@ public:
 	void PrintResult();
 
 	void Check();
+
+	void Clean();
 };

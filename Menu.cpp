@@ -10,7 +10,6 @@ Menu::Menu()
 	items_number = 0;
 	item = 0;
 	admin = false;
-	num_day = num_film = num_time = 0;
 	cinema = NULL;
 }
 
@@ -19,7 +18,6 @@ Menu::Menu(int items_number)
 	this->items_number = items_number;
 	item = 0;
 	admin = false;
-	num_day = num_film = num_time = 0;
 	cinema = NULL;
 }
 
@@ -84,51 +82,7 @@ void Menu::FilmList()
 	return;
 }
 
-void Menu::ChooseFilm()
-{
-	num_film = 0;
-	char symbol;
-
-	do
-	{
-		symbol = _getch();
-
-		if (symbol >= '0' && symbol <= '9')
-		{
-			if (num_film * 10 + symbol - 48 <= cinema->films_number)
-			{
-				if (symbol >= '1' || symbol == '0' && num_film > 0)
-				{
-					num_film = num_film * 10 + symbol - 48;
-					printf("%c", symbol);
-				}
-				else
-				{ 
-					num_film = 0;
-					break;
-				}
-			}
-		}
-		else if (symbol == '\b' && num_film > 0)
-		{
-			num_film /= 10;
-			printf("\b \b");
-		}
-		else if (symbol == 27)
-		{
-			num_film = -1;
-			Escape();
-			break;
-		}
-
-	} while (symbol != 13 || num_film <= 0);
-
-	item = num_film;
-
-	return;
-}
-
-void Menu::Description()
+void Menu::Description(Order& order)
 {
 	system("cls");
 	const time_t tm = time(nullptr);
@@ -156,27 +110,27 @@ void Menu::Description()
 	//uni.DateRet(0);
 	//uni.ConvTime(tm);
 	
-	cout << "\n\nНазвание: " << cinema->films[num_film - 1].name;
-	cout << "\n\nОписание: " << cinema->films[num_film - 1].short_description;
-	cout << "\n\nПродолжительность: " << cinema->films[num_film - 1].duration;
-	cout << "\n\nРежиссер(-ы): " << cinema->films[num_film - 1].rejisser;
-	cout << "\n\nВ главных ролях: " << cinema->films[num_film - 1].main_role;
+	cout << "\n\nНазвание: " << cinema->films[order.film - 1].name;
+	cout << "\n\nОписание: " << cinema->films[order.film - 1].short_description;
+	cout << "\n\nПродолжительность: " << cinema->films[order.film - 1].duration;
+	cout << "\n\nРежиссер(-ы): " << cinema->films[order.film - 1].rejisser;
+	cout << "\n\nВ главных ролях: " << cinema->films[order.film - 1].main_role;
 	
 	
 	int k;
 	int n;
-	if (num_time == 0)
+	if (order.time == 0)
 	{
 		cout << "\n\nРасписание сеансов:";
-		if (num_day == 0)
+		if (order.day == 0)
 		{
 			k = 0;
 			n = 3;
 		}
 		else
 		{
-			k = num_day - 1;
-			n = num_day;
+			k = order.day - 1;
+			n = order.day;
 		}
 
 		for (int i = k; i < n; i++)
@@ -186,11 +140,11 @@ void Menu::Description()
 			for (int j = 0; j < 3; j++)
 			{
 
-				cout << "\n                " << cinema->films[num_film - 1].time[3 * i + j] << "    " << cinema->films[num_film - 1].price[3 * i + j] << " руб.";
+				cout << "\n                " << cinema->films[order.film - 1].time[3 * i + j] << "    " << cinema->films[order.film - 1].price[3 * i + j] << " руб.";
 			}
 		}
 
-		if (num_day == 0)
+		if (order.day == 0)
 		{
 
 			cout << "\n\n1) " << Time::RetDate(0) << "\n2) " << Time::RetDate(1) << "\n3) " << Time::RetDate(2) << "\n\nВыберите дату: ";
@@ -200,7 +154,7 @@ void Menu::Description()
 			cout << "\n\n";
 			for (int i = 0; i < 3; i++)
 			{
-				cout << "\n" << (i + 1) << ") " << cinema->films[num_film - 1].time[(num_day - 1) * 3 + i];
+				cout << "\n" << (i + 1) << ") " << cinema->films[order.film - 1].time[(order.day - 1) * 3 + i];
 			}
 			cout << "\n\nВыберите время: ";
 		}
@@ -208,7 +162,7 @@ void Menu::Description()
 	}
 	else
 	{
-		//cout << kinoteatr.filmi[num_film - 1].mesta[(num_day - 1) * 3 + (num_time - 1)];	//тест
+		//cout << kinoteatr.filmi[order.film - 1].mesta[(order.day - 1) * 3 + (order.time - 1)];	//тест
 		cout << "\n\n   A B C D E F G H I J";
 		for (int i = 0; i < 10; i++)
 		{
@@ -220,19 +174,19 @@ void Menu::Description()
 			}
 			for (int j = 0; j < 10; j++)
 			{
-				if (cinema->films[(num_film - 1)].mesta[(num_day - 1) * 3 + (num_time - 1)][i * 10 + j] == '0')	//место свободно
+				if (cinema->films[(order.film - 1)].mesta[(order.day - 1) * 3 + (order.time - 1)][i * 10 + j] == '0')	//место свободно
 				{
 					cout << "- ";
 				}
-				else if (cinema->films[(num_film - 1)].mesta[(num_day - 1) * 3 + (num_time - 1)][i * 10 + j] == '1')	//место забронировано
+				else if (cinema->films[(order.film - 1)].mesta[(order.day - 1) * 3 + (order.time - 1)][i * 10 + j] == '1')	//место забронировано
 				{
 					cout << "? ";
 				}
-				else if (cinema->films[(num_film - 1)].mesta[(num_day - 1) * 3 + (num_time - 1)][i * 10 + j] == '2')	//место выкуплено
+				else if (cinema->films[(order.film - 1)].mesta[(order.day - 1) * 3 + (order.time - 1)][i * 10 + j] == '2')	//место выкуплено
 				{
 					cout << "X ";
 				}
-				else if (cinema->films[(num_film - 1)].mesta[(num_day - 1) * 3 + (num_time - 1)][i * 10 + j] == '3')	//место выкуплено
+				else if (cinema->films[(order.film - 1)].mesta[(order.day - 1) * 3 + (order.time - 1)][i * 10 + j] == '3')	//место выкуплено
 				{
 					cout << "O ";
 				}
@@ -255,12 +209,6 @@ void Menu::Escape()
 	char choice = _getch();
 	if (choice == 27)
 		exit(0);
-	return;
-}
-
-void Menu::Clean()
-{
-	num_day = num_film = num_time = 0;
 	return;
 }
 

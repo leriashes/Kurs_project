@@ -79,14 +79,14 @@ int main()
 
 	while (true)
 	{
-		if (!User::GetAdmin() && f && menu.num_film == 0)
+		if (!User::GetAdmin() && f && order.film == 0)
 		{
 			menu.Cashier();
 			do
 			{
 				menu.ChooseItem();
 			} while (menu.GetItem() == 0);
-			menu.Clean();
+			order.Clean();
 
 			n = false;
 		}
@@ -95,71 +95,72 @@ int main()
 		{
 			n = true;
 			cinema.NameOut();
-			if (menu.num_film <= 0)
+			if (order.film <= 0)
 			{
 				menu.FilmList();
-				menu.ChooseFilm();
-				order.film = menu.num_film;
+				menu.items_number = cinema.films_number;
+				menu.ChooseItem();
+				order.film =  menu.GetItem();
 
-				if (menu.num_film == 0)
+				if (order.film == 0)
 				{
 					f = true;
 				}
-				else if (menu.num_film == -1)
+				else if (order.film == -1)
 				{
 					f = false;
 				}
 			}
 
-			if (menu.num_film > 0)
+			if (order.film > 0)
 			{
 				f = false;
 
-				if (menu.num_day <= 0)
+				if (order.day <= 0)
 				{
-					menu.Description();	//ввод даты посещения
+					menu.Description(order);	//ввод даты посещения
 					menu.ChooseItem();
-					menu.num_day = menu.GetItem();
-					order.day = menu.num_day;
+					order.day = menu.GetItem();
+					order.day = order.day;
 
-					if (menu.num_day == -1)
+					if (order.day == -1)
 					{
-						menu.num_day = 0;
+						order.day = 0;
 					}
-					else if (menu.num_day == 0)
+					else if (order.day == 0)
 					{
-						menu.num_film = 0;
+						order.film = 0;
 					}
 				}
 
-				if (menu.num_day != 0 && menu.num_time == 0)
+				if (order.day != 0 && order.time == 0)
 				{
-					menu.Description();	//ввод времени посещения
+					menu.Description(order);	//ввод времени посещения
 					menu.ChooseItem();
-					menu.num_time = menu.GetItem();
-					order.time = menu.num_time;
+					order.time = menu.GetItem();
+					order.time = order.time;
 
-					if (menu.num_time == -1)
+					if (order.time == -1)
 					{
-						menu.num_time = 0;
+						order.time = 0;
 					}
-					else if (menu.num_time == 0)
+					else if (order.time == 0)
 					{
-						menu.num_day = 0;
+						order.day = 0;
 					}
 				}
 
-				if (menu.num_time != 0)
+				if (order.time != 0)
 				{
 					//вывод мест в кинотеатре
 					if (order.ChoosePlace())
 					{
-						menu.num_time = 0;
+						order.time = 0;
 					}
 					else
 					{
 						//order.ChooseAction();
-						menu.Clean();
+						order.Clean();
 					}
 				}
 			}
