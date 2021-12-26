@@ -305,6 +305,7 @@ void Order::Buy()
 					Tickets();
 					cout << "\n\nНажмите любую клавишу для продолжения...";
 					_getch();
+					film = 0;
 				}
 				else
 				{
@@ -352,6 +353,7 @@ void Order::Buy()
 					cout << "\n\nНажмите любую клавишу для продолжения...";
 					_getch();
 					sale = 0;
+					film = 0;
 				}
 			}
 		}
@@ -368,6 +370,7 @@ void Order::Buy()
 			cout << "\n\nНажмите любую клавишу для продолжения...";
 			_getch();
 			sale = 0;
+			film = 0;
 		}
 		else if (menu.GetItem() == 3)
 		{
@@ -394,19 +397,12 @@ void Order::Buy()
 
 void Order::ChooseAction()
 {
-	//PrintInfo();
-
 	string str = cinema->films[film - 1].mesta[time - 1 + (day - 1) * 3].substr((row - 1) * 10 + seat - 65, 1);
 	Menu menu;
 
 	if (str == "0")
 	{
 		cinema->films[film - 1].mesta[time - 1 + (day - 1) * 3] = cinema->films[film - 1].mesta[time - 1 + (day - 1) * 3].substr(0, (row - 1) * 10 + seat - 65) + "3" + cinema->films[film - 1].mesta[time - 1 + (day - 1) * 3].substr((row - 1) * 10 + seat - 64);
-		/*
-		PrintInfo();
-		cout << "\n\nДля покупки нажмите '1'. \nДля бронирования нажмите '2'.\nДля выбора ещё одного места нажмите '3'.";
-		menu.items_number = 3;
-		*/
 
 		do
 		{
@@ -424,31 +420,46 @@ void Order::ChooseAction()
 			{
 				Buy();
 			}
-			//покупка
 			else if (menu.GetItem() == 2)
 				//бронь
 				;
 			else if (menu.GetItem() == 3)
 				ChoosePlace();
-			else
-				//esc
-				;
+
 		} while (menu.GetItem() < 0);
 	}
 	else if (str == "1")
 	{
+		PrintInfo();
 		cout << "\n\nМесто уже забронировано!\nДля выбора другого места нажмите '1'.";
 		menu.items_number = 1;
+		do
+		{
+			menu.ChooseItem();
+		} while (menu.GetItem() < 0);
+		ChoosePlace();
 	}
 	else if (str == "2")
 	{
+		PrintInfo();
 		cout << "\n\nМесто уже оплачено!\nДля выбора другого места нажмите '1'.";
 		menu.items_number = 1;
+		do
+		{
+			menu.ChooseItem();
+		} while (menu.GetItem() < 0);
+		ChoosePlace();
 	}
 	else if (str == "3")
 	{
+		PrintInfo();
 		cout << "\n\nМесто уже выбрано!\nДля выбора ещё одного места нажмите '1'.";
 		menu.items_number = 1;
+		do
+		{
+			menu.ChooseItem();
+		} while (menu.GetItem() < 0);
+		ChoosePlace();
 	}
 
 	return;
