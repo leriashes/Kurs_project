@@ -19,7 +19,7 @@ public:
 	~Menu();
 
 	void Cashier();
-	void Admin();
+	void Admin(File_O fileo);
 
 	void ChooseItem();
 	void File();	//перенести в файл?  убрать k?

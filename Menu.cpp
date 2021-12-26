@@ -37,14 +37,19 @@ void Menu::Cashier()
 	return;
 }
 
-void Menu::Admin()
+void Menu::Admin(File_O fileo)
 {
+	items_number = 3;
 	if (cinema != NULL && cinema->name != "")
 		cinema->NameOut();
 	else
 		system("cls");
-	cout << "0) Выход из режима администратора\n\n1) Открыть файл по умолчанию в домашнем каталоге (\"kino_v_teatre\")\n2) Открыть файл по заданному пути\n3) Создание нового файла\n4) Редактирование информации о фильмах в прокате\n5) Редактирование информации о промокодах\n6) Аннулирование билета\n7) Редактирование информации о кинотеатре\n";
-	items_number = 7;
+	cout << "0) Выход из режима администратора\n\n1) Открыть файл по умолчанию в домашнем каталоге (\"kino_v_teatre\")\n2) Открыть файл по заданному пути\n3) Создание нового файла\n";
+	if (fileo.path != "" && fileo.path != "0")
+	{
+		cout << "4) Редактирование информации о фильмах в прокате\n5) Редактирование информации о промокодах\n6) Аннулирование билета\n7) Редактирование информации о кинотеатре\n";
+		items_number = 7;
+	}
 
 	return;
 }
@@ -77,13 +82,21 @@ void Menu::ChooseItem()
 void Menu::FilmList()
 {
 	cout << "0) Возврат в меню\n\n";
-	cout << "Список фильмов:\n\n";
-	for (int i = 0; i < cinema->films_number; i++)
+	if (cinema->films_number > 0)
 	{
-		cout << i + 1 << ") " << cinema->films[i].name << " (" << cinema->films[i].age << ")\n";
+		cout << "Список фильмов:\n\n";
+		for (int i = 0; i < cinema->films_number; i++)
+		{
+			cout << i + 1 << ") " << cinema->films[i].name << " (" << cinema->films[i].age << ")\n";
+		}
+		cout << "\n\nВыберите фильм (введите номер): ";		//????? НАДО ЛИ
+		items_number = cinema->films_number;
 	}
-	cout << "\n\nВыберите фильм (введите номер): ";		//????? НАДО ЛИ
-	items_number = cinema->films_number;
+	else
+	{
+		cout << "Список фильмов пуст.";
+		items_number = 0;
+	}
 
 	return;
 }
@@ -198,7 +211,10 @@ void Menu::Escape()
 
 void Menu::ChangeProkat()
 {
-	cinema->NameOut();
+	if (cinema != NULL && cinema->name != "")
+		cinema->NameOut();
+	else
+		system("cls");
 	cout << "1) Удаление фильма из проката\n2) Редактирование информации о фильме\n3) Добавление фильма в прокат";
 	items_number = 3;
 	return;

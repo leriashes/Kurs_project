@@ -103,20 +103,50 @@ void User::Admin(Cinema &cinema, File_O &file_stream)
 		// сделать выход из режима администратора
 		admin = true;
 
-		menu.Admin();
+		menu.Admin(file_stream);
 		//menu.File();
 		menu.ChooseItem();
 
 		if (menu.GetItem() == 1)
 		{
 			file_stream.path = "kino_v_teatre.txt";
-			file_stream.CheckPath();
+
+			if (file_stream.CheckPath() && file_stream.CheckCompound())		//проверка файла на внутренее форматирование
+			{
+				system("cls");
+				cout << "Идёт считывание данных из файла. \n\nОжидайте";
+				thread t(Time::PrintLoading);
+
+				Time::loadingComplete = false;
+				file_stream.Read(cinema);
+				Time::loadingComplete = true;
+				t.join();
+			}
+			/*
+			else
+			{
+				error = "Файл \"" + file_stream.path + "\" не удовлетворяет условиям форматирования.\n";
+			}*/
 		}
 		else if (menu.GetItem() == 2)
 		{
 			file_stream.InputPath();
-			file_stream.CheckPath();
-			file_stream.CheckCompound();
+			if (file_stream.CheckPath() && file_stream.CheckCompound())		//проверка файла на внутренее форматирование
+			{
+				system("cls");
+				cout << "Идёт считывание данных из файла. \n\nОжидайте";
+				thread t(Time::PrintLoading);
+
+				Time::loadingComplete = false;
+				file_stream.Read(cinema);
+				Time::loadingComplete = true;
+				t.join();
+			}
+			/*
+			else
+			{
+				error = "Файл \"" + file_stream.path + "\" не удовлетворяет условиям форматирования.\n";
+			}*/
 		}
 		else if (menu.GetItem() == 3)
 		{
@@ -125,94 +155,125 @@ void User::Admin(Cinema &cinema, File_O &file_stream)
 		}
 		else if (menu.GetItem() == 4)
 		{
-			menu.ChangeProkat();
-			menu.ChooseItem();
-			if (menu.GetItem() == 1)	//удаление фильма из проката
+			while (true)
 			{
-				//вывод списка фильмов
-				system("cls");
-				cout << "Удаление фильма\n\n";
-				menu.FilmList();
-				//cout << "Введите номер фильма для удаления из проката: ";
-				menu.items_number = cinema.films_number;
+				menu.ChangeProkat();
 				menu.ChooseItem();
-				cinema.DelFilm(menu.GetItem() - 1);
-				system("cls");
-				cout << "Фильм был успешно удален!";
-				menu.FilmList();
-				_getch();
-				//нужно ли подтверждение удаления???
-
-			}
-			else if (menu.GetItem() == 2)	//редактирование информации о фильме в прокате
-			{
-				do
+				if (menu.GetItem() == 1)	//удаление фильма из проката
 				{
 					//вывод списка фильмов
-					system("cls");
-					cout << "Редактирование информации о фильме\n\n";
-					menu.FilmList();
-					cout << "Введите номер фильма для внесения изменений: ";
-					menu.items_number = cinema.films_number;
-					menu.ChooseItem();
-					int num_film = menu.GetItem() - 1;
-					cinema.ChangeFilm(0, num_film);
-
-					menu.items_number = 6;
-					menu.ChooseItem();
-					if (menu.GetItem() > 0 && menu.GetItem() < 7)
+					do
 					{
-						cinema.ChangeFilm(menu.GetItem(), num_film);
+						system("cls");
+						cout << "Удаление фильма\n\n";
+						menu.FilmList();
+						menu.ChooseItem();
+					} while (menu.GetItem() < 0);
+
+					if (menu.GetItem() != 0)
+					{
+						cinema.DelFilm(menu.GetItem() - 1);
+						system("cls");
+						cout << "Фильм был успешно удален!";
+						file_stream.Write(cinema);
+						_getch();
+						//нужно ли подтверждение удаления???
 					}
 
-					file_stream.Write(cinema);
-					//запись изменений в файл!!!
-				} while (menu.GetItem() < 0);
-			}
-			else if (menu.GetItem() == 3)	//добавление нового фильма в прокат
-			{
-
-				system("cls");
-				if (cinema.films_number < 8)
+				}
+				else if (menu.GetItem() == 2)	//редактирование информации о фильме в прокате
 				{
-					cinema.ChangeFilm(-1, cinema.films_number);		//ввод названия фильма
-					cinema.ChangeFilm(-2, cinema.films_number);		//ввод продожительности фильма
-					cinema.ChangeFilm(-3, cinema.films_number);		//ввод возрастного ограничения фильма
-					cinema.ChangeFilm(-4, cinema.films_number);		//ввод краткого описания фильма
-					cinema.ChangeFilm(-5, cinema.films_number);		//ввод актерского состава фильма
-					cinema.ChangeFilm(-6, cinema.films_number);		//ввод режиссер фильма
-					cinema.ChangeFilm(-7, cinema.films_number);		//ввод времени сеансов
-					cinema.ChangeFilm(-8, cinema.films_number);		//ввод стоимости билета
-					cinema.ChangeFilm(-9, cinema.films_number);		//ввод номера зала для показа фильма
-					for (int y = 0; y < 9; y++)
+					int num_film = -1;
+					do
 					{
-						cinema.NewHallCinema(cinema.films_number);
+						do
+						{
+							//вывод списка фильмов
+							system("cls");
+							cout << "Редактирование информации о фильме\n\n";
+							menu.FilmList();
+							menu.ChooseItem();
+						} while (menu.GetItem() < 0);
+
+						num_film = 0;
+						if (menu.GetItem() > 0)
+						{
+							num_film = menu.GetItem() - 1;
+
+							while (true)
+							{
+								cinema.ChangeFilm(0, num_film);
+								menu.items_number = 6;
+								menu.ChooseItem();
+								if (menu.GetItem() > 0 && menu.GetItem() < 7)
+								{
+									cinema.ChangeFilm(menu.GetItem(), num_film);
+									file_stream.Write(cinema);
+								}
+								else if (menu.GetItem() == 0)
+								{
+									num_film = -1;
+									break;
+								}
+							}
+						}
+							
+					} while (menu.GetItem() < 0 || num_film < 0);
+				}
+				else if (menu.GetItem() == 3)	//добавление нового фильма в прокат
+				{
+					if (cinema.films_number < 9)
+					{
+						cinema.NameOut();
+						cinema.ChangeFilm(-1, cinema.films_number);		//ввод названия фильма
+						cinema.ChangeFilm(-2, cinema.films_number);		//ввод продожительности фильма
+						cinema.ChangeFilm(-3, cinema.films_number);		//ввод возрастного ограничения фильма
+						cinema.ChangeFilm(-4, cinema.films_number);		//ввод краткого описания фильма
+						cinema.ChangeFilm(-5, cinema.films_number);		//ввод актерского состава фильма
+						cinema.ChangeFilm(-6, cinema.films_number);		//ввод режиссер фильма
+						cinema.ChangeFilm(-7, cinema.films_number);		//ввод времени сеансов
+						cinema.ChangeFilm(-8, cinema.films_number);		//ввод стоимости билета
+						cinema.ChangeFilm(-9, cinema.films_number);		//ввод номера зала для показа фильма
+
+						cinema.NameOut();
+						cout << "Идёт запись данных в файл. \n\nОжидайте";
+						thread t(Time::PrintLoading);
+						Time::loadingComplete = false;
+						for (int y = 0; y < 9; y++)
+						{
+							cinema.NewHallCinema(cinema.films_number);
+						}
+						Time::loadingComplete = true;
+						t.join();
+
+						//cout << "drop";
+						//добавление зала и времени сеансов со стоимостью
+						cinema.films_number++;
+						file_stream.Write(cinema);
+						cinema.NameOut();
+						cout << "\nДанные успешно записаны!";
+						_getch();
+
+					}
+					else
+					{
+						cout << "Количество фильмов в прокате достигло максимального количества";
+						cout << "\n\nНажмите любую клавишу для возврата в меню";
+						_getch();
 					}
 
-					//cout << "drop";
-					_getch();
-					//добавление зала и времени сеансов со стоимостью
-					cinema.films_number++;
-					file_stream.Write(cinema);
-					cout << "Все было успешно записано!";
-
 				}
-				else
-				{
-					cout << "Количество фильмов в прокате достигло максимального количества";
-					cout << "\n\nНажмите любую клавишу для возврата в меню";
-					_getch();
-				}
+				else if (menu.GetItem() == 0)
+					break;
 
+				//добавление или удаление фильма
+				//вывод списка фильмов
+				//выбор
+				//Редактирование информации о фильме
+				//вывод списка фильмов
+				//выбор фильма для редактирования информации о нем
+				//вывод пунктов для редактирования
 			}
-
-			//добавление или удаление фильма
-			//вывод списка фильмов
-			//выбор
-			//Редактирование информации о фильме
-			//вывод списка фильмов
-			//выбор фильма для редактирования информации о нем
-			//вывод пунктов для редактирования
 		}
 		else if (menu.GetItem() == 5)
 		{
@@ -227,14 +288,12 @@ void User::Admin(Cinema &cinema, File_O &file_stream)
 				if (menu.GetItem() == 1)	//удаление промокода
 				{
 					cinema.DelPromo();
-					cinema.ListPromo(0);
 				}
-				if (menu.GetItem() == 2)	//редактирование промокода
+				else if (menu.GetItem() == 2)	//редактирование промокода
 				{
 					cinema.RedPromo();
-					cinema.ListPromo(0);
 				}
-				if (menu.GetItem() == 3)	//добавление нового промокода
+				else if (menu.GetItem() == 3)	//добавление нового промокода
 				{
 					cinema.NewPromo();
 				}
@@ -251,41 +310,45 @@ void User::Admin(Cinema &cinema, File_O &file_stream)
 		}
 		else if (menu.GetItem() == 7)
 		{
-			system("cls");
-			cout << "Выберите пункт для редактирования";
-			cout << "\n\n1) Название\n2) Адрес\n3) Кассиры\n4) ИНН\n5) РНМ";
-			menu.items_number = 5;
-			menu.ChooseItem();
-			system("cls");
-			if (menu.GetItem() == 1)
+			while (true)
 			{
-				cinema.ChangeName();
+				cinema.NameOut();
+				cout << "Выберите пункт для редактирования";
+				cout << "\n\n1) Название\n2) Адрес\n3) Кассиры\n4) ИНН\n5) РНМ";
+				menu.items_number = 5;
+				menu.ChooseItem();
+				cinema.NameOut();
+				if (menu.GetItem() == 0)
+					break;
+				else
+				{
+					if (menu.GetItem() == 1)
+					{
+						cinema.ChangeName();
+					}
+					else if (menu.GetItem() == 2)
+					{
+						cinema.ChangeAdress();
+					}
+					else if (menu.GetItem() == 3)
+					{
+						cinema.ChangeCashier();
+					}
+					else if (menu.GetItem() == 4)
+					{
+						cinema.ChangeINN();
+					}
+					else if (menu.GetItem() == 5)
+					{
+						cinema.ChangeRNM();
+					}
+					file_stream.Write(cinema);
+				}
 			}
-			if (menu.GetItem() == 2)
-			{
-				cinema.ChangeAdress();
-			}
-			if (menu.GetItem() == 3)
-			{
-				cinema.ChangeCashier();
-			}
-			if (menu.GetItem() == 4)
-			{
-				cinema.ChangeINN();
-			}
-			if (menu.GetItem() == 5)
-			{
-				cinema.ChangeRNM();
-			}
-			file_stream.Write(cinema);
-			//создание нового файла
 		}
 		else if (menu.GetItem() == 0)
 		{
 			AdminLogOut();
-			//menu.admin = false;
-			//f = true;
-			//изменение 
 		}
 	}
 
