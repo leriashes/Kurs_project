@@ -27,7 +27,10 @@ Menu::~Menu()
 
 void Menu::Cashier() 
 {
-	cinema->NameOut();
+	if (cinema != NULL && cinema->name != "")
+		cinema->NameOut();
+	else
+		system("cls");
 	cout << "1) Просмотр списка фильмов\n2) Вход в режим администратора\n\nESC - Выход";
 	items_number = 2;
 
@@ -36,7 +39,10 @@ void Menu::Cashier()
 
 void Menu::Admin()
 {
-	cinema->NameOut();
+	if (cinema != NULL && cinema->name != "")
+		cinema->NameOut();
+	else
+		system("cls");
 	cout << "0) Выход из режима администратора\n\n1) Открыть файл по умолчанию в домашнем каталоге (\"kino_v_teatre\")\n2) Открыть файл по заданному пути\n3) Создание нового файла\n4) Редактирование информации о фильмах в прокате\n5) Редактирование информации о промокодах\n6) Аннулирование билета\n7) Редактирование информации о кинотеатре\n";
 	items_number = 7;
 
@@ -86,29 +92,8 @@ void Menu::Description(Order& order)
 {
 	system("cls");
 	const time_t tm = time(nullptr);
-
-	/*char buf[64];
-	strftime(buf, size(buf), "%d.%m.%Y", localtime(&tm));
-	cout << buf << endl;*/
-			
-	//time_t t = time(0);
-	std::tm* now = localtime(&tm); //было localtime(&t)
+	std::tm* now = localtime(&tm);
 	cout << (now->tm_year + 1900) << '-' << (now->tm_mon + 1) << '-' << now->tm_mday << "\n";
-	
-	
-
-	//system("cls");
-
-	
-	
-	/*
-	cout << "yesterday : " << ConvTime(yesterday) << endl;
-	cout << "present   : " << ConvTime(present) << endl;
-	cout << "tommorow  : " << ConvTime(tommorow) << endl;
-	*/
-	
-	//uni.DateRet(0);
-	//uni.ConvTime(tm);
 	
 	cout << "\n\nНазвание: " << cinema->films[order.film - 1].name;
 	cout << "\n\nОписание: " << cinema->films[order.film - 1].short_description;
@@ -162,7 +147,6 @@ void Menu::Description(Order& order)
 	}
 	else
 	{
-		//cout << kinoteatr.filmi[order.film - 1].mesta[(order.day - 1) * 3 + (order.time - 1)];	//тест
 		cout << "\n\n   A B C D E F G H I J";
 		for (int i = 0; i < 10; i++)
 		{
@@ -217,6 +201,7 @@ void Menu::ChangeProkat()
 	cinema->NameOut();
 	cout << "1) Удаление фильма из проката\n2) Редактирование информации о фильме\n3) Добавление фильма в прокат";
 	items_number = 3;
+	return;
 }
 
 void Menu::File()

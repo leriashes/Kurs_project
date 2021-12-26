@@ -26,6 +26,7 @@ int main()
 
 	order.cinema = menu.cinema = &cinema;
 	
+	f = false;
 	//ввод пути к БД
 	do
 	{
@@ -43,7 +44,9 @@ int main()
 		} while (menu.GetItem() == 0);
 		
 		if (menu.GetItem() == 3)
+		{
 			User::Admin(cinema, file_stream);
+		}
 		else if (menu.GetItem() > 0)
 		{
 			file_stream.path = "kino_v_teatre.txt";
@@ -53,11 +56,13 @@ int main()
 				file_stream.InputPath();
 			}
 
+			f = true;
 			//происходит проверка где-то тут!
-			if (file_stream.path != "0")
+			if (file_stream.path != "0" && file_stream.CheckPath())
 			{
 				if (file_stream.CheckCompound())		//проверка файла на внутренее форматирование
 				{
+					f = false;
 					system("cls");
 					cout << "Идёт считывание данных из файла. \n\nОжидайте";
 					thread t(Time::PrintLoading);
@@ -73,7 +78,7 @@ int main()
 				}
 			}
 		}
-	} while (menu.GetItem() == -1 || file_stream.path == "0" || !file_stream.CheckPath() || !file_stream.CheckCompound());
+	} while (menu.GetItem() == -1 || f || menu.GetItem() == 3);
 
 	f = n = true;
 

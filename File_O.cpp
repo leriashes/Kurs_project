@@ -6,6 +6,7 @@
 #include <cstring>
 #include <cstdio>
 #include "File_O.h"
+#include "Menu.h"
 #include "windows.h"
 using namespace std;
 
@@ -33,36 +34,53 @@ void File_O::InputPath()
 
 void File_O::New(Cinema &cinema)
 {
-    cinema = *new Cinema();
-    cout << "Введите название нового файла (без расширения): ";
-    string path;
+    Menu menu;
+    Cinema co;
+    cinema = co;
 
+    do
+    {
+        system("cls");
+        cout << "Введите название нового файла (без расширения): ";
+        cin >> path;
+    } while (path == "");
+    path += ".txt";
+    string sp;
     //проверка введеного имени файла на наличие "txt"
 
-    if (CheckPath())   //проверка на существование такого файла в памяти
+    ifstream f1;
+    f1.open(path);
+    if (f1.is_open())   //проверка на существование такого файла в памяти
     {
         //файл с таким названием существует, создать копию и создать чистый файл или затереть текущий
-        cout << "Файл с таким названием уже существует\n1) Создать копию файла и переименовать (" << path + "_1.txt)" << "\n2) Удалить текущую версию файла " << path;
+        cout << "Файл с таким названием уже существует\n1) Создать копию файла и переименовать (" << sp + "_1.txt)" << "\n2) Удалить текущую версию файла " << sp << ".txt";
         
-        /*item_num = 2;
-        input_number();
-        if (menu_number == 1)
+        menu.items_number = 2;
+        menu.ChooseItem();
+        if (menu.GetItem() == 1)
         {
-            ifstream    inFile(path + ".txt");
-            ofstream    outFile(path + "_1.txt");
+            ifstream inFile(sp + ".txt");
+            ofstream outFile(sp + "_1.txt");
 
             outFile << inFile.rdbuf();
             ofstream fout(path);
             fout.close();
         }
-        else if (menu_number == 2)
+        else if (menu.GetItem() == 2)
         {
             ofstream fout(path); //создание объекта класса ofstream для записи
             fout.close();   //закрытие фалйа
-        }*/
-                
+        }
+        f1.close();
     }
-    
+    else
+    {
+        system("cls");
+        cout << "Файл " << path << " создан!";
+        ofstream fout(path); //создание объекта класса ofstream для записи
+        fout.close();   //закрытие фалйа
+        _getch();
+    }
     if (CheckPath() == 1)
     {
         

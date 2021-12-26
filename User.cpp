@@ -5,6 +5,8 @@
 #include "User.h"
 
 bool User::admin = false;
+string User::password = "Kino12345";
+string User::parol = "";
 
 bool User::GetAdmin()
 {
@@ -18,7 +20,66 @@ bool User::SignIn()
 
 void User::AdminLogIn()
 {
-	admin = true;
+
+	while (true)
+	{
+		system("cls");
+		printf("Введите пароль: ");
+
+		parol = "";
+		//Ввод пароля
+		char symbol;
+		do
+		{
+			symbol = _getch();
+			if (symbol != 13 && symbol != 8)
+			{
+				cout << "*";
+				parol += symbol;
+			}
+
+			//Если нажата клавиша backspace
+			if (symbol == 8)
+			{
+				if (parol.length() > 0)
+				{
+					cout << "\b \b";
+					parol.pop_back();
+				}
+			}
+
+		} while (symbol != 13);
+
+		//code(parol);
+
+		//Проверка правильности пароля
+		//Если пароль введён неверно
+		if (password != parol)
+		{
+			Menu menu;
+			do
+			{
+				system("cls");
+				cout << "Неверный пароль!\nДля возврата в меню нажмите '0'.\nДля повторного ввода пароля нажмите '1'.\nДля выхода нажмите 'esc'.";
+
+				
+				menu.items_number = 1;
+				menu.ChooseItem();
+
+				if (menu.GetItem() == 0)
+					return;
+
+			} while (menu.GetItem() == -1);
+
+		}
+		//Если пароль введён верно
+		else
+		{
+			admin = true;
+			break;
+		}
+	}
+	
 	return;
 }
 
@@ -34,7 +95,7 @@ void User::Admin(Cinema &cinema, File_O &file_stream)
 	menu.cinema = &cinema;
 	AdminLogIn();
 
-	if (admin)
+	while (admin)
 	{
 		//администратор
 		//ввод пароля администратора
@@ -54,6 +115,8 @@ void User::Admin(Cinema &cinema, File_O &file_stream)
 		else if (menu.GetItem() == 2)
 		{
 			file_stream.InputPath();
+			file_stream.CheckPath();
+			file_stream.CheckCompound();
 		}
 		else if (menu.GetItem() == 3)
 		{
@@ -97,34 +160,14 @@ void User::Admin(Cinema &cinema, File_O &file_stream)
 
 					menu.items_number = 6;
 					menu.ChooseItem();
-					if (menu.GetItem() == 1)	//изменение названия фильма
+					if (menu.GetItem() > 0 && menu.GetItem() < 7)
 					{
-						cinema.ChangeFilm(1, num_film);
-					}
-					if (menu.GetItem() == 2)	//изменение продолжительности фильма
-					{
-						cinema.ChangeFilm(2, num_film);
-					}
-					if (menu.GetItem() == 3)	//изменение возрастного ограничения фильма
-					{
-						cinema.ChangeFilm(3, num_film);
-					}
-					if (menu.GetItem() == 4)	//изменение краткого описания фильма
-					{
-						cinema.ChangeFilm(4, num_film);
-					}
-					if (menu.GetItem() == 5)	//изменение актерского состава фильма
-					{
-						cinema.ChangeFilm(5, num_film);
-					}
-					if (menu.GetItem() == 6)	//изменение режиссеров фильма
-					{
-						cinema.ChangeFilm(6, num_film);
+						cinema.ChangeFilm(menu.GetItem(), num_film);
 					}
 
 					file_stream.Write(cinema);
 					//запись изменений в файл!!!
-				} while (menu.GetItem() != '0');
+				} while (menu.GetItem() < 0);
 			}
 			else if (menu.GetItem() == 3)	//добавление нового фильма в прокат
 			{
