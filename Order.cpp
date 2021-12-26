@@ -228,7 +228,129 @@ void Order::Buy()
 		}
 		else if (menu.GetItem() == 1)
 		{
-			;
+			int x = 1, sum, cost = stoi(cinema->films[film - 1].price[(day - 1) * 3 + time - 1]);
+			while (x == 1)
+			{
+				string opl = "\nВведите внесённую сумму: ";
+				sum = 0;
+				int b;
+				char d;
+
+				while (true)
+				{
+					PrintResult();
+					cout << opl;
+
+					do
+					{
+						b = -2;
+
+						char symbol;
+						symbol = _getch();
+
+						if (symbol == 27)
+						{
+							menu.Escape();
+							b = -1;
+						}
+						else if (symbol >= '0' && symbol <= '9' || symbol == '\r')
+						{
+							b = symbol - 48;
+						}
+					} while ((b < -1 || b > 9) && b + 48 != 13);
+
+					if (b == 0 && sum > 0)
+					{
+						d = b + 48;
+						opl += d;
+						sum *= 10;
+					}
+					else if (b > 0 && b < 10)
+					{
+						d = b + 48;
+						opl += d;
+						sum = sum * 10 + b;
+					}
+					else if (b + 48 == 13)
+						break;
+				}
+
+				if (sum < num * cost)
+				{
+					do
+					{
+						cout << "\nНедостаточно средств! Нажмите любую клавишу чтобы повторить оплату.";
+
+						x = _getch();
+
+						if (x == 27)
+							menu.Escape();
+						else
+							x = 1;
+					} while (x != 1);
+				}
+				else if (sum == num * cost)
+				{
+					cout << "\nОплата прошла успешно!";
+
+					x = 0;
+					Check();
+					cout << "\n\nНажмите любую клавишу для продолжения...";
+					_getch();
+					sum = 0;
+
+					cinema->NameOut();
+					Tickets();
+					cout << "\n\nНажмите любую клавишу для продолжения...";
+					_getch();
+				}
+				else
+				{
+					int change;
+					string str = "\nОплата прошла успешно! \n\nВаша сдача: ";
+
+					change = sum - num * cost;
+
+					int k = change, i = 0;
+
+					while (k > 0)
+					{
+						k /= 10;
+						i++;
+					}
+
+					while (i > 0)
+					{
+						if (i == 1)
+						{
+							k = change % 10;
+							str += (k + 48);
+							break;
+						}
+						else
+						{
+							k = (change % int(pow(10, i))) / int(pow(10, i - 1));
+							str += (k + 48);
+							i--;
+						}
+					}
+
+					str += " руб.";
+
+					cout << str;
+
+					x = 0;
+					Check();
+					cout << "\n\nНажмите любую клавишу для продолжения...";
+					_getch();
+					sum = 0;
+					
+					cinema->NameOut();
+					Tickets();
+					cout << "\n\nНажмите любую клавишу для продолжения...";
+					_getch();
+				}
+			}
 		}
 		else if (menu.GetItem() == 2)
 		{
@@ -837,7 +959,7 @@ void Order::Tickets()
 	for (int i = 0; i < num; i++)
 	{
 		row = cinema->films[film - 1].mesta[time - 1 + (day - 1) * 3].find("4");
-		cinema->films[film - 1].mesta[time - 1 + (day - 1) * 3].replace(cinema->films[film - 1].mesta[time - 1 + (day - 1) * 3].find("4"), 1, "1");
+		cinema->films[film - 1].mesta[time - 1 + (day - 1) * 3].replace(cinema->films[film - 1].mesta[time - 1 + (day - 1) * 3].find("4"), 1, "2");
 		seat = row % 10 + 65;
 		row = row / 10 + 1;
 
