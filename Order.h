@@ -31,6 +31,7 @@ public:
 	void PrintResult();
 
 	void Check();
+	void Tickets();
 
 	void Clean();
 };

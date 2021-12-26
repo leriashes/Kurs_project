@@ -237,6 +237,11 @@ void Order::Buy()
 			Check();
 			cout << "\n\nÍàæìèòå ëþáóþ êëàâèøó äëÿ ïðîäîëæåíèÿ...";
 			_getch();
+
+			cinema->NameOut();
+			Tickets();
+			cout << "\n\nÍàæìèòå ëþáóþ êëàâèøó äëÿ ïðîäîëæåíèÿ...";
+			_getch();
 		}
 		else if (menu.GetItem() == 3)
 		{
@@ -350,8 +355,23 @@ void Order::PrintResult()
 	
 	cout << "\n\nÌåñòà:";
 
-	num = 0;
+	if (cinema->films[film - 1].mesta[time - 1 + (day - 1) * 3].find("3") != string::npos)
+		num = 0;
+
 	int cost = stoi(cinema->films[film - 1].price[(day - 1) * 3 + time - 1]);
+
+	while (cinema->films[film - 1].mesta[time - 1 + (day - 1) * 3].find("4") != string::npos)
+	{
+		row = cinema->films[film - 1].mesta[time - 1 + (day - 1) * 3].find("4");
+		cinema->films[film - 1].mesta[time - 1 + (day - 1) * 3].replace(cinema->films[film - 1].mesta[time - 1 + (day - 1) * 3].find("4"), 1, "5");
+		seat = row % 10 + 65;
+		row = row / 10 + 1;
+		cout << "\nÐÿä: " << row;
+		cout << "   Ìåñòî: " << seat;
+	}
+
+	while (cinema->films[film - 1].mesta[time - 1 + (day - 1) * 3].find("5") != string::npos)
+		cinema->films[film - 1].mesta[time - 1 + (day - 1) * 3].replace(cinema->films[film - 1].mesta[time - 1 + (day - 1) * 3].find("5"), 1, "4");
 
 	while (cinema->films[film - 1].mesta[time - 1 + (day - 1) * 3].find("3") != string::npos)
 	{
@@ -366,12 +386,6 @@ void Order::PrintResult()
 	}
 
 	cout << "\n\nÈÒÎÃÎ Ê ÎÏËÀÒÅ: " << num * cost << " ðóáëåé\n";
-	
-
-	while (cinema->films[film - 1].mesta[time - 1 + (day - 1) * 3].find("4") != string::npos)
-	{
-		cinema->films[film - 1].mesta[time - 1 + (day - 1) * 3].replace(cinema->films[film - 1].mesta[time - 1 + (day - 1) * 3].find("4"), 1, "3");
-	}
 
 	return;
 }
@@ -804,6 +818,65 @@ void Order::Check()
 		}*/
 
 	///}
+}
+
+void Order::Tickets()
+{
+	cinema->NameOut();
+
+	string name_of_film = cinema->films[film - 1].name;
+	name_of_film += (" (" + cinema->films[film - 1].age + ")");
+
+	int n1 = name_of_film.length();
+
+
+	cout << "\n";
+	for (int i = 0; i < 39; i++)
+		cout << "_";
+
+	for (int i = 0; i < num; i++)
+	{
+		row = cinema->films[film - 1].mesta[time - 1 + (day - 1) * 3].find("4");
+		cinema->films[film - 1].mesta[time - 1 + (day - 1) * 3].replace(cinema->films[film - 1].mesta[time - 1 + (day - 1) * 3].find("4"), 1, "1");
+		seat = row % 10 + 65;
+		row = row / 10 + 1;
+
+		cout << "\n|" << cinema->name;
+		for (int j = 0; j < 23 -cinema->name.length(); j++)
+			cout << " ";
+		cout << " êèíîáèëåò|   |";
+
+		cout << "\n|" << cinema->address;
+		for (int j = 0; j < 33 - cinema->address.length(); j++)
+			cout << " ";
+		cout << "| Ê |";
+
+		cout << "\n|                                 | Î |";
+
+		cout << "\n|" << name_of_film;
+		for (int j = 0; j < 33 - n1; j++)
+			cout << " ";
+		cout << "| Í |";
+
+		cout << "\n|                                 | Ò |";
+		cout << "\n|ÇÀË " << cinema->films[film - 1].number_zal << "    ÐßÄ " << row;
+
+		if (row != 10)
+			cout << " ";
+
+		cout << "    ÌÅÑÒÎ " << seat << "       | Ð | ";
+		cout << "\n|                                 | Î |";
+
+		cout << "\n|ÄÀÒÀ " << Time::RetDate(day - 1).erase(0, 3) << "    ÍÀ×ÀËÎ " << cinema->films[film - 1].time[(day - 1) * 3 + time - 1] << "  | Ë |";
+		cout << "\n|                                 | Ü |";
+
+		cout << "\n|ÖÅÍÀ ÁÈËÅÒÀ  " << cinema->films[film - 1].price[(day - 1) * 3 + time - 1] << " ðóá.            |   |\n";
+
+		for (int j = 0; j < 39; j++)
+			printf("-");
+	}
+
+	return;
 }
 
 void Order::Clean()

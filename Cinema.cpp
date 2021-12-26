@@ -41,7 +41,6 @@ void Cinema::ChangeCashier()
 	do
 	{
 		ListCashier(0);
-		//cout << "1) " << cashiers[0] << "\n2) " << cashiers[1];
 		cout << "\n\n1) Добавить кассира\n2) Удалить кассира\n";
 		menu.ChooseItem();
 		func = menu.GetItem();
@@ -88,7 +87,7 @@ void Cinema::ChangeCashier()
 		}
 	}
 
-	//_getch();
+	return;
 }
 
 void Cinema::ListCashier(int k)
