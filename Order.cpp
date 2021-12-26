@@ -16,6 +16,7 @@ Order::Order()
 	row = 0;
 	seat = 0;
 	num = 0;
+	sale = 0;
 	cinema = NULL;
 }
 
@@ -275,7 +276,7 @@ void Order::Buy()
 						break;
 				}
 
-				if (sum < num * cost)
+				if (sum < num * cost - sale)
 				{
 					do
 					{
@@ -289,9 +290,10 @@ void Order::Buy()
 							x = 1;
 					} while (x != 1);
 				}
-				else if (sum == num * cost)
+				else if (sum == num * cost - sale)
 				{
 					cout << "\nОплата прошла успешно!";
+					sale = 0;
 
 					x = 0;
 					Check();
@@ -308,8 +310,8 @@ void Order::Buy()
 				{
 					int change;
 					string str = "\nОплата прошла успешно! \n\nВаша сдача: ";
-
-					change = sum - num * cost;
+				
+					change = sum - num * cost + sale;
 
 					int k = change, i = 0;
 
@@ -349,6 +351,7 @@ void Order::Buy()
 					Tickets();
 					cout << "\n\nНажмите любую клавишу для продолжения...";
 					_getch();
+					sale = 0;
 				}
 			}
 		}
@@ -364,10 +367,25 @@ void Order::Buy()
 			Tickets();
 			cout << "\n\nНажмите любую клавишу для продолжения...";
 			_getch();
+			sale = 0;
 		}
 		else if (menu.GetItem() == 3)
 		{
-			;
+			string promokod;
+
+			do
+			{
+				cout << "\n\nВведите промокод: ";
+				getline(cin, promokod);
+			} while (promokod == "");
+
+			for (int i = 0; i < cinema->promo_number; i++)
+				if (promokod == cinema->promo[i][0])
+				{
+					sale = num * stoi(cinema->films[film - 1].price[(day - 1) * 3 + time - 1]) * stoi(cinema->promo[i][1]) / 100;
+					break;
+				}
+			Buy();
 		}
 	} while (menu.GetItem() < 0);
 
@@ -507,7 +525,7 @@ void Order::PrintResult()
 		num++;
 	}
 
-	cout << "\n\nИТОГО К ОПЛАТЕ: " << num * cost << " рублей\n";
+	cout << "\n\nИТОГО К ОПЛАТЕ: " << num * cost - sale << " рублей\n";
 
 	return;
 }

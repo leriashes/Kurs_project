@@ -12,6 +12,7 @@ private:
 	int row;
 	char seat;
 	int num;
+	int sale;
 
 public:
 	int film;
