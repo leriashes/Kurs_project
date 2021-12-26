@@ -2,6 +2,7 @@
 #include <algorithm>
 #include "Order.h"
 #include "Menu.h"
+#include "User.h"
 #include <ctime>
 #include <fcntl.h>
 #include <io.h>
@@ -453,6 +454,11 @@ void Order::Reserve()
 		else
 			x = 1;
 	} while (x != 1);
+
+	while (cinema->films[film - 1].mesta[time - 1 + (day - 1) * 3].find("4") != string::npos)
+	{
+		cinema->films[film - 1].mesta[time - 1 + (day - 1) * 3].replace(cinema->films[film - 1].mesta[time - 1 + (day - 1) * 3].find("4"), 1, "1");
+	}
 }
 
 void Order::ChooseAction()
@@ -462,54 +468,85 @@ void Order::ChooseAction()
 
 	if (str == "0")
 	{
-		cinema->films[film - 1].mesta[time - 1 + (day - 1) * 3] = cinema->films[film - 1].mesta[time - 1 + (day - 1) * 3].substr(0, (row - 1) * 10 + seat - 65) + "3" + cinema->films[film - 1].mesta[time - 1 + (day - 1) * 3].substr((row - 1) * 10 + seat - 64);
-
-		do
+		if (User::GetAdmin())
 		{
 			PrintInfo();
-			cout << "\n\nДля покупки нажмите '1'. \nДля бронирования нажмите '2'.\nДля выбора ещё одного места нажмите '3'.";
-			menu.items_number = 3;
+			cout << "\n\nМесто свободно!\nДля выбора другого места нажмите '1'.";
+			menu.items_number = 1;
+			do
+			{
+				menu.ChooseItem();
+			} while (menu.GetItem() < 0);
+			ChoosePlace();
+		}
+		else
+		{
+			cinema->films[film - 1].mesta[time - 1 + (day - 1) * 3] = cinema->films[film - 1].mesta[time - 1 + (day - 1) * 3].substr(0, (row - 1) * 10 + seat - 65) + "3" + cinema->films[film - 1].mesta[time - 1 + (day - 1) * 3].substr((row - 1) * 10 + seat - 64);
 
-			menu.ChooseItem();
-			if (menu.GetItem() == 0)
+			do
 			{
-				cinema->films[film - 1].mesta[time - 1 + (day - 1) * 3] = cinema->films[film - 1].mesta[time - 1 + (day - 1) * 3].substr(0, (row - 1) * 10 + seat - 65) + "0" + cinema->films[film - 1].mesta[time - 1 + (day - 1) * 3].substr((row - 1) * 10 + seat - 64);
-				ChoosePlace();
-			}
-			else if (menu.GetItem() == 1)
-			{
-				Buy();
-			}
-			else if (menu.GetItem() == 2)
-			{
-				Reserve();
-			}
-			else if (menu.GetItem() == 3)
-				ChoosePlace();
+				PrintInfo();
+				cout << "\n\nДля покупки нажмите '1'. \nДля бронирования нажмите '2'.\nДля выбора ещё одного места нажмите '3'.";
+				menu.items_number = 3;
 
-		} while (menu.GetItem() < 0);
+				menu.ChooseItem();
+				if (menu.GetItem() == 0)
+				{
+					cinema->films[film - 1].mesta[time - 1 + (day - 1) * 3] = cinema->films[film - 1].mesta[time - 1 + (day - 1) * 3].substr(0, (row - 1) * 10 + seat - 65) + "0" + cinema->films[film - 1].mesta[time - 1 + (day - 1) * 3].substr((row - 1) * 10 + seat - 64);
+					ChoosePlace();
+				}
+				else if (menu.GetItem() == 1)
+				{
+					Buy();
+				}
+				else if (menu.GetItem() == 2)
+				{
+					Reserve();
+				}
+				else if (menu.GetItem() == 3)
+					ChoosePlace();
+
+			} while (menu.GetItem() < 0);
+		}
 	}
 	else if (str == "1")
 	{
-		PrintInfo();
-		cout << "\n\nМесто уже забронировано!\nДля выбора другого места нажмите '1'.";
-		menu.items_number = 1;
-		do
+		if (User::GetAdmin())
 		{
-			menu.ChooseItem();
-		} while (menu.GetItem() < 0);
-		ChoosePlace();
+			cinema->films[film - 1].mesta[time - 1 + (day - 1) * 3] = cinema->films[film - 1].mesta[time - 1 + (day - 1) * 3].substr(0, (row - 1) * 10 + seat - 65) + "0" + cinema->films[film - 1].mesta[time - 1 + (day - 1) * 3].substr((row - 1) * 10 + seat - 64);
+			ChoosePlace();
+		}
+		else
+		{
+			PrintInfo();
+			cout << "\n\nМесто уже забронировано!\nДля выбора другого места нажмите '1'.";
+			menu.items_number = 1;
+			do
+			{
+				menu.ChooseItem();
+			} while (menu.GetItem() < 0);
+			ChoosePlace();
+		}
 	}
 	else if (str == "2")
 	{
-		PrintInfo();
-		cout << "\n\nМесто уже оплачено!\nДля выбора другого места нажмите '1'.";
-		menu.items_number = 1;
-		do
+		if (User::GetAdmin())
 		{
-			menu.ChooseItem();
-		} while (menu.GetItem() < 0);
-		ChoosePlace();
+			cinema->films[film - 1].mesta[time - 1 + (day - 1) * 3] = cinema->films[film - 1].mesta[time - 1 + (day - 1) * 3].substr(0, (row - 1) * 10 + seat - 65) + "0" + cinema->films[film - 1].mesta[time - 1 + (day - 1) * 3].substr((row - 1) * 10 + seat - 64);
+			ChoosePlace();
+			
+		}
+		else
+		{
+			PrintInfo();
+			cout << "\n\nМесто уже оплачено!\nДля выбора другого места нажмите '1'.";
+			menu.items_number = 1;
+			do
+			{
+				menu.ChooseItem();
+			} while (menu.GetItem() < 0);
+			ChoosePlace();
+		}
 	}
 	else if (str == "3")
 	{

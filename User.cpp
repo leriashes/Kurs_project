@@ -303,10 +303,85 @@ void User::Admin(Cinema &cinema, File_O &file_stream)
 		}
 		else if (menu.GetItem() == 6)
 		{
-			//Аннулирование билета
-			//вывод списка фильмов
-			//вывод даты времени
-			//выбор места для аннулирования
+			Order order;
+			order.cinema = &cinema;
+		
+			while (true)
+			{
+				if (order.film == 0)
+				{
+					do
+					{
+						cinema.NameOut();
+						menu.FilmList();
+						menu.items_number = cinema.films_number;
+						menu.ChooseItem();
+						order.film = menu.GetItem();
+						if (order.film == 0)
+							break;
+					} while (order.film < 0);
+
+					if (order.film == 0)
+						break;
+				}
+
+				if (order.film > 0)
+				{
+					if (order.day <= 0)
+					{
+						menu.Description(order);	//ввод даты посещения
+						menu.ChooseItem();
+						order.day = menu.GetItem();
+						order.day = order.day;
+
+						if (order.day == -1)
+						{
+							order.day = 0;
+						}
+						else if (order.day == 0)
+						{
+							order.film = 0;
+						}
+					}
+
+					if (order.day != 0 && order.time == 0)
+					{
+						menu.Description(order);	//ввод времени посещения
+						menu.ChooseItem();
+						order.time = menu.GetItem();
+						order.time = order.time;
+
+						if (order.time == -1)
+						{
+							order.time = 0;
+						}
+						else if (order.time == 0)
+						{
+							order.day = 0;
+						}
+					}
+
+					if (order.time != 0)
+					{
+						//вывод мест в кинотеатре
+						if (order.ChoosePlace())
+						{
+							order.time = 0;
+						}
+						else
+						{
+							//order.ChooseAction();
+							order.Clean();
+						}
+					}
+
+					file_stream.Write(cinema);
+					//Аннулирование билета
+					//вывод списка фильмов
+					//вывод даты времени
+					//выбор места для аннулирования
+				}
+			}
 		}
 		else if (menu.GetItem() == 7)
 		{
