@@ -598,6 +598,7 @@ void Order::PrintInfo()
 void Order::PrintResult()
 {
 	cinema->NameOut();
+	cout << "0 - назад\n\n";
 
 	cout << "Фильм: " << cinema->films[film - 1].name;
 	cout << "\n\nДата: " << Time::RetDate(day - 1).erase(0, 3);

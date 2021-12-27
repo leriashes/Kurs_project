@@ -103,12 +103,12 @@ void Menu::FilmList()
 
 void Menu::Description(Order& order)
 {
-	system("cls");
+	cinema->NameOut();
+	cout << "0 - назад\n";
 	const time_t tm = time(nullptr);
 	std::tm* now = localtime(&tm);
-	cout << (now->tm_year + 1900) << '-' << (now->tm_mon + 1) << '-' << now->tm_mday << "\n";
 	
-	cout << "\n\nНазвание: " << cinema->films[order.film - 1].name;
+	cout << "\nНазвание: " << cinema->films[order.film - 1].name;
 	cout << "\n\nОписание: " << cinema->films[order.film - 1].short_description;
 	cout << "\n\nПродолжительность: " << cinema->films[order.film - 1].duration;
 	cout << "\n\nРежиссер(-ы): " << cinema->films[order.film - 1].rejisser;
@@ -215,7 +215,7 @@ void Menu::ChangeProkat()
 		cinema->NameOut();
 	else
 		system("cls");
-	cout << "1) Удаление фильма из проката\n2) Редактирование информации о фильме\n3) Добавление фильма в прокат";
+	cout << "0) Назад\n\n1) Удаление фильма из проката\n2) Редактирование информации о фильме\n3) Добавление фильма в прокат";
 	items_number = 3;
 	return;
 }

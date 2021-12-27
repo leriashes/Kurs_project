@@ -41,7 +41,7 @@ void Cinema::ChangeCashier()
 	do
 	{
 		ListCashier(0);
-		cout << "\n\n1) Добавить кассира\n2) Удалить кассира\n";
+		cout << "\n\n0) Назад\n\n1) Добавить кассира\n2) Удалить кассира\n";
 		menu.ChooseItem();
 		func = menu.GetItem();
 	} while (func < 0 || func > promo_number);
