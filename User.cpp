@@ -13,18 +13,13 @@ bool User::GetAdmin()
 	return admin;
 }
 
-bool User::SignIn()
-{
-	return true;
-}
-
 void User::AdminLogIn()
 {
 
 	while (true)
 	{
 		system("cls");
-		printf("Введите пароль: ");
+		cout << "Введите пароль: ";
 
 		parol = "";
 		//Ввод пароля
@@ -281,7 +276,7 @@ void User::Admin(Cinema &cinema, File_O &file_stream)
 			{
 				cinema.NameOut();
 				cinema.ListPromo(0);
-				cout << "1) Удалить промокод\n2) Изменить промокод\n3) Добавить промокод";
+				cout << "0) Назад\n\n1) Удалить промокод\n2) Изменить промокод\n3) Добавить промокод";
 				menu.items_number = 3;
 				menu.ChooseItem();
 
@@ -388,7 +383,7 @@ void User::Admin(Cinema &cinema, File_O &file_stream)
 			while (true)
 			{
 				cinema.NameOut();
-				cout << "Выберите пункт для редактирования";
+				cout << "0) Назад\n\nВыберите пункт для редактирования";
 				cout << "\n\n1) Название\n2) Адрес\n3) Кассиры\n4) ИНН\n5) РНМ";
 				menu.items_number = 5;
 				menu.ChooseItem();

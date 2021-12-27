@@ -408,7 +408,7 @@ void Order::Reserve()
 	int x;
 
 	srand(std::time(0));
-	x = rand() % 100000 + 1;
+	x = rand() % 1000000 + 1;
 
 	int k = x, i = 0;
 
@@ -598,6 +598,7 @@ void Order::PrintInfo()
 void Order::PrintResult()
 {
 	cinema->NameOut();
+	cout << "0 - назад\n\n";
 
 	cout << "Фильм: " << cinema->films[film - 1].name;
 	cout << "\n\nДата: " << Time::RetDate(day - 1).erase(0, 3);
@@ -653,7 +654,6 @@ void space(int quan)
 
 void Order::Check()
 {
-	//int num = 0;
 	int d, k;
 
 	string name_of_film = cinema->films[film - 1].name;
@@ -720,9 +720,7 @@ void Order::Check()
 	for (int i = 0; i < 29 - str.length(); i++)
 		cout << " ";
 
-
-	int iRand = (rand() % (cinema->cashiers_number)) + 1;
-	str = cinema->cashiers[iRand];
+	str = cinema->cashiers[(rand() % (cinema->cashiers_number)) + 1];
 	//str = cinema->cashiers[rand() % (cinema->cashiers_number - 1) + 1];
 	cout << "|\n|Кассир: " << str;
 
