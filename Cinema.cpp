@@ -384,13 +384,20 @@ void Cinema::ChangeFilm(int num_punkt, int num_film)
 	{
 		if (num_punkt == -7)
 		{ 
-			//время работы с 9 до 21;
-			cout << "\nСамое позднее время для первого сеанса: ";
-			cout << (21 * 60 - 2 * 15 - 3 * (atoi(films[num_film].duration.c_str()))) / 60 << ":" << (21 * 60 - 2 * 15 - 3 * (atoi(films[num_film].duration.c_str()))) % 60;
-			//21*60
-				//перерыв между сеансами для уборки 15 минут
 			int first_time, second_time, third_time;
 			int m, h;
+
+			h = (21 * 60 - 2 * 15 - 3 * (atoi(films[num_film].duration.c_str()))) / 60;
+			m = (21 * 60 - 2 * 15 - 3 * (atoi(films[num_film].duration.c_str()))) % 60;
+			cout << "\n\nСамое раннее время для первого сеанса: 08:00\n";
+			cout << "\nСамое позднее время для первого сеанса: ";
+			
+			if (h < 10)
+				cout << 0;
+			cout << h << ":";
+			if (m < 10)
+				cout << 0;
+			cout << m;
 			
 			//TimeAuto(atoi(films[num_film].duration.c_str()));
 
@@ -399,22 +406,46 @@ void Cinema::ChangeFilm(int num_punkt, int num_film)
 			{
 				h = (first_time + 15 + (atoi(films[num_film].duration.c_str()))) / 60;
 				m = (first_time + 15 + (atoi(films[num_film].duration.c_str()))) % 60;
-				cout << "\nСамое раннее время для второго сеанса: " << h << ":" << m << "\n";
+				cout << "\n\nСамое раннее время для второго сеанса: ";
+				if (h < 10)
+					cout << 0;
+				cout << h << ":";
+				if (m < 10)
+					cout << 0;
+				cout << m << "\n";
 
 				h = (21 * 60 - 15 - 2 * (atoi(films[num_film].duration.c_str()))) / 60;
 				m = (21 * 60 - 15 - 2 * (atoi(films[num_film].duration.c_str()))) % 60;
-				cout << "\nСамое позднее время для второго сеанса: " << h << ":" << m << "\n";
+				cout << "\nСамое позднее время для второго сеанса: ";
+				if (h < 10)
+						cout << 0;
+				cout << h << ":";
+				if (m < 10)
+					cout << 0;
+				cout << m << "\n";
 
 				second_time = CheckTime(first_time, 2, atoi(films[num_film].duration.c_str()));	//
 				if (second_time != 0)
 				{
 					h = (second_time + 15 + (atoi(films[num_film].duration.c_str()))) / 60;
 					m = (second_time + 15 + (atoi(films[num_film].duration.c_str()))) % 60;
-					cout << "\nСамое раннее время для третьего сеанса: " << h << ":" << m << "\n";
+					cout << "\n\nСамое раннее время для третьего сеанса: ";
+					if (h < 10)
+						cout << 0;
+					cout << h << ":";
+					if (m < 10)
+						cout << 0;
+					cout << m << "\n";
 
 					h = (21 * 60 - (atoi(films[num_film].duration.c_str()))) / 60;
 					m = (21 * 60 - (atoi(films[num_film].duration.c_str()))) % 60;
-					cout << "\nСамое позднее время для третьего сеанса: " << h << ":" << m << "\n";
+					cout << "\nСамое позднее время для третьего сеанса: ";
+					if (h < 10)
+						cout << 0;
+					cout << h << ":";
+					if (m < 10)
+						cout << 0;
+					cout << m << "\n";
 
 					third_time = CheckTime(second_time, 3, atoi(films[num_film].duration.c_str()));	//
 					if (third_time != 0)
