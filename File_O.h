@@ -9,9 +9,12 @@ class File_O
 {
 
 public:
+	void ReadBron();
+
 	int error;
 	int kol_vo_film;	//перенести в кинотеатр?
 	string path;
+	string path_bron;
 
 	void InputPath();		//ввод пути для файла
 	void New(Cinema& cinema);	//создание нового файла   ??????

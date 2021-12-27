@@ -11,6 +11,12 @@
 using namespace std;
 
 
+void File_O::ReadBron()
+{
+
+
+}
+
 void File_O::InputPath()
 {
     do
