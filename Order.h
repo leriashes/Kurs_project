@@ -3,7 +3,9 @@
 #include <iostream>
 #include <string>
 #include "conio.h"
+#include <Windows.h>
 #include "Cinema.h"
+#include <time.h>
 using namespace std;
 
 class Order
@@ -34,6 +36,8 @@ public:
 
 	void Check();
 	void Tickets();
-
 	void Clean();
+
+	void CheckNal();
+	void CheckKarta();
 };
