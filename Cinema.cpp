@@ -264,6 +264,8 @@ void Cinema::DelFilm(int num_film)
 		films[i] = films[i + 1];
 	}
 	films_number = films_number - 1;
+
+
 }
 
 void Cinema::ChangeFilm(int num_punkt, int num_film)
@@ -296,12 +298,12 @@ void Cinema::ChangeFilm(int num_punkt, int num_film)
 				NameOut();
 				cout << "Текущая продолжительность фильма: " << films[num_film].duration << " мин.";
 			}
-			string temp;
+			string temp = "";
 			cout << "\nПродолжительность фильма (мин.): ";
 			getline(cin, films[num_film].duration);		//проверка на отсутствие лишних символов
 			for (int y = 0; y < (films[num_film].duration).length(); y++)		//проверка на отсутствие лишних символов
 			{
-				if (films[num_film].duration[y] >= '0' && films[num_film].duration[y] <= '9')
+				if (isdigit(films[num_film].duration[y]))
 				{
 					temp = temp + films[num_film].duration[y];
 				}

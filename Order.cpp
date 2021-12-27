@@ -720,7 +720,10 @@ void Order::Check()
 	for (int i = 0; i < 29 - str.length(); i++)
 		cout << " ";
 
-	str = cinema->cashiers[rand() % (cinema->cashiers_number - 1) + 1];
+
+	int iRand = (rand() % (cinema->cashiers_number)) + 1;
+	str = cinema->cashiers[iRand];
+	//str = cinema->cashiers[rand() % (cinema->cashiers_number - 1) + 1];
 	cout << "|\n|Êàññèğ: " << str;
 
 	for (int i = 0; i < 28 - str.length(); i++)
@@ -1027,19 +1030,42 @@ void Order::Check()
 		cout << "|Íåôèñêàëüíûé äîêóìåíò               |\n";
 		cout << "|ÈÍÍ: 2223486316                     |\n";
 		cout << "|ÔÍ: 9285000123456782                |\n";
+		string str = "";
+		for (int i = 0; i < 5; ++i)
+		{
+			str += to_string(rand() % 10);
+		}
+
 		cout << "|×åê ¹: " << str;
 
-		str = cinema->cashiers[rand() % (cinema->cashiers_number - 1) + 1];
-		cout << "|Êàññèğ: " << str;
+		for (int i = 0; i < 29 - str.length(); i++)
+		{
+			cout << " ";
+		}
 
-		space(15);
+		int iRand = (rand() % (cinema->cashiers_number)) + 1;
+		str = cinema->cashiers[iRand];
+		//str = cinema->cashiers[rand() % (cinema->cashiers_number - 1) + 1];
+		cout << "|\n|Êàññèğ: " << str;
+
+		for (int i = 0; i < 28 - str.length(); i++)
+		{
+			cout << " ";
+		}
+
+
 		printf("|");
 
 		cout << "\n|Ñàéò ÔÍÑ:                   nalog.ru|";
 		cout << "\n|ÎÔÄ:            ÎÎÎ \"ßğóñ\" (\"ÎÔÄ-ß\")|";
 		cout << "\n|Ñàéò ÎÔÄ:              www.nfd-ya.ru|";
 
-		cout << "\n|ÓÊÀÇÀÒÜ ÀÄĞÅÑ ÈÇ PROKAT             |\n";
+		cout << "\n|" << cinema->address;
+
+		for (int i = 0; i < 36 - cinema->address.length(); i++)
+		{
+			cout << " ";
+		}
 
 
 		string bank[3] = { "ÑÁÅĞÁÀÍÊ", "ÏĞÎÌÑÂßÇÜÁÀÍÊ", "ÂÒÁ" };
@@ -1047,7 +1073,7 @@ void Order::Check()
 		//äëÿ äëèíû ñòğîêè
 		int len = bank[0].length();
 		//(28- len) / 2 - îòñòóïèòü ñ êàæäîé ñòîğîíû
-		cout << "|";
+		cout << "|\n|";
 		space((29 - len) / 2);
 
 		cout << "ÏÀÎ \"" << bank[0] << "\"";
@@ -1059,7 +1085,7 @@ void Order::Check()
 			cout << " ";
 		}
 
-		string str = "";
+		str = "";
 		for (int i = 0; i < 5; ++i)
 		{
 			str += to_string(rand() % 10);
