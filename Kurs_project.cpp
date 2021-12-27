@@ -171,14 +171,42 @@ int main()
 			}
 
 		}
-		else if (menu.GetItem() == 2 || User::GetAdmin())
+		else if (menu.GetItem() == 2 || !User::GetAdmin())
+		{
+			cinema.NameOut();
+			cout << "Введите код заказа: ";
+
+			string code = "";
+			//Ввод пароля
+			char symbol;
+			do
+			{
+				symbol = _getch();
+				if (symbol != 8 && symbol >= '0' && symbol <= '9')
+				{
+					cout << "*";
+					code += symbol;
+				}
+
+				//Если нажата клавиша backspace
+				if (symbol == 8)
+				{
+					if (code.length() > 0)
+					{
+						cout << "\b \b";
+						code.pop_back();
+					}
+				}
+
+			} while (code.length() < 6);
+
+
+		}
+		else if (menu.GetItem() == 3 || User::GetAdmin())
 		{
 			User::Admin(cinema, file_stream);
 		}
-
 	}
-	/// 
-	/// ДОБАВИТЬ ДЛЯ ВСЕХ РЕЖИМОВ ВОЗМОЖНОСТЬ СМЕНЫ ТЕКСТОВИКА С БАЗОЙ
 	
 	return 0;
 }

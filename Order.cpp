@@ -408,7 +408,7 @@ void Order::Reserve()
 	int x;
 
 	srand(std::time(0));
-	x = rand() % 100000 + 1;
+	x = rand() % 1000000 + 1;
 
 	int k = x, i = 0;
 

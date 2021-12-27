@@ -31,8 +31,8 @@ void Menu::Cashier()
 		cinema->NameOut();
 	else
 		system("cls");
-	cout << "1) Просмотр списка фильмов\n2) Вход в режим администратора\n\nESC - Выход";
-	items_number = 2;
+	cout << "1) Просмотр списка фильмов\n2) Оплата забронированных билетов\n3) Вход в режим администратора\n\nESC - Выход";
+	items_number = 3;
 
 	return;
 }

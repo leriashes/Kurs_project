@@ -13,18 +13,13 @@ bool User::GetAdmin()
 	return admin;
 }
 
-bool User::SignIn()
-{
-	return true;
-}
-
 void User::AdminLogIn()
 {
 
 	while (true)
 	{
 		system("cls");
-		printf("¬ведите пароль: ");
+		cout << "¬ведите пароль: ";
 
 		parol = "";
 		//¬вод парол€
