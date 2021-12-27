@@ -21,6 +21,7 @@ Order::Order()
 	seat = 0;
 	num = 0;
 	sale = 0;
+	sum = 0;
 	cinema = NULL;
 }
 
@@ -233,7 +234,7 @@ void Order::Buy()
 		}
 		else if (menu.GetItem() == 1)
 		{
-			int x = 1, sum, cost = stoi(cinema->films[film - 1].price[(day - 1) * 3 + time - 1]);
+			int x = 1, cost = stoi(cinema->films[film - 1].price[(day - 1) * 3 + time - 1]);
 			while (x == 1)
 			{
 				string opl = "\nВведите внесённую сумму: ";
@@ -280,7 +281,7 @@ void Order::Buy()
 						break;
 				}
 
-				if (sum < num * cost - sale)
+				if (sum < num * (cost - sale))
 				{
 					do
 					{
@@ -294,13 +295,13 @@ void Order::Buy()
 							x = 1;
 					} while (x != 1);
 				}
-				else if (sum == num * cost - sale)
+				else if (sum == num * (cost - sale))
 				{
 					cout << "\nОплата прошла успешно!";
 					sale = 0;
 
 					x = 0;
-					Check();
+					Check(false);
 					cout << "\n\nНажмите любую клавишу для продолжения...";
 					_getch();
 					sum = 0;
@@ -316,7 +317,7 @@ void Order::Buy()
 					int change;
 					string str = "\nОплата прошла успешно! \n\nВаша сдача: ";
 				
-					change = sum - num * cost + sale;
+					change = sum - num * (cost + sale);
 
 					int k = change, i = 0;
 
@@ -347,7 +348,7 @@ void Order::Buy()
 					cout << str;
 
 					x = 0;
-					Check();
+					Check(false);
 					cout << "\n\nНажмите любую клавишу для продолжения...";
 					_getch();
 					sum = 0;
@@ -365,7 +366,7 @@ void Order::Buy()
 		{
 			PrintResult();
 			cout << "\nОплата прошла успешно!\n\n";
-			Check();
+			Check(true);
 			cout << "\n\nНажмите любую клавишу для продолжения...";
 			_getch();
 
@@ -389,7 +390,7 @@ void Order::Buy()
 			for (int i = 0; i < cinema->promo_number; i++)
 				if (promokod == cinema->promo[i][0])
 				{
-					sale = num * stoi(cinema->films[film - 1].price[(day - 1) * 3 + time - 1]) * stoi(cinema->promo[i][1]) / 100;
+					sale = stoi(cinema->films[film - 1].price[(day - 1) * 3 + time - 1]) * stoi(cinema->promo[i][1]) / 100;
 					break;
 				}
 			Buy();
@@ -638,7 +639,7 @@ void Order::PrintResult()
 		num++;
 	}
 
-	cout << "\n\nИТОГО К ОПЛАТЕ: " << num * cost - sale << " рублей\n";
+	cout << "\n\nИТОГО К ОПЛАТЕ: " << num * (cost - sale) << " рублей\n";
 
 	return;
 }
@@ -652,7 +653,7 @@ void space(int quan)
 }
 
 
-void Order::Check()
+void Order::Check(bool card)
 {
 	int d, k;
 
@@ -669,7 +670,7 @@ void Order::Check()
 	int mo = localtime(&t)->tm_mon + 1;
 	int yea = localtime(&t)->tm_year + 1900;
 
-	printf("\n\n|");
+	cout << "\n\n|";
 
 	_setmode(_fileno(stdout), _O_U16TEXT);
 	_setmode(_fileno(stdin), _O_U16TEXT);
@@ -683,16 +684,13 @@ void Order::Check()
 
 	cout << "|\n|";
 
-	string taima;
+	string str;
 
-	taima = to_string(da) + '.' + to_string(mo) + '.' + to_string(yea) + "  " + to_string(hour) + ':' + to_string(minute) + ':' + to_string(sec);
-	int tima;
-	tima = taima.length();
+	str = to_string(da) + '.' + to_string(mo) + '.' + to_string(yea) + "  " + to_string(hour) + ':' + to_string(minute) + ':' + to_string(sec);
 
-	for (int i = 0; i < 36 - tima; i++)
-		cout << " ";
+	space(36 - str.length());
 
-	cout << taima;
+	cout << str;
 
 	cout << "|\n|Кинотеатр '" << cinema->name << "'";
 
@@ -709,7 +707,7 @@ void Order::Check()
 	}
 	cout << "|\n|           КАССОВЫЙ  ЧЕК            |\n";
 
-	string str = "";
+	str = "";
 	for (int i = 0; i < 5; ++i)
 	{
 		str += to_string(rand() % 10);
@@ -720,8 +718,7 @@ void Order::Check()
 	for (int i = 0; i < 29 - str.length(); i++)
 		cout << " ";
 
-	str = cinema->cashiers[(rand() % (cinema->cashiers_number)) + 1];
-	//str = cinema->cashiers[rand() % (cinema->cashiers_number - 1) + 1];
+	str = cinema->cashiers[rand() % cinema->cashiers_number + 1];
 	cout << "|\n|Кассир: " << str;
 
 	for (int i = 0; i < 28 - str.length(); i++)
@@ -753,19 +750,19 @@ void Order::Check()
 
 	int cost = atoi(cinema->films[film - 1].price[(day - 1) * 3 + time - 1].c_str());
 	
-	cout << cost / (num + 1) << ".00 X " << num + 1 << " ШТ";
+	cout << cost - sale << ".00 X " << num << " ШТ";
 
-	for (d = cost / (num + 1), k = 0; d > 0; k++)
+	for (d = cost - sale, k = 0; d > 0; k++)
 	{
 		d /= 10;
 	}
 
-	for (d = num + 1; d > 0; k++)
+	for (d = num; d > 0; k++)
 	{
 		d /= 10;
 	}
 
-	for (d = cost; d > 0; k++)
+	for (d = (cost - sale) * num; d > 0; k++)
 	{
 		d /= 10;
 	}
@@ -782,7 +779,7 @@ void Order::Check()
 	_setmode(_fileno(stdin), O_TEXT);
 
 	
-	cout << cost << " РУБ|\n";		//ЛЕРА
+	cout << (cost - sale) * num << " РУБ|\n";
 	
 
 	//продолжение суммы
@@ -792,7 +789,7 @@ void Order::Check()
 
 	cout << "|\n|ИТОГО";
 
-	for (d = cost, k = 0; d > 0; k++)
+	for (d = num * (cost - sale), k = 0; d > 0; k++)
 		d /= 10;
 
 	space(26 - k);
@@ -805,11 +802,11 @@ void Order::Check()
 	_setmode(_fileno(stdout), O_TEXT);
 	_setmode(_fileno(stdin), O_TEXT);
 
-	cout << cost << " РУБ|\n";
+	cout << num * (cost - sale) << " РУБ|\n";
 
 	cout << "|В Т.Ч. НДС 20%";
 
-	for (d = 0.2 * cost, k = 0; d > 0; k++)
+	for (d = 0.2 * num * (cost - sale), k = 0; d > 0; k++)
 		d /= 10;
 
 	space(17 - k);
@@ -822,15 +819,14 @@ void Order::Check()
 	_setmode(_fileno(stdout), O_TEXT);
 	_setmode(_fileno(stdin), O_TEXT);
 
-	cout << (0.2 * cost) << " РУБ|\n";
+	cout << (int)(0.2 * num * (cost - sale)) << " РУБ|\n";
 	cout << "|ПРИХОД";
 
 	space(30);
 	//ЕСЛИ НАЛИЧНЫЕ
-	if (true)
+	if (!card)
 	{
 		cout << "|\n|НАЛИЧНЫЕ:";
-		int sum = cost * num;
 		for (d = sum, k = 0; d > 0; k++)
 		{
 			d /= 10;
@@ -854,7 +850,7 @@ void Order::Check()
 
 		cout << "|\n|СДАЧА:";
 
-		d = sum - cost;
+		d = sum - num * cost + num * sale;
 		if (d == 0)
 		{
 			k = 1;
@@ -875,14 +871,14 @@ void Order::Check()
 
 		_setmode(_fileno(stdout), O_TEXT);
 		_setmode(_fileno(stdin), O_TEXT);
-		cout << sum - cost << " РУБ|";
+		cout << sum - cost * num + sale * num << " РУБ|";
 	}
 	else
 	{
 
 		cout << "|\n|БЕЗНАЛИЧНЫЕ:";
 
-		for (d = cost, k = 0; d > 0; k++)
+		for (d = cost * num - sale * num, k = 0; d > 0; k++)
 		{
 			d /= 10;
 		}
@@ -999,7 +995,7 @@ void Order::Check()
 	_setmode(_fileno(stdout), O_TEXT);
 	_setmode(_fileno(stdin), O_TEXT);
 
-	if (true)
+	if (card)
 	{
 		//печать второго чека для карты
 
@@ -1019,16 +1015,18 @@ void Order::Check()
 
 		cout << "\n|";
 
-		space(36 - tima);
+		str = to_string(da) + '.' + to_string(mo) + '.' + to_string(yea) + "  " + to_string(hour) + ':' + to_string(minute) + ':' + to_string(sec);
 
-		cout << taima;
+		space(36 - str.length());
+
+		cout << str;
 
 		cout << "|\n|РН ККТ: 0009865161651698            |\n";
 		cout << "|ЗН ККТ: 0287619841532168            |\n";
 		cout << "|Нефискальный документ               |\n";
 		cout << "|ИНН: 2223486316                     |\n";
 		cout << "|ФН: 9285000123456782                |\n";
-		string str = "";
+		str = "";
 		for (int i = 0; i < 5; ++i)
 		{
 			str += to_string(rand() % 10);
