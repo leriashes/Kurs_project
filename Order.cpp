@@ -392,6 +392,7 @@ void space(int quan)
 
 void Order::Check()
 {
+	//int num = 0;
 	int d, k;
 
 	string name_of_film = cinema->films[film - 1].name;
