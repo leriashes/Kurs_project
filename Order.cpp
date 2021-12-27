@@ -4,6 +4,9 @@
 #include "Menu.h"
 #include <ctime>
 #include <fcntl.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <time.h>
 #include <io.h>
 
 using namespace std;
@@ -377,6 +380,15 @@ void Order::PrintResult()
 
 	return;
 }
+void space(int quan)
+{
+	for (int i = 0; i < quan; i++)
+	{
+		cout << " ";
+	}
+
+}
+
 
 void Order::Check()
 {
@@ -423,13 +435,16 @@ void Order::Check()
 	cout << "|\n|Кинотеатр '" << cinema->name << "'";
 
 	for (int i = 0; i < 24 - cinema->name.length(); i++)
+	{
 		cout << " ";
+	}
 
 	cout << "|\n|" << cinema->address;
 
 	for (int i = 0; i < 36 - cinema->address.length(); i++)
+	{
 		cout << " ";
-
+	}
 	cout << "|\n|           КАССОВЫЙ  ЧЕК            |\n";
 
 	string str = "";
@@ -447,7 +462,9 @@ void Order::Check()
 	cout << "|\n|Кассир: " << str;
 
 	for (int i = 0; i < 28 - str.length(); i++)
+	{
 		cout << " ";
+	}
 
 	d = rand() % 365 + 1;
 	cout << "|\n|Смена: " << d;
@@ -458,7 +475,8 @@ void Order::Check()
 	for (int i = 0; i < 29 - k; i++)
 		cout << " ";
 
-	/*cout << "|\n|Касса: " << kassa[0];
+	int kassa= (rand() % 5) + 1;
+	cout << "|\n|Касса: " << kassa;
 
 	space(28);
 
@@ -469,18 +487,27 @@ void Order::Check()
 	space(36 - name_of_film.length());
 
 	cout << "|\n|";
-	cout << cost / (num_tick + 1) << ".00 X " << num_tick + 1 << " ШТ";
 
-	for (d = cost / (num_tick + 1), k = 0; d > 0; k++)
-		d /= 10;
+	int cost = atoi(cinema->films[film - 1].price[(day - 1) * 3 + time - 1].c_str());
+	
+	cout << cost / (num + 1) << ".00 X " << num + 1 << " ШТ";
 
-	for (d = num_tick + 1; d > 0; k++)
+	for (d = cost / (num + 1), k = 0; d > 0; k++)
+	{
 		d /= 10;
+	}
+
+	for (d = num + 1; d > 0; k++)
+	{
+		d /= 10;
+	}
 
 	for (d = cost; d > 0; k++)
+	{
 		d /= 10;
-
+	}
 	space(22 - k);
+	
 
 	//для специального символа (3 полосы для знака равно
 	_setmode(_fileno(stdout), _O_U16TEXT);
@@ -491,7 +518,9 @@ void Order::Check()
 	_setmode(_fileno(stdout), O_TEXT);
 	_setmode(_fileno(stdin), O_TEXT);
 
-	cout << cost << " РУБ|\n";
+	
+	cout << cost << " РУБ|\n";		//ЛЕРА
+	
 
 	//продолжение суммы
 	cout << "|";
@@ -504,7 +533,7 @@ void Order::Check()
 		d /= 10;
 
 	space(26 - k);
-
+	
 	_setmode(_fileno(stdout), _O_U16TEXT);
 	_setmode(_fileno(stdin), _O_U16TEXT);
 
@@ -521,7 +550,7 @@ void Order::Check()
 		d /= 10;
 
 	space(17 - k);
-
+	
 	_setmode(_fileno(stdout), _O_U16TEXT);
 	_setmode(_fileno(stdin), _O_U16TEXT);
 
@@ -534,14 +563,15 @@ void Order::Check()
 	cout << "|ПРИХОД";
 
 	space(30);
-
 	//ЕСЛИ НАЛИЧНЫЕ
-	if (nal)
+	if (true)
 	{
 		cout << "|\n|НАЛИЧНЫЕ:";
-
+		int sum = cost * num;
 		for (d = sum, k = 0; d > 0; k++)
+		{
 			d /= 10;
+		}
 
 		space(22 - k);
 
@@ -563,11 +593,16 @@ void Order::Check()
 
 		d = sum - cost;
 		if (d == 0)
+		{
 			k = 1;
+		}
 		else
+		{
 			for (k = 0; d > 0; k++)
+			{
 				d /= 10;
-
+			}
+		}
 		space(25 - k);
 
 		_setmode(_fileno(stdout), _O_U16TEXT);
@@ -579,14 +614,15 @@ void Order::Check()
 		_setmode(_fileno(stdin), O_TEXT);
 		cout << sum - cost << " РУБ|";
 	}
-	//ЕСЛИ КАРТА
 	else
 	{
 
 		cout << "|\n|БЕЗНАЛИЧНЫЕ:";
 
 		for (d = cost, k = 0; d > 0; k++)
+		{
 			d /= 10;
+		}
 
 		space(19 - k);
 
@@ -647,7 +683,7 @@ void Order::Check()
 		L"\u2569" , L"\u2256" , L"\u256A" , L"\u256B" , L"\u256C" };
 	//std::wcout << text[1] << L'\n';
 
-	srand(time(NULL));
+	srand(std::time(NULL));
 	random_shuffle(begin(text), end(text));
 
 	for (int k = 0, i = 0; i < 8; i++)
@@ -700,7 +736,7 @@ void Order::Check()
 	_setmode(_fileno(stdout), O_TEXT);
 	_setmode(_fileno(stdin), O_TEXT);
 
-	if (!nal)
+	if (true)
 	{
 		//печать второго чека для карты
 
@@ -729,7 +765,10 @@ void Order::Check()
 		cout << "|Нефискальный документ               |\n";
 		cout << "|ИНН: 2223486316                     |\n";
 		cout << "|ФН: 9285000123456782                |\n";
-		cout << "|Кассир: " << kassir[0];
+		cout << "|Чек №: " << str;
+
+		str = cinema->cashiers[rand() % (cinema->cashiers_number - 1) + 1];
+		cout << "|Кассир: " << str;
 
 		space(15);
 		printf("|");
@@ -742,7 +781,6 @@ void Order::Check()
 
 
 		string bank[3] = { "СБЕРБАНК", "ПРОМСВЯЗЬБАНК", "ВТБ" };
-		srand(time(NULL));
 		random_shuffle(begin(bank), end(bank));
 		//для длины строки
 		int len = bank[0].length();
@@ -755,13 +793,23 @@ void Order::Check()
 
 		cout << " ";
 		if (bank[0] == "СБЕРБАНК")
+		{
 			cout << " ";
+		}
 
-		cout << "|\n|Чек №: " << check[1];
+		string str = "";
+		for (int i = 0; i < 5; ++i)
+		{
+			str += to_string(rand() % 10);
+		}
 
-		for (d = check[1], k = 0; d > 0; k++)
+		cout << "|\n|Чек №: " << str;
+
+
+		for (d = atoi(str.c_str()), k = 0; d > 0; k++)
+		{
 			d /= 10;
-
+		}
 		space(29 - k);
 
 		cout << "|\n|               Оплата               |\n";
@@ -776,7 +824,7 @@ void Order::Check()
 		cout << "|\n|Комиссия с держателя карты 0%       |\n";
 
 		string karta[3] = { "Visa", "МИР", "MasterCard" };
-		srand(time(NULL));
+		srand(std::time(NULL));
 		random_shuffle(begin(karta), end(karta));
 
 		cout << "|Карта: " << karta[0];
@@ -787,7 +835,7 @@ void Order::Check()
 		int kod[89999];
 		for (int j = 0, i = 10000; i < 99999; i++, j++)
 			kod[j] = i;
-		srand(time(NULL));
+		srand(std::time(NULL));
 		random_shuffle(begin(kod), end(kod));
 
 		cout << "|Код авторизации: " << kod[0];
@@ -803,9 +851,22 @@ void Order::Check()
 		{
 			wcout << L"\u005C";
 			wcout << L"\u002F";
-		}*/
+		}
 
-	///}
+		///}
+	}
+}
+
+void Order::CheckNal()
+{
+
+
+}
+
+void Order::CheckKarta()
+{
+
+
 }
 
 
