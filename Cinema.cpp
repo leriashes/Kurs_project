@@ -4,6 +4,14 @@
 #include "Time.h"
 #include "Menu.h"
 
+void Cinema::List_bron()
+{
+	for (int o = 0; o < broni_number; o++)
+	{
+		cout << bron[o][1] << bron[o][2];
+	}
+}
+
 void Cinema::ChangeName()
 {
 	cout << "Текущее название кинотеатра: " << name << "";

@@ -11,9 +11,84 @@
 using namespace std;
 
 
-void File_O::ReadBron()
+void File_O::ReadBron(Cinema& cinema) //считывание данных из файла бронировани€
 {
+    bool result = false;
+    ifstream f1;
 
+    f1.open(path_bron);
+    if (!(f1.is_open()))
+    {
+        //создать файл
+        /*cout << "\n‘айл не найден\n";
+        _getch();
+        */
+        //создание файла, заполнение всех данных
+
+    }
+    else
+    {
+        //считывание данных о бронировании в массив или в строку
+
+        string str;
+        string temp;
+        int i = 0;
+        while (!f1.eof())   //узнать количество строк в файле
+        {
+
+            getline(f1, str);
+            i++;
+        }
+
+        
+        f1.seekg(0, std::ios::beg);     //переход в начало файла
+        for (int u = 0; u < i; u++)
+        {
+            getline(f1, cinema.bron[u][0]);
+            string rez[7];
+            //разбор брони на составл€ющие
+            string sep = "|";   // строка или символ разделитель
+            size_t sep_size = sep.size();
+            string original = cinema.bron[u][0];
+            string tempura;
+            int h = 1;
+            while (true) {
+                tempura = original.substr(0, original.find(sep));
+                if (tempura.size() != 0)   // можно добавить доп. проверку дл€ строк из пробелов
+                {
+                    rez[h] = "";
+                    rez[h] = tempura;
+                    if (h == 6)
+                    {
+                        if ((rez[1] + "\0") == cinema.id_cinema)
+                        {
+                            for (int e = 0; e < 7; e++)
+                            {
+                                cinema.bron[cinema.broni_number][e] = rez[e];
+                            }
+                            cinema.broni_number++;
+                        }
+                     
+                    }
+                    h++;
+                }
+                if (tempura.size() == original.size())
+                {
+                    break;
+                }
+                else
+                {
+                    original = original.substr(tempura.size() + sep_size);
+                }
+            }
+            
+        }
+
+
+
+        //cout << "‘айл найден!";
+        result = true;
+    }
 
 }
 
@@ -117,6 +192,11 @@ bool File_O::CheckPath()
     */
 }
 
+void substr(char* dest, char* source, int from, int length) {
+    strncpy(dest, source + from, length);
+    dest[length] = 0;
+
+}
 void File_O::Read(Cinema& cinema)
 {
     ifstream file(path);
@@ -125,6 +205,27 @@ void File_O::Read(Cinema& cinema)
     int i = 0;
     int j = 0;
     string temp;
+
+    getline(file, temp);    //чтение id кинотеатра (если имеетс€)
+    if (temp[0] == 'i' && temp[1] == 'd' && temp[2] == ':')
+    {
+        for (int g = 0; g < temp.size(); g++)
+        {
+            if (g > 3)
+            {
+                cinema.id_cinema = cinema.id_cinema + temp[g];
+            }
+        }
+    }
+    else     //создание id файла
+    {
+        string str = "";
+        for (int i = 0; i < 5; ++i)
+        {
+            str += to_string(rand() % 10);
+        }
+        cinema.id_cinema = str;
+    }
 
     //заполнение информации о кинотеатре
     getline(file, cinema.name);    //чтение названи€ кинотеатра
@@ -256,9 +357,9 @@ bool File_O::CheckCompound()        //проверка форматировани€ текстового файла
     base.close();
     delete[] str;
 
-    if ((i - 9) % 134 == 0)            //форматирование верно
+    if ((i - 10) % 134 == 0)            //форматирование верно
     {
-        kol_vo_film = (i - 9) / 134;
+        kol_vo_film = (i - 10) / 134;
 		result = true;
     }
 
@@ -286,6 +387,7 @@ void File_O::Write(Cinema cinema)
     f.open(path);
     if (f)
     {
+        f << cinema.id_cinema << endl;      //запись id файла
         f << cinema.name << endl;    //запись названи€ кинотеатра в файл
         f << cinema.address << endl;  //запись адреса кинотеатра в файл
         //f << cinema.cashiers[0] << endl;    //запись кассиров

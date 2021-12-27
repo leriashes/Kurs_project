@@ -1120,13 +1120,13 @@ void Order::Check()
 
 		cout << "|\n";
 
-		int kod[89999];
-		for (int j = 0, i = 10000; i < 99999; i++, j++)
-			kod[j] = i;
-		srand(std::time(NULL));
-		random_shuffle(begin(kod), end(kod));
+		str = "";
+		for (int i = 0; i < 5; ++i)
+		{
+			str += to_string(rand() % 10);
+		}
 
-		cout << "|Код авторизации: " << kod[0];
+		cout << "|Код авторизации: " << str;
 		space(14);
 		cout << "|\n|                                    |\n";
 

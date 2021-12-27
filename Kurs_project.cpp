@@ -69,8 +69,12 @@ int main()
 
 					Time::loadingComplete = false;
 					file_stream.Read(cinema);
+					file_stream.ReadBron(cinema);
 					Time::loadingComplete = true;
 					t.join();
+
+					cinema.List_bron();
+					_getch();
 				}
 				else
 				{
