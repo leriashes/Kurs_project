@@ -13,6 +13,8 @@ class Order
 private:
 	int row;
 	char seat;
+	int num;
+	int sale;
 
 public:
 	int film;
@@ -26,12 +28,16 @@ public:
 	int ChooseRow();
 	int ChooseSeat();
 	void Buy();
+	void Reserve();
 	void ChooseAction();
 
 	void PrintInfo();
 	void PrintResult();
 
 	void Check();
+	void Tickets();
+	void Clean();
+
 	void CheckNal();
 	void CheckKarta();
 };

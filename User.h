@@ -5,6 +5,8 @@ class User
 {
 private:
 	static bool admin;
+	static string password;
+	static string parol;
 
 public:
 	static bool GetAdmin();

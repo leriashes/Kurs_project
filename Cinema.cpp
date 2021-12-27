@@ -1,68 +1,73 @@
 #include "Cinema.h"
 #include "conio.h"
 #include "File_O.h"
+#include "Time.h"
+#include "Menu.h"
 
 void Cinema::ChangeName()
 {
-	cout << "Текущее название кинотеатра: " << name << "\n\n";
+	cout << "Текущее название кинотеатра: " << name << "";
 	InputName();
-	
+	return;
 }
 
 void Cinema::ChangeAdress()
 {
-	cout << "Текущий адес кинотеатра: " << address << "\n\n";
+	cout << "Текущий адес кинотеатра: " << address << "";
 	InputAdress();
+	return;
 }
 
 void Cinema::ChangeINN()
 {
-	system("cls");
 	cout << "Текущий ИНН: " << inn;
 	InputINN();
+	return;
 }
 
 void Cinema::ChangeRNM()
 {
-	system("cls");
 	cout << "Текущий РНМ: " << rnm;
 	InputRNM();
+	return;
 }
 
 void Cinema::ChangeCashier()
 {
-	ListCashier(0);
-	//cout << "1) " << cashiers[0] << "\n2) " << cashiers[1];
-	cout << "\n\n1) Добавить кассира\n2) Удалить кассира\n";
 	int func;
+	
+	Menu menu(cashiers_number);
 
 	do
 	{
-		func = _getch();
-	} while (func < '0' && func > '2');
+		ListCashier(0);
+		cout << "\n\n1) Добавить кассира\n2) Удалить кассира\n";
+		menu.ChooseItem();
+		func = menu.GetItem();
+	} while (func < 0 || func > promo_number);
 	
-	if (func == '1')
+	if (func == 1)
 	{
 		if (cashiers_number >= 5)
 		{
-			cout << "Удалите прежде, чем добавлять нового";
+			cout << "Удалите одного из кассиров прежде, чем добавлять нового.";
 		}
 		else
 		{
 			cashiers_number++;
 			do
 			{
-				system("cls");
+				NameOut();
 				cout << "Введите данные нового кассира: ";
 				getline(cin, cashiers[cashiers_number]);
 			} while (cashiers[cashiers_number] == "");
 		}
 	}
-	else if (func == '2')
+	else if (func == 2)
 	{
 		if (cashiers_number > 0)
 		{
-			system("cls");
+			NameOut();
 			ListCashier(1);
 			int number;
 			cout << "Введите порядковый номер кассира для удаления: ";
@@ -82,7 +87,7 @@ void Cinema::ChangeCashier()
 		}
 	}
 
-	//_getch();
+	return;
 }
 
 void Cinema::ListCashier(int k)
@@ -114,52 +119,68 @@ void Cinema::ListPromo(int k)
 void Cinema::DelPromo()
 {
 	int num;
-	system("cls");
+	NameOut();
 	ListPromo(1);		//вывод всех промокодов
 	cout << "Номер промокода для удаления: ";
 	//функция возврата в меню
+	Menu menu(promo_number);
+
 	do
 	{
-		num = _getch();
-	} while (num < '1' || num - 48 > promo_number);
-	for (int u = num - 48; u < promo_number; u++)
+		menu.ChooseItem();
+		num = menu.GetItem();
+	} while (num < 0 || num > promo_number);
+
+	if (num != 0)
 	{
-		promo[u][0] = promo[u + 1][0];
-		promo[u][1] = promo[u + 1][1];
+		for (int u = num - 48; u < promo_number; u++)
+		{
+			promo[u][0] = promo[u + 1][0];
+			promo[u][1] = promo[u + 1][1];
+		}
+		promo_number--;
 	}
-	promo_number--;
+
+	return;
 }
 
 void Cinema::RedPromo()
 {
 	int num;
-	system("cls");
+	NameOut();
 	ListPromo(1);		//вывод всех промокодов
 	cout << "Номер промокода для редактирования: ";
 	//функция возврата в меню
+	Menu menu(promo_number);
+
 	do
 	{
-		num = _getch();
-	} while (num < '1' || num - 48 > promo_number);
-	system("cls");
-	cout << "Промокод: \"" << promo[num - 48][0] << " (" << promo[num - 48][1] << "%)";
-	cout << "\n\n1) Название\n2) Номинал";
-	int func;
-	do
+		menu.ChooseItem();
+		num = menu.GetItem();
+	} while (num < 0 || num > promo_number);
+
+	if (num != 0)
 	{
-		func = _getch();
-	} while (func != '1' && func != '2');
-	string temp = "";
-	if (func == '1')
-	{
-		string old = "Текущее название промокода \"" + promo[num - 48][0] + "\"\n\n";
-		
-		promo[num - 48][0] = NewPromoName(old);
-	}
-	else if (func == '2')
-	{
-		string old = "Текущий номинал промокода \"" + promo[num - 48][0] + "\" (" + promo[num - 48][1] + "%)\n\n";
-		promo[num - 48][1] = NewPromoValue(old);
+		NameOut();
+		cout << "Промокод: \"" << promo[num][0] << " (" << promo[num][1] << "%)";
+		cout << "\n\n1) Название\n2) Номинал";
+		int func;
+		do
+		{
+			func = _getch();
+		} while (func != '1' && func != '2');
+		string temp = "";
+		if (func == '1')
+		{
+			string old = "Текущее название промокода \"" + promo[num][0] + "\"\n\n";
+
+			promo[num][0] = NewPromoName(old);
+		}
+		else if (func == '2')
+		{
+			string old = "Текущий номинал промокода \"" + promo[num][0] + "\" (" + promo[num][1] + "%)\n\n";
+			promo[num][1] = NewPromoValue(old);
+		}
 	}
 }
 
@@ -249,9 +270,9 @@ void Cinema::ChangeFilm(int num_punkt, int num_film)
 {
 	if (num_punkt == 0)
 	{
-		system("cls");
+		NameOut();
 		cout << "1) Название\n2) Продолжительность\n3) Возрастное ограничение\n4) Краткое описание\n5) Главные роли\n6) Режиссер";
-		cout << "\n\nВведите пункт для внесения изменений: ";
+		cout << "\n\nВведите номер пункт для внесения изменений: ";
 	}
 	else if (num_punkt == 1 || num_punkt == -1)	//название фильма
 	{
@@ -259,10 +280,10 @@ void Cinema::ChangeFilm(int num_punkt, int num_film)
 		{
 			if (num_punkt == 1)
 			{
-				system("cls");
-				cout << "Текущее название фильма: " << films[num_film].name;
+				NameOut();
+				cout << "Текущее название фильма: " << films[num_film].name << "\n";
 			}
-			cout << "\nНазвание фильма: ";
+			cout << "Название фильма: ";
 			getline(cin, films[num_film].name);
 		} while (films[num_film].name == "");
 	}
@@ -272,11 +293,11 @@ void Cinema::ChangeFilm(int num_punkt, int num_film)
 		{
 			if (num_punkt == 2)
 			{
-				system("cls");
+				NameOut();
 				cout << "Текущая продолжительность фильма: " << films[num_film].duration << " мин.";
 			}
 			string temp;
-			cout << "\nПродолжительность фильма: ";
+			cout << "\nПродолжительность фильма (мин.): ";
 			getline(cin, films[num_film].duration);		//проверка на отсутствие лишних символов
 			for (int y = 0; y < (films[num_film].duration).length(); y++)		//проверка на отсутствие лишних символов
 			{
@@ -304,7 +325,7 @@ void Cinema::ChangeFilm(int num_punkt, int num_film)
 		{
 			if (num_punkt == 3)
 			{
-				system("cls");
+				NameOut();
 				cout << "Текущее возрастное ограничение фильма: " << films[num_film].age ;
 			}
 			string temp;
@@ -326,7 +347,7 @@ void Cinema::ChangeFilm(int num_punkt, int num_film)
 		{
 			if (num_punkt == 4)
 			{
-				system("cls");
+				NameOut();
 				cout << "Текущее краткое описание фильма: " << films[num_film].short_description;
 			}
 			cout << "\nКраткое описание фильма: ";
@@ -339,7 +360,7 @@ void Cinema::ChangeFilm(int num_punkt, int num_film)
 		{
 			if (num_punkt == 5)
 			{
-				system("cls");
+				NameOut();
 				cout << "Текущие актеры в главной роли фильма: " << films[num_film].main_role;
 			}
 			cout << "\nГлавные роли фильма: ";	//куцое предложение!!!
@@ -352,7 +373,7 @@ void Cinema::ChangeFilm(int num_punkt, int num_film)
 		{
 			if (num_punkt == 6)
 			{
-				system("cls");
+				NameOut();
 				cout << "Текущие режиссер(-ы) фильма: " << films[num_film].rejisser;
 			}
 			cout << "\nРежиссер(-ы) фильма: ";
@@ -364,25 +385,43 @@ void Cinema::ChangeFilm(int num_punkt, int num_film)
 		if (num_punkt == -7)
 		{ 
 			//время работы с 9 до 21;
-			cout << "Самое позднее время для первого сеанса: ";
+			cout << "\nСамое позднее время для первого сеанса: ";
 			cout << (21 * 60 - 2 * 15 - 3 * (atoi(films[num_film].duration.c_str()))) / 60 << ":" << (21 * 60 - 2 * 15 - 3 * (atoi(films[num_film].duration.c_str()))) % 60;
 			//21*60
 				//перерыв между сеансами для уборки 15 минут
-			int time_first, time_second, time_thord;
-			TimeAuto(atoi(films[num_film].duration.c_str()));
+			int first_time, second_time, third_time;
+			int m, h;
+			
+			//TimeAuto(atoi(films[num_film].duration.c_str()));
 
-			time_first = CheckTime(8 * 60, 1, atoi(films[num_film].duration.c_str()));	//
-			if (time_first != 0)
+			first_time = CheckTime(8 * 60, 1, atoi(films[num_film].duration.c_str()));	//
+			if (first_time != 0)
 			{
-				time_second = CheckTime(time_first, 2, atoi(films[num_film].duration.c_str()));	//
-				if (time_second != 0)
+				h = (first_time + 15 + (atoi(films[num_film].duration.c_str()))) / 60;
+				m = (first_time + 15 + (atoi(films[num_film].duration.c_str()))) % 60;
+				cout << "\nСамое раннее время для второго сеанса: " << h << ":" << m << "\n";
+
+				h = (21 * 60 - 15 - 2 * (atoi(films[num_film].duration.c_str()))) / 60;
+				m = (21 * 60 - 15 - 2 * (atoi(films[num_film].duration.c_str()))) % 60;
+				cout << "\nСамое позднее время для второго сеанса: " << h << ":" << m << "\n";
+
+				second_time = CheckTime(first_time, 2, atoi(films[num_film].duration.c_str()));	//
+				if (second_time != 0)
 				{
-					time_thord = CheckTime(time_second, 3, atoi(films[num_film].duration.c_str()));	//
-					if (time_thord != 0)
+					h = (second_time + 15 + (atoi(films[num_film].duration.c_str()))) / 60;
+					m = (second_time + 15 + (atoi(films[num_film].duration.c_str()))) % 60;
+					cout << "\nСамое раннее время для третьего сеанса: " << h << ":" << m << "\n";
+
+					h = (21 * 60 - (atoi(films[num_film].duration.c_str()))) / 60;
+					m = (21 * 60 - (atoi(films[num_film].duration.c_str()))) % 60;
+					cout << "\nСамое позднее время для третьего сеанса: " << h << ":" << m << "\n";
+
+					third_time = CheckTime(second_time, 3, atoi(films[num_film].duration.c_str()));	//
+					if (third_time != 0)
 					{
-						films[num_film].time[0] = films[num_film].time[3] = films[num_film].time[6] = Convert_Time(time_first);
-						films[num_film].time[1] = films[num_film].time[4] = films[num_film].time[7] = Convert_Time(time_second);
-						films[num_film].time[2] = films[num_film].time[5] = films[num_film].time[8] = Convert_Time(time_thord);
+						films[num_film].time[0] = films[num_film].time[3] = films[num_film].time[6] = Convert_Time(first_time);
+						films[num_film].time[1] = films[num_film].time[4] = films[num_film].time[7] = Convert_Time(second_time);
+						films[num_film].time[2] = films[num_film].time[5] = films[num_film].time[8] = Convert_Time(third_time);
 					}
 				}
 			}
@@ -461,6 +500,7 @@ void Cinema::ChangeFilm(int num_punkt, int num_film)
 	}
 	else if (num_punkt == 9 || num_punkt == -9)	//зал сеанса
 	{
+		NameOut();
 		int zals[9];
 		for (int o = 0; o < 9; o++)
 		{
@@ -476,6 +516,7 @@ void Cinema::ChangeFilm(int num_punkt, int num_film)
 				}
 			}
 		}
+
 		cout << "Доступные залы: ";
 		for (int y = 0; y < 9; y++)
 		{
@@ -487,6 +528,7 @@ void Cinema::ChangeFilm(int num_punkt, int num_film)
 		
 		bool zall =  false;
 		int num;
+		cout << "\n\nВведите номер зала: ";
 		do
 		{
 			num = _getch();
@@ -505,9 +547,6 @@ void Cinema::ChangeFilm(int num_punkt, int num_film)
 	}
 }
 
-
-
-
 int Cinema::CheckTime(int time, int num_seans, int duration)
 {
 	string temp;
@@ -516,15 +555,15 @@ int Cinema::CheckTime(int time, int num_seans, int duration)
 		if (num_seans == 1)
 		{
 			cout << "\n\nВведите время первого сеанса (пример: 12:40): ";
-			TimeAuto(duration);
+			//TimeAuto(duration);
 		}
 		else if (num_seans == 2)
 		{
-			cout << "\n\nВведите время второго сеанса (пример: 12:40): ";
+			cout << "\nВведите время второго сеанса (пример: 12:40): ";
 		}
 		else if (num_seans == 3)
 		{
-			cout << "\n\nВведите время третьего сеанса (пример: 12:40): ";
+			cout << "\nВведите время третьего сеанса (пример: 12:40): ";
 		}
 		getline(cin, temp);
 		int minutes;
@@ -621,7 +660,8 @@ void Cinema::TimeAuto(int duration)
 		}
 	}
 	
-	_getch();
+	//_getch();
+	return;
 }
 
 string Cinema::Convert_Time(int time)
@@ -661,8 +701,7 @@ void Cinema::InputCashier()
 		getline(cin, full_name);
 		//проверка на существование данного кассира в базе???
 	} while (full_name == "");
-	
-	//присваивание кассиру
+
 	return;
 }
 
@@ -673,6 +712,8 @@ void Cinema::InputINN()
 		cout << "\n\nВведите ИНН кинотеатра: ";
 		getline(cin, inn);
 	} while (inn == "");
+
+	return;
 }
 
 void Cinema::InputAdress()
@@ -682,6 +723,8 @@ void Cinema::InputAdress()
 		cout << "\n\nВведите адрес кинотеатра: ";
 		getline(cin, address);
 	} while (address == "");
+
+	return;
 }
 
 void Cinema::InputRNM()
@@ -691,43 +734,19 @@ void Cinema::InputRNM()
 		cout << "\n\nВведите РНМ: ";
 		getline(cin, rnm);
 	} while (rnm == "");
-}
 
-bool loadingCompl;
-void PrintLoad()
-{
-	int i = 0;
-	do
-	{
-		std::cout << '.';
-		std::this_thread::sleep_for(0.3s);
-		i++;
-		if (i == 3)
-		{
-			i = 0;
-			cout << "\b \b\b \b\b \b";
-			std::this_thread::sleep_for(0.3s);
-		}
-	} while (!loadingCompl);
+	return;
 }
 
 void Cinema::NewHallCinema(int number_film)
 {
 	for (int i = 0; i < 9; i++)
 	{
-		system("cls");
-		/*cout << "\n\nОжидайте";
-		thread t(PrintLoad);
-		*/
-		loadingCompl = false;
-		films[number_film].rand[i] = "0\0";
+		films[number_film].rand[i] = "0";
 		films[number_film].mesta[i] = NewHall();
-		/*cout << "Успешно загенено";
-		_getch();
-		*/
-
-		loadingCompl = true;
 	}
+
+	return;
 }
 
 void Cinema::PriceInput(int num_film, int num)
@@ -735,7 +754,7 @@ void Cinema::PriceInput(int num_film, int num)
 	string temp, yuop;
 	do
 	{
-		system("cls");
+		NameOut();
 		cout << "Введите стоимость билета для сеанса в " << films[num_film].time[num] << ": ";
 		getline(cin, temp);	//Проверка на правильность ввода ???? заменить на ввод int
 		for (int y = 0; y < temp.size(); y++)
@@ -747,6 +766,8 @@ void Cinema::PriceInput(int num_film, int num)
 		}
 	} while (yuop == "");
 	films[num_film].price[num + 3] = films[num_film].price[num + 6] = films[num_film].price[num] = yuop;
+
+	return;
 }
 
 void Cinema::NameOut()
@@ -756,6 +777,9 @@ void Cinema::NameOut()
 		system("cls");
 		cout << "Кинотеатр '" << name << "'\n\n";
 	}
+	else
+		system("cls");
+
 	return;
 }
 
@@ -768,8 +792,6 @@ string Cinema::NewHall()
 		int num = rand() % 3;
 		temp = temp + to_string(num);
 	}
-	//cout << filmi[number_film].mesta[number];	//тест
-	//cout << filmi[number_film].mesta[(number_d - 1) * 3 + (number_t - 1)];	//тест
-	//_getch();
+
 	return temp;
 }
