@@ -203,7 +203,15 @@ int main()
 				}
 
 			} while (code.length() < 6);
-
+			int number = cinema.SearchBron(code);
+			if (number != -1)
+			{
+				
+			}
+			else
+			{
+				cout << "Код брони введен неверно!";
+			}
 
 		}
 		else if (menu.GetItem() == 3 || User::GetAdmin())

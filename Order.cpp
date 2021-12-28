@@ -404,12 +404,11 @@ void Order::Reserve()
 	PrintResult();
 
 	string kod = "\nЗа 30 минут до сеанса бронь аннулируется. При оплате заказа на кассе назовите код: ";
-
 	int x;
-
+	string doub;
 	srand(std::time(0));
 	x = rand() % 1000000 + 1;
-
+	doub = to_string(x);
 	int k = x, i = 0;
 
 	while (k > 0)
@@ -453,15 +452,30 @@ void Order::Reserve()
 		x = _getch();
 
 		if (x == 27)
+		{
 			menu.Escape();
+		}
+
 		else
+		{
 			x = 1;
+		}
 	} while (x != 1);
 
 	while (cinema->films[film - 1].mesta[time - 1 + (day - 1) * 3].find("4") != string::npos)
 	{
 		cinema->films[film - 1].mesta[time - 1 + (day - 1) * 3].replace(cinema->films[film - 1].mesta[time - 1 + (day - 1) * 3].find("4"), 1, "1");
 	}
+	cinema->bron[cinema->broni_number][1] = cinema->id_cinema;
+	cinema->bron[cinema->broni_number][2] = doub;
+	cinema->bron[cinema->broni_number][3] = cinema->films[film - 1].name;
+	cinema->bron[cinema->broni_number][4] = cinema->films[film - 1].time[time - 1 + (day - 1) * 3];
+	cinema->bron[cinema->broni_number][5] = "";			//места
+
+	//перезапись файла после бронирования билетов
+
+
+
 }
 
 void Order::ChooseAction()
@@ -507,8 +521,9 @@ void Order::ChooseAction()
 					Reserve();
 				}
 				else if (menu.GetItem() == 3)
+				{
 					ChoosePlace();
-
+				}
 			} while (menu.GetItem() < 0);
 		}
 	}
