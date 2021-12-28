@@ -15,6 +15,7 @@ private:
 	char seat;
 	int num;
 	int sale;
+	int sum;
 
 public:
 	int film;
@@ -34,7 +35,7 @@ public:
 	void PrintInfo();
 	void PrintResult();
 
-	void Check();
+	void Check(bool card);
 	void Tickets();
 	void Clean();
 
