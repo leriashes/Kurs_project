@@ -1151,21 +1151,9 @@ void Order::Check(bool card)
 			wcout << L"\u005C";
 			wcout << L"\u002F";
 		}
-
-		///}
 	}
-}
 
-void Order::CheckNal()
-{
-
-
-}
-
-void Order::CheckKarta()
-{
-
-
+	return;
 }
 
 void Order::Tickets()
