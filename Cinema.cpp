@@ -4,6 +4,19 @@
 #include "Time.h"
 #include "Menu.h"
 
+int Cinema::SearchBron(string code)
+{
+	for (int i = 0; i < broni_number; i++)
+	{
+		if (code == bron[i][1])
+		{
+			return i;
+		}
+	}
+	
+	return -1;
+}
+
 void Cinema::List_bron()
 {
 	for (int o = 0; o < broni_number; o++)

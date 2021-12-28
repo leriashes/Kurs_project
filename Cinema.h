@@ -32,6 +32,7 @@ private:
 	Film films[10];
 	
 public:
+	int SearchBron(string code);	//поиск брони по номеру
 	void List_bron();	//вывод всех бронирований
 	void ChangeName();	//измение названия кинотеатра
 	void ChangeAdress();	//измение адреса кинотеатра
