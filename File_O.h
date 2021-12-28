@@ -10,7 +10,7 @@ class File_O
 
 public:
 	void ReadBron(Cinema& cinema);
-
+	void WriteBron();
 	int error;
 	int kol_vo_film;	//перенести в кинотеатр?
 	string path;

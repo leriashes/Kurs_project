@@ -15,7 +15,7 @@ void File_O::ReadBron(Cinema& cinema) //считывание данных из файла бронирования
 {
     bool result = false;
     ifstream f1;
-
+    cinema.broni_number = 0;
     f1.open(path_bron);
     if (!(f1.is_open()))
     {
@@ -192,11 +192,7 @@ bool File_O::CheckPath()
     */
 }
 
-void substr(char* dest, char* source, int from, int length) {
-    strncpy(dest, source + from, length);
-    dest[length] = 0;
 
-}
 void File_O::Read(Cinema& cinema)
 {
     ifstream file(path);
@@ -205,7 +201,8 @@ void File_O::Read(Cinema& cinema)
     int i = 0;
     int j = 0;
     string temp;
-
+    cinema.cashiers_number = 0;
+    cinema.promo_number = 0;
     getline(file, temp);    //чтение id кинотеатра (если имеется)
     if (temp[0] == 'i' && temp[1] == 'd' && temp[2] == ':')
     {
@@ -302,7 +299,29 @@ void File_O::Read(Cinema& cinema)
     getline(file, cinema.otchet_vsego);     //чтение выручки за период
     getline(file, cinema.otchet_today);     //чтение выручки за сегодняшний день
     
+    bool generate = false;
+    time_t t;
+    std::time(&t);
 
+    int da = localtime(&t)->tm_mday;
+    int mo = localtime(&t)->tm_mon + 1;
+    int yea = localtime(&t)->tm_year + 1900;
+    string doub;
+
+    for (i = 0; i < 10; i++)
+    {
+        doub = doub + cinema.otchet_today[i];
+    }
+    if (doub == to_string(da) + '.' + to_string(mo) + '.' + to_string(yea))
+    {
+        generate = false;
+        cinema.otchet_today.erase(0, 11);
+    }
+    else
+    {
+        generate = true;
+        cinema.otchet_today = "0";
+    }
 
     //заполнение информации о фильмах
     do
@@ -328,7 +347,7 @@ void File_O::Read(Cinema& cinema)
                 getline(file, temp);
                 cinema.films[i].mesta[j] = cinema.films[i].mesta[j] + temp;
             }
-            if (cinema.films[i].rand[j][0] == '0')
+            if (cinema.films[i].rand[j][0] == '0' && generate == true)
             {
                 cinema.films[i].mesta[j] = cinema.NewHall();
                 Sleep(100);
@@ -357,7 +376,7 @@ bool File_O::CheckCompound()        //проверка форматирования текстового файла
     base.close();
     delete[] str;
 
-    if ((i - 10) % 134 == 0)            //форматирование верно
+    if (((i - 10) % 134 == 0) || ((i - 9) % 134 == 0))            //форматирование верно
     {
         kol_vo_film = (i - 10) / 134;
 		result = true;
