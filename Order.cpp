@@ -70,7 +70,7 @@ int Order::ChoosePlace()
 			cinema->films[film - 1].mesta[time - 1 + (day - 1) * 3].replace(cinema->films[film - 1].mesta[time - 1 + (day - 1) * 3].find("3"), 1, "0");
 		}
 	}
-	else
+	else if (film != 0)
 	{
 		ChooseAction();
 	}
@@ -317,7 +317,7 @@ void Order::Buy()
 					int change;
 					string str = "\nОплата прошла успешно! \n\nВаша сдача: ";
 				
-					change = sum - num * (cost + sale);
+					change = sum - num * (cost - sale);
 
 					int k = change, i = 0;
 
