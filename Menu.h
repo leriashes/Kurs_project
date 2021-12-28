@@ -1,21 +1,33 @@
 #pragma once
-#include "Kinoteatr.h"
+#include "Cinema.h"
+#include "File_O.h"
+#include "Time.h"
+#include "Order.h"
+
 class Menu
 {
 public:
-	int item_num;
-	int menu_number;
-	char menu_text[512];
+	int items_number;
+	int item;
 
 public:
+	bool admin;
+	Cinema* cinema;
+
 	Menu();
-	Menu(const char* menu_text,  int item_num);
+	Menu(int item_num);
 	~Menu();
 
-	void user_kassir();
-	void start_menu();
-	void print();
-	void input_number();
-	void file_choice(int k);
-	void spisok_kino(Kinoteatr kinoteatr);
+	void Cashier();
+	void Admin(File_O fileo);
+
+	void ChooseItem();
+	void File();	//перенести в файл?  убрать k?
+	void FilmList();	//в фильм
+	void Description(Order& order);	//в фильм или в заказ?
+
+	void Escape();
+	void ChangeProkat();
+
+	int GetItem();
 };

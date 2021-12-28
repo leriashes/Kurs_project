@@ -2,23 +2,28 @@
 #define _CRT_SECURE_NO_WARNINGS
 #include <fstream>
 #include <string>
-#include "Menu.h";
-#include "Kinoteatr.h";
+#include "Cinema.h";
 using namespace std;
 
-class File_O : public Menu, Kinoteatr
+class File_O
 {
-	
-public:
-	int error;
-	int kol_vo_film;
-	string path;
-	
 
-	void file_input();		//ввод пути для файла
-	void file_new();	//создание нового файла
-	int file_check(string path);	//проверка на сущестование
-	void file_read(string path);
-	int file_check_compound(string path);	//проверка форматирования файла
+public:
+	void ReadBron(Cinema& cinema);
+
+	int error;
+	int kol_vo_film;	//перенести в кинотеатр?
+	string path;
+	string path_bron = "bronirovanie.txt";
+
+	void InputPath();		//ввод пути для файла
+	void New(Cinema& cinema);	//создание нового файла   ??????
+	bool CheckPath();	//проверка на сущестование
+	void Read(Cinema& cinema);
+	bool CheckCompound();	//проверка форматирования файла
+	void Write(Cinema cinema);	//запись всех данных в файл
+	void Clean();
+
+	friend class Menu;
 };
 
