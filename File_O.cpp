@@ -213,9 +213,11 @@ void File_O::Read(Cinema& cinema)
                 cinema.id_cinema = cinema.id_cinema + temp[g];
             }
         }
+        getline(file, cinema.name); //чтение названи€ кинотеатра
     }
     else     //создание id файла
     {
+        cinema.name = temp;
         string str = "";
         for (int i = 0; i < 5; ++i)
         {
@@ -225,7 +227,7 @@ void File_O::Read(Cinema& cinema)
     }
 
     //заполнение информации о кинотеатре
-    getline(file, cinema.name);    //чтение названи€ кинотеатра
+        
     getline(file, cinema.address);    //чтение адреса кинотеатра
 
 	//???? читаем только одного ?????
@@ -298,7 +300,6 @@ void File_O::Read(Cinema& cinema)
 
     getline(file, cinema.otchet_vsego);     //чтение выручки за период
     getline(file, cinema.otchet_today);     //чтение выручки за сегодн€шний день
-    
     bool generate = false;
     time_t t;
     std::time(&t);
@@ -307,12 +308,13 @@ void File_O::Read(Cinema& cinema)
     int mo = localtime(&t)->tm_mon + 1;
     int yea = localtime(&t)->tm_year + 1900;
     string doub;
-
+    //cout << cinema.otchet_today.size();
+    //_getch();
     for (i = 0; i < 10; i++)
     {
         doub = doub + cinema.otchet_today[i];
     }
-    if (doub == to_string(da) + '.' + to_string(mo) + '.' + to_string(yea))
+    if (doub == (to_string(da) + '.' + to_string(mo) + '.' + to_string(yea)))
     {
         generate = false;
         cinema.otchet_today.erase(0, 11);
@@ -322,7 +324,7 @@ void File_O::Read(Cinema& cinema)
         generate = true;
         cinema.otchet_today = "0";
     }
-
+    i = 0;
     //заполнение информации о фильмах
     do
     {
@@ -356,7 +358,7 @@ void File_O::Read(Cinema& cinema)
         i++;
     } while (i < kol_vo_film);
 	cinema.films_number = i;
-
+    file.close();
     Write(cinema);
  
     return;
@@ -381,12 +383,19 @@ bool File_O::CheckCompound()        //проверка форматировани€ текстового файла
         kol_vo_film = (i - 10) / 134;
 		result = true;
     }
-
+    base.close();
 	return result;
 }
 
 void File_O::Write(Cinema cinema)
 {
+
+    time_t t;
+    std::time(&t);
+
+    int da = localtime(&t)->tm_mday;
+    int mo = localtime(&t)->tm_mon + 1;
+    int yea = localtime(&t)->tm_year + 1900;
 
     string path_cop = path;
     path_cop.resize(path_cop.size() - 4);
@@ -406,7 +415,7 @@ void File_O::Write(Cinema cinema)
     f.open(path);
     if (f)
     {
-        f << cinema.id_cinema << endl;      //запись id файла
+        f << "id: " << cinema.id_cinema << endl;      //запись id файла
         f << cinema.name << endl;    //запись названи€ кинотеатра в файл
         f << cinema.address << endl;  //запись адреса кинотеатра в файл
         //f << cinema.cashiers[0] << endl;    //запись кассиров
@@ -435,7 +444,11 @@ void File_O::Write(Cinema cinema)
         }
         f << endl;
         f << cinema.otchet_vsego << endl;     //запись выручки за весь период
-        f << cinema.otchet_today << endl;     //запись выручки за сегодн€шний день
+        /// <summary>
+        /// ѕ≈–≈ƒ≈Ћј“№ «јѕ»—№ ≈∆≈ƒЌ≈¬Ќќ√ќ ќ“„≈“ј
+        /// </summary>
+        /// <param name="cinema"></param>
+        f << to_string(da) << '.' << to_string(mo) << '.' << to_string(yea) << ': ' << cinema.otchet_today << endl;     //запись выручки за сегодн€шний день
 
         for (int i = 0; i < cinema.films_number; i++)
         {
