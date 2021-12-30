@@ -58,6 +58,7 @@ public:
 	void TimeAuto(int duration);
 	string Convert_Time(int time);
 	int DeConvert_Time(string time);
+	void ListSell();
 
 	void InputName();	//Ввод названия кинотеатра
 	void InputCashier();	//ввод ФИО кассира

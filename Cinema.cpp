@@ -293,7 +293,7 @@ void Cinema::ChangeFilm(int num_punkt, int num_film)
 	if (num_punkt == 0)
 	{
 		NameOut();
-		cout << "1) Название\n2) Продолжительность\n3) Возрастное ограничение\n4) Краткое описание\n5) Главные роли\n6) Режиссер\n7) Время сеансов\n8) Стоимость билетов";
+		cout << "1) Название\n2) Продолжительность\n3) Возрастное ограничение\n4) Краткое описание\n5) Главные роли\n6) Режиссер\n7) Время сеансов\n8) Стоимость билетов\n9) Номера зала";
 		cout << "\n\nВведите номер пункт для внесения изменений: ";
 	}
 	else if (num_punkt == 1 || num_punkt == -1)	//название фильма
@@ -615,7 +615,7 @@ void Cinema::ChangeFilm(int num_punkt, int num_film)
 			{
 				cout << (i + 1) << ") " << films[num_film].price[i] << "руб.  (" << films[num_film].time[i] << ")\n";
 			}
-			cout << "\n\nВыберите сеанс для редактирования стоиомости билета: ";
+			cout << "\n\nВыберите сеанс для редактирования стоимости билета: ";
 
 			int num;
 			do
@@ -631,49 +631,58 @@ void Cinema::ChangeFilm(int num_punkt, int num_film)
 	else if (num_punkt == 9 || num_punkt == -9)	//зал сеанса
 	{
 		NameOut();
-		int zals[9];
-		for (int o = 0; o < 9; o++)
+		if (films_number > 9)
 		{
-			zals[o] = o + 1;
+			cout << "Изменение зала невозможно\n\nНажмите любую клавишу для возврата в меню";
+			_getch();
 		}
-		for (int i = 0; i < 9; i++)
+		else
 		{
-			for (int u = 0; u < 9; u++)
-			{
-				if (zals[u] == atoi(films[i].number_zal.c_str()))
-				{
-					zals[u] = -20;
-				}
-			}
-		}
 
-		cout << "Доступные залы: ";
-		for (int y = 0; y < 9; y++)
-		{
-			if (zals[y] > 0)
+			int zals[9];
+			for (int o = 0; o < 9; o++)
 			{
-				cout << zals[y] << "   ";
+				zals[o] = o + 1;
 			}
-		}
-		
-		bool zall =  false;
-		int num;
-		cout << "\n\nВведите номер зала: ";
-		do
-		{
-			num = _getch();
-			if (num > '0' && num < '10')
+			for (int i = 0; i < 9; i++)
 			{
-				for (int t = 0; t < 9; t++)
+				for (int u = 0; u < 9; u++)
 				{
-					if (zals[t] == num - 48)
+					if (zals[u] == atoi(films[i].number_zal.c_str()))
 					{
-						zall = true;
+						zals[u] = -20;
 					}
 				}
 			}
-		} while (zall != true);
-		films[num_film].number_zal = to_string(num - 48);
+
+			cout << "Доступные залы: ";
+			for (int y = 0; y < 9; y++)
+			{
+				if (zals[y] > 0)
+				{
+					cout << zals[y] << "   ";
+				}
+			}
+
+			bool zall = false;
+			int num;
+			cout << "\n\nВведите номер зала: ";
+			do
+			{
+				num = _getch();
+				if (num > '0' && num < '10')
+				{
+					for (int t = 0; t < 9; t++)
+					{
+						if (zals[t] == num - 48)
+						{
+							zall = true;
+						}
+					}
+				}
+			} while (zall != true);
+			films[num_film].number_zal = to_string(num - 48);
+		}
 	}
 }
 
@@ -823,6 +832,30 @@ int Cinema::DeConvert_Time(string time)
 	int times;
 	times = (int(time[0]) - 48) * 10 * 60 + (int(time[1] - 48) * 60) + (int(time[3]) - 48) * 10 + (int(time[4]) - 48);
 	return times;
+}
+
+void Cinema::ListSell()
+{
+	int func;
+	do
+	{
+		system("cls");
+		cout << "Прибыль за сегодня: " << otchet_today;
+		cout << "\nПрибыль за все время: " << otchet_vsego;
+		cout << "\n\n1) Обнулить прибыль за сегодня\n2) Обнулись прибыль за все время\n\n0) Назад";
+		do
+		{
+			func = _getch();
+		} while (func < '0' || func > '2');
+		if (func == '1')
+		{
+			otchet_today = "0";
+		}
+		else if (func == '2')
+		{
+			otchet_vsego = "0";
+		}
+	} while (func != '0');
 }
 
 void Cinema::InputName()

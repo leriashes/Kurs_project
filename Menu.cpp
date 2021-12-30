@@ -199,10 +199,16 @@ void Menu::Description(Order& order)
 void Menu::Escape()
 {
 	if (cinema != NULL && cinema->name != "")
+	{
 		cinema->NameOut();
+	}
 	else
+	{
 		system("cls");
-	cout << "Вы уверены что хотите выйти? \nДа - esc, нет - любая клавиша.";
+	}
+	cout << "\nПрибыль за сегодня: " << cinema->otchet_today;
+	
+	cout << "\n\nВы уверены что хотите выйти? \nДа - esc, нет - любая клавиша.";
 	char choice = _getch();
 	if (choice == 27)
 		exit(0);

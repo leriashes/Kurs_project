@@ -765,8 +765,8 @@ void Order::Check(bool card)
 
 	int cost = atoi(cinema->films[film - 1].price[(day - 1) * 3 + time - 1].c_str());
 	
-	cinema->otchet_today = to_string(atoi(cinema->otchet_today.c_str()) + cost);
-	cinema->otchet_vsego = to_string(atoi(cinema->otchet_vsego.c_str()) + cost);
+	cinema->otchet_today = to_string(atoi(cinema->otchet_today.c_str()) + cost * num);
+	cinema->otchet_vsego = to_string(atoi(cinema->otchet_vsego.c_str()) + cost * num);
 
 	cout << cost - sale << ".00 X " << num << " ив";
 

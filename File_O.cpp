@@ -315,7 +315,7 @@ void File_O::Read(Cinema& cinema)
     if (doub == (to_string(da) + '.' + to_string(mo) + '.' + to_string(yea)))
     {
         generate = false;
-        cinema.otchet_today.erase(0, 11);
+        cinema.otchet_today.erase(0, 12);
     }
     else
     {
@@ -446,7 +446,7 @@ void File_O::Write(Cinema cinema)
         /// ѕ≈–≈ƒ≈Ћј“№ «јѕ»—№ ≈∆≈ƒЌ≈¬Ќќ√ќ ќ“„≈“ј
         /// </summary>
         /// <param name="cinema"></param>
-        f << to_string(da) << '.' << to_string(mo) << '.' << to_string(yea) << ': ' << cinema.otchet_today << endl;     //запись выручки за сегодн€шний день
+        f << to_string(da) << '.' << to_string(mo) << '.' << to_string(yea) << ": " << cinema.otchet_today << endl;     //запись выручки за сегодн€шний день
 
         for (int i = 0; i < cinema.films_number; i++)
         {
@@ -465,7 +465,7 @@ void File_O::Write(Cinema cinema)
                 f << cinema.films[i].price[j] << endl;   //запись стоиомсти билета
                 f << cinema.films[i].time[j] << endl;   //запись времени сеанса
                 f << cinema.films[i].rand[j] << endl;   //запись точки (флажка) генерации
-
+                    
                 for (int o = 0; o < 10; o++)
                 {
                     for (int y = 0; y < 10; y++)
