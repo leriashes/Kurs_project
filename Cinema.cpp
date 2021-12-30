@@ -602,9 +602,31 @@ void Cinema::ChangeFilm(int num_punkt, int num_film)
 	}
 	else if (num_punkt == 8 || num_punkt == -8)	//стоимость сеансов
 	{
-		PriceInput(num_film, 0);
-		PriceInput(num_film, 1);
-		PriceInput(num_film, 2);
+		if (num_punkt == -8)
+		{
+			PriceInput(num_film, 0);
+			PriceInput(num_film, 1);
+			PriceInput(num_film, 2);
+		}
+		else
+		{
+			system("cls");
+			for (int i = 0; i < 3; i++)
+			{
+				cout << (i + 1) << ") " << films[num_film].price[i] << "руб.  (" << films[num_film].time[i] << ")\n";
+			}
+			cout << "\n\nВыберите сеанс для редактирования стоиомости билета: ";
+
+			int num;
+			do
+			{
+				num = _getch();
+			} while (num < '0' && num >'3');
+			/*system("cls");
+			cout << "Текущая стоимость: " << films[num_film].price[num - 49] << "\n\n";*/
+			PriceInput(num_film, num - 49);
+		}
+
 	}
 	else if (num_punkt == 9 || num_punkt == -9)	//зал сеанса
 	{
