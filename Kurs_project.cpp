@@ -169,6 +169,7 @@ int main()
 					{
 						//order.ChooseAction();
 						order.Clean();
+						file_stream.Write(cinema);
 					}
 				}
 			}
