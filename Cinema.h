@@ -57,6 +57,7 @@ public:
 	int CheckTime(int time, int num_seans, int duration);
 	void TimeAuto(int duration);
 	string Convert_Time(int time);
+	int DeConvert_Time(string time);
 
 	void InputName();	//Ввод названия кинотеатра
 	void InputCashier();	//ввод ФИО кассира

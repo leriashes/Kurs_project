@@ -198,9 +198,9 @@ void User::Admin(Cinema &cinema, File_O &file_stream)
 							while (true)
 							{
 								cinema.ChangeFilm(0, num_film);
-								menu.items_number = 6;
+								menu.items_number = 8;
 								menu.ChooseItem();
-								if (menu.GetItem() > 0 && menu.GetItem() < 7)
+								if (menu.GetItem() > 0 && menu.GetItem() < 9)
 								{
 									cinema.ChangeFilm(menu.GetItem(), num_film);
 									file_stream.Write(cinema);

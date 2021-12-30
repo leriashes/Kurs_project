@@ -293,7 +293,7 @@ void Cinema::ChangeFilm(int num_punkt, int num_film)
 	if (num_punkt == 0)
 	{
 		NameOut();
-		cout << "1) Название\n2) Продолжительность\n3) Возрастное ограничение\n4) Краткое описание\n5) Главные роли\n6) Режиссер";
+		cout << "1) Название\n2) Продолжительность\n3) Возрастное ограничение\n4) Краткое описание\n5) Главные роли\n6) Режиссер\n7) Время сеансов\n8) Стоимость билетов";
 		cout << "\n\nВведите номер пункт для внесения изменений: ";
 	}
 	else if (num_punkt == 1 || num_punkt == -1)	//название фильма
@@ -402,7 +402,62 @@ void Cinema::ChangeFilm(int num_punkt, int num_film)
 			getline(cin, films[num_film].rejisser);
 		} while (films[num_film].rejisser == "");
 	}
-	else if (num_punkt == 7 || num_punkt == -7)	//время и стоимость сеансов
+	else if (num_punkt == 7)		//редактирование времени сеанса
+	{
+		system("cls");
+		cout << "Выберите время сеанса для редактирования: ";
+		for (int i = 0; i < 3; i++)
+		{
+			cout << "\n" << i + 1 << ") " << films[num_film].time[i];
+		}	
+		int num;
+		do
+		{
+			num = _getch();
+		} while (num < '0' || num > '3');
+		int time;
+		bool good = false;
+		system("cls");
+		cout << "Текущее время: " << films[num_film].time[num - 49];
+		do
+		{
+			cout << "\n\n\nВведите новое время сеанса: ";
+			int temp;
+			if (num - 48 == 1)
+			{
+				temp = 8 * 60;
+			}
+			else
+			{
+				temp = DeConvert_Time(films[num_film].time[num - 49]);
+			}
+
+			time = CheckTime(temp, num - 49, atoi(films[num_film].duration.c_str()));
+			int check;
+			if (num - 48 < 3)
+			{
+				check = DeConvert_Time(films[num_film].time[num - 49]);
+			}
+			else
+			{
+				check = 21 * 60;
+			}
+			if (time + atoi(films[num_film].duration.c_str()) + 15 <= check)
+			{
+				cout << "time = " << time;
+				cout << "\n\n CHECK: " << check;
+				_getch();
+				films[num_film].time[num - 49] = films[num_film].time[num - 49 + 3] = films[num_film].time[num - 49 + 6] = Convert_Time(time);
+				good = true;
+			}
+			else
+			{
+				cout << "\nВремя не удовлетворяет условию.\n\n";
+			}
+		} while (good != true);
+		 
+	}
+	else if (num_punkt == -7)	//время нового сеанса
 	{
 		if (num_punkt == -7)
 		{ 
@@ -689,6 +744,7 @@ int Cinema::CheckTime(int time, int num_seans, int duration)
 		{
 			cout << "Неверное формтирование. Повторите попытку";
 		}
+		cout << "\n\n";
 	} while (true);
 }
 
@@ -722,7 +778,12 @@ string Cinema::Convert_Time(int time)
 	int temp;
 	string ret;
 	//конвертация в часы и минуты с помощью деления, добавления знака :
-	ret = to_string(time / 60) + ":";
+	ret = to_string(time / 60);
+	if (atoi(ret.c_str()) < 10)
+	{
+		ret = "0" + ret;
+	}
+	ret = ret + ":";
 	temp = time - time / 60 * 60;
 	if (temp < 10)
 	{
@@ -733,6 +794,13 @@ string Cinema::Convert_Time(int time)
 		ret = ret + to_string(temp);
 	}
 	return ret;
+}
+
+int Cinema::DeConvert_Time(string time)
+{
+	int times;
+	times = (int(time[0]) - 48) * 10 * 60 + (int(time[1] - 48) * 60) + (int(time[3]) - 48) * 10 + (int(time[4]) - 48);
+	return times;
 }
 
 void Cinema::InputName()
