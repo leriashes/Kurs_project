@@ -174,7 +174,7 @@ int main()
 			}
 
 		}
-		else if (menu.GetItem() == 2 || !User::GetAdmin())
+		else if (menu.GetItem() == 2 && !User::GetAdmin())
 		{
 			cinema.NameOut();
 			cout << "Введите код заказа: ";

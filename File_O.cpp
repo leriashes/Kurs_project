@@ -52,7 +52,8 @@ void File_O::ReadBron(Cinema& cinema) //считывание данных из файла бронирования
             string original = cinema.bron[u][0];
             string tempura;
             int h = 1;
-            while (true) {
+            while (true) 
+            {
                 tempura = original.substr(0, original.find(sep));
                 if (tempura.size() != 0)   // можно добавить доп. проверку для строк из пробелов
                 {
@@ -68,7 +69,6 @@ void File_O::ReadBron(Cinema& cinema) //считывание данных из файла бронирования
                             }
                             cinema.broni_number++;
                         }
-                     
                     }
                     h++;
                 }
@@ -81,15 +81,13 @@ void File_O::ReadBron(Cinema& cinema) //считывание данных из файла бронирования
                     original = original.substr(tempura.size() + sep_size);
                 }
             }
-            
         }
-
-
 
         //cout << "Файл найден!";
         result = true;
     }
 
+    return;
 }
 
 void File_O::InputPath()
@@ -493,6 +491,7 @@ void File_O::Write(Cinema cinema)
         cout << "Проблемы с записью в файл";
     }
 
+    return;
 }
 
 void File_O::Clean()

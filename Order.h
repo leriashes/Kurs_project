@@ -38,7 +38,4 @@ public:
 	void Check(bool card);
 	void Tickets();
 	void Clean();
-
-	void CheckNal();
-	void CheckKarta();
 };
