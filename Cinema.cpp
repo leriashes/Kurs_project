@@ -4,11 +4,38 @@
 #include "Time.h"
 #include "Menu.h"
 
-int Cinema::SearchBron(string code)
+
+
+bool Cinema::CheckNameBron(int num)
+{
+	for (int u = 0; u < films_number; u++)
+	{
+		if (films[u].name == bron[num][4])
+		{
+
+			return true;
+		}
+	}
+	return false;
+}
+
+void Cinema::ChangeFilmBron(int num_punkt, string new_znach, string old_znach)
+{
+	for (int y = 0; y < broni_number; y++)
+	{
+		if (bron[y][num_punkt] == old_znach)
+		{
+			bron[y][num_punkt] = new_znach;
+		}
+	}
+	
+}
+
+int Cinema::SearchBron(string code)	//сверка номеров брони 
 {
 	for (int i = 0; i < broni_number; i++)
 	{
-		if (code == bron[i][1])
+		if (code == bron[i][2])
 		{
 			return i;
 		}
@@ -291,6 +318,7 @@ void Cinema::DelFilm(int num_film)
 
 void Cinema::ChangeFilm(int num_punkt, int num_film)
 {
+	string old;
 	if (num_punkt == 0)
 	{
 		NameOut();
@@ -299,6 +327,7 @@ void Cinema::ChangeFilm(int num_punkt, int num_film)
 	}
 	else if (num_punkt == 1 || num_punkt == -1)	//название фильма
 	{
+		old = films[num_film].name;
 		do
 		{
 			if (num_punkt == 1)
@@ -309,6 +338,7 @@ void Cinema::ChangeFilm(int num_punkt, int num_film)
 			cout << "Название фильма: ";
 			getline(cin, films[num_film].name);
 		} while (films[num_film].name == "");
+		ChangeFilmBron(4, films[num_film].name, old);
 	}
 	else if (num_punkt == 2 || num_punkt == -2)	//продожительность фильма
 	{
@@ -685,6 +715,7 @@ void Cinema::ChangeFilm(int num_punkt, int num_film)
 			films[num_film].number_zal = to_string(num - 48);
 		}
 	}
+	
 }
 
 int Cinema::CheckTime(int time, int num_seans, int duration)

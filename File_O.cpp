@@ -95,6 +95,45 @@ void File_O::ReadBron(Cinema& cinema) //считывание данных из файла бронирования
 
 void File_O::WriteBron(Cinema cinema)
 {
+    string path_cop = path_bron;
+    path_cop.resize(path_cop.size() - 4);
+    path_cop = path_cop + "_copy.txt\0";
+
+    //скопировать исходный файл
+    std::ifstream    inFile(path_bron);
+    std::ofstream    outFile(path_cop);
+
+    
+    outFile << inFile.rdbuf();
+    outFile.close();
+    inFile.close();
+    Clean(path_bron);
+
+    ofstream    outFile(path_cop);
+    ifstream f1;
+    cinema.broni_number = 0;
+    cinema.broni_zapis = 0;
+
+    f1.open(path_cop);
+    string str;
+    while (!f1.eof())
+    {
+        getline(f1, str);
+        str.resize(str.size() - 5);
+        if (str != cinema.id_cinema)
+        {   //запись в новый файл
+
+        }
+        //обрезать номера 
+
+    }
+
+    
+    
+    
+
+    //открыть копию файла, начать его прочитывать и копировать в файл, если номер фильма не совпадает с текущим открытым файлом
+
     std::ofstream f;                    //создаем поток 
     f.open(path_bron, std::ios::app);  // открываем файл для записи в конец
     for (int y = 0; y < cinema.broni_number; y++)
@@ -121,10 +160,10 @@ void File_O::WriteNewBron(Cinema& cinema)
     for (int y = (cinema.broni_number - cinema.broni_zapis); y < cinema.broni_number; y++)
     {
         f << endl;
-        for (int t = 1; t < 7; t++)
+        for (int t = 1; t < 8; t++)
         {
             f << cinema.bron[y][t];
-            if (t != 6)
+            if (t != 7)
             {
                 f << "|";
             }
@@ -449,7 +488,7 @@ void File_O::Write(Cinema cinema)
     inFile.close();
     outFile.close();
 
-    Clean();   //удаление всех данных из файла
+    Clean(path);   //удаление всех данных из файла
 
     //запись в файл
     ofstream  f;
@@ -537,10 +576,10 @@ void File_O::Write(Cinema cinema)
     return;
 }
 
-void File_O::Clean()
+void File_O::Clean(string pat)
 {
     fstream ofs;
-    ofs.open(path, ios::out | ios::trunc);
+    ofs.open(pat, ios::out | ios::trunc);
     ofs.close();
 
     return;

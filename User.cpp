@@ -204,6 +204,7 @@ void User::Admin(Cinema &cinema, File_O &file_stream)
 								{
 									cinema.ChangeFilm(menu.GetItem(), num_film);
 									file_stream.Write(cinema);
+									file_stream.WriteBron(cinema);
 								}
 								else if (menu.GetItem() == 0)
 								{

@@ -209,7 +209,14 @@ int main()
 			int number = cinema.SearchBron(code);
 			if (number != -1)
 			{
+				//сверка названий фильмов
+				if (cinema.CheckNameBron(number))
+				{
+
+					//сверка дней
+				}
 				
+
 			}
 			else
 			{

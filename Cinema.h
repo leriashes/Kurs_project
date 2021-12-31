@@ -18,7 +18,7 @@ private:
 	string address;	//адрес кинотеатра
 	string cashiers[5];	//кассиры кинотеатра		// сделать класс кассиров с информацией о них?
 	string id_cinema;
-	string bron[100][7];
+	string bron[100][8];
 
 	string inn;		//данные для чека
 	string rnm;		//данные для чека
@@ -34,6 +34,10 @@ private:
 	Film films[10];
 	
 public:
+	bool CheckNameBron(int num);
+	void BuyBron();		//проверка и выкуп билетов из брони
+	void ChangeFilmBron(int num_punkt, string new_znach, string old_znach);	//внесение изменений в информацию о фильме, если такие брони были
+
 	int SearchBron(string code);	//поиск брони по номеру
 	void List_bron();	//вывод всех бронирований
 	void ChangeName();	//измение названия кинотеатра
