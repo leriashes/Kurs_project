@@ -110,7 +110,8 @@ void Menu::Description(Order& order)
 	
 	cout << "\nНазвание: " << cinema->films[order.film - 1].name;
 	cout << "\n\nОписание: " << cinema->films[order.film - 1].short_description;
-	cout << "\n\nПродолжительность: " << cinema->films[order.film - 1].duration;
+	cout << "\n\nПродолжительность (мин.): " << cinema->films[order.film - 1].duration;
+	cout << "\n\nВозрастное ограничение: " << cinema->films[order.film - 1].age;
 	cout << "\n\nРежиссер(-ы): " << cinema->films[order.film - 1].rejisser;
 	cout << "\n\nВ главных ролях: " << cinema->films[order.film - 1].main_role;
 	

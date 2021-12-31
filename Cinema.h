@@ -10,6 +10,8 @@ class Cinema
 {
 public:
 	int films_number;	//количество фильмов в прокате
+	int broni_number = 0;	//количество забронированных билетов
+	int broni_zapis = 0;	//количество забронированных билетов под запись в файл
 
 private:
 	string name;	//название кинотеатра
@@ -25,7 +27,7 @@ private:
 	string promo[10][2];	//промокоды
 	int promo_number = 0;
 	int cashiers_number = 0;
-	int broni_number = 0;
+	
 
 
 	

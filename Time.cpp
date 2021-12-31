@@ -18,10 +18,23 @@ string Time::ConvTime(time_t t)
 	string week[7] = { "ом", "бр", "яп", "вр", "ор", "яа", "бя" };
 	tm* ptm = gmtime(&t);
 	if (ptm->tm_wday == 0)
+	{
 		ptm->tm_wday = 7;
-	string result = week[ptm->tm_wday - 1] + " " + to_string(ptm->tm_mday) + "." + to_string(ptm->tm_mon + 1) + "." + to_string(ptm->tm_year + 1900);
+	}
+	string result = week[ptm->tm_wday - 1] + " ";
+	if (to_string(ptm->tm_mday).size() == 1)
+	{
+		result = result + "0";
+	}
+	result = result + to_string(ptm->tm_mday) + ".";
+	if (to_string(ptm->tm_mon + 1).size() == 1)
+	{
+		result = result + "0";
+	}
+	result = result + to_string(ptm->tm_mon + 1) + "." + to_string(ptm->tm_year + 1900);
 	return result;
 }
+
 
 string Time::RetTime()
 {
@@ -29,6 +42,7 @@ string Time::RetTime()
 	std::tm* local = std::localtime(&t);
 	return "0";
 }
+
 
 void Time::PrintLoading()
 {

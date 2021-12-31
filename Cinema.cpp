@@ -125,6 +125,7 @@ void Cinema::ListCashier(int k)
 	}
 }
 
+
 void Cinema::ListPromo(int k)
 {
 	for (int y = 1; y <= promo_number; y++)

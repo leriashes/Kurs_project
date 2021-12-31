@@ -16,6 +16,8 @@ void File_O::ReadBron(Cinema& cinema) //считывание данных из файла бронирования
     bool result = false;
     ifstream f1;
     cinema.broni_number = 0;
+    cinema.broni_zapis = 0;
+
     f1.open(path_bron);
     if (!(f1.is_open()))
     {
@@ -88,6 +90,47 @@ void File_O::ReadBron(Cinema& cinema) //считывание данных из файла бронирования
     }
 
     return;
+}
+
+
+void File_O::WriteBron(Cinema cinema)
+{
+    std::ofstream f;                    //создаем поток 
+    f.open(path_bron, std::ios::app);  // открываем файл для записи в конец
+    for (int y = 0; y < cinema.broni_number; y++)
+    {
+        f << endl;
+        for (int t = 1; t < 7; t++)
+        {
+            f << cinema.bron[y][t];
+            if (t != 6)
+            {
+                f << "|";
+            }
+        }
+        //f << cinema.broni_number;
+    }
+    //cinema.broni_number = 0;
+    f.close();
+}
+
+void File_O::WriteNewBron(Cinema& cinema)
+{
+    std::ofstream f;                    //создаем поток 
+    f.open(path_bron, std::ios::app);  // открываем файл для записи в конец
+    for (int y = (cinema.broni_number - cinema.broni_zapis); y < cinema.broni_number; y++)
+    {
+        f << endl;
+        for (int t = 1; t < 7; t++)
+        {
+            f << cinema.bron[y][t];
+            if (t != 6)
+            {
+                f << "|";
+            }
+        }
+    }
+    cinema.broni_zapis = 0;
 }
 
 void File_O::InputPath()

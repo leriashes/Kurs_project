@@ -462,7 +462,15 @@ void Order::Reserve()
 			x = 1;
 		}
 	} while (x != 1);
-
+	int o = 0;
+	string bronka = "";
+	for (int t = 0; t < 100; t++)
+	{
+		if (cinema->films[film - 1].mesta[time - 1 + (day - 1) * 3][t] == '4')
+		{
+			bronka = bronka + to_string(t) + " ";
+		}
+	}
 	while (cinema->films[film - 1].mesta[time - 1 + (day - 1) * 3].find("4") != string::npos)
 	{
 		cinema->films[film - 1].mesta[time - 1 + (day - 1) * 3].replace(cinema->films[film - 1].mesta[time - 1 + (day - 1) * 3].find("4"), 1, "1");
@@ -470,12 +478,14 @@ void Order::Reserve()
 	cinema->bron[cinema->broni_number][1] = cinema->id_cinema;
 	cinema->bron[cinema->broni_number][2] = doub;
 	cinema->bron[cinema->broni_number][3] = cinema->films[film - 1].name;
-	cinema->bron[cinema->broni_number][4] = cinema->films[film - 1].time[time - 1 + (day - 1) * 3];
-	cinema->bron[cinema->broni_number][5] = "";			//места
-
+	cinema->bron[cinema->broni_number][4] = cinema->films[film - 1].time[time - 1];
+	string temp = Time::RetDate(day - 1);
+	temp.erase(0, 3);
+	cinema->bron[cinema->broni_number][5] = temp;			//дата
+	cinema->bron[cinema->broni_number][6] = bronka;			//места
+	cinema->broni_zapis = cinema->broni_zapis + 1;
+	cinema->broni_number = cinema->broni_number + 1;
 	//перезапись файла после бронирования билетов
-
-
 
 }
 
@@ -1214,7 +1224,7 @@ void Order::Tickets()
 		for (int j = 0; j < 39; j++)
 			printf("-");
 	}
-
+	
 	return;
 }
 
