@@ -10,13 +10,15 @@ class Cinema
 {
 public:
 	int films_number;	//количество фильмов в прокате
+	int broni_number = 0;	//количество забронированных билетов
+	int broni_zapis = 0;	//количество забронированных билетов под запись в файл
 
 private:
 	string name;	//название кинотеатра
 	string address;	//адрес кинотеатра
 	string cashiers[5];	//кассиры кинотеатра		// сделать класс кассиров с информацией о них?
 	string id_cinema;
-	string bron[100][7];
+	string bron[100][8];
 
 	string inn;		//данные для чека
 	string rnm;		//данные для чека
@@ -25,13 +27,17 @@ private:
 	string promo[10][2];	//промокоды
 	int promo_number = 0;
 	int cashiers_number = 0;
-	int broni_number = 0;
+	
 
 
 	
 	Film films[10];
 	
 public:
+	bool CheckNameBron(int num);
+	void BuyBron();		//проверка и выкуп билетов из брони
+	void ChangeFilmBron(int num_punkt, string new_znach, string old_znach);	//внесение изменений в информацию о фильме, если такие брони были
+
 	int SearchBron(string code);	//поиск брони по номеру
 	void List_bron();	//вывод всех бронирований
 	void ChangeName();	//измение названия кинотеатра
@@ -58,6 +64,7 @@ public:
 	void TimeAuto(int duration);
 	string Convert_Time(int time);
 	int DeConvert_Time(string time);
+	void ListSell();
 
 	void InputName();	//Ввод названия кинотеатра
 	void InputCashier();	//ввод ФИО кассира

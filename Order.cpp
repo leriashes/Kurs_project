@@ -462,17 +462,33 @@ void Order::Reserve()
 			x = 1;
 		}
 	} while (x != 1);
-
+	int o = 0;
+	string bronka = "";
+	for (int t = 0; t < 100; t++)
+	{
+		if (cinema->films[film - 1].mesta[time - 1 + (day - 1) * 3][t] == '4')
+		{
+			bronka = bronka + to_string(t) + " ";
+		}
+	}
 	while (cinema->films[film - 1].mesta[time - 1 + (day - 1) * 3].find("4") != string::npos)
 	{
 		cinema->films[film - 1].mesta[time - 1 + (day - 1) * 3].replace(cinema->films[film - 1].mesta[time - 1 + (day - 1) * 3].find("4"), 1, "1");
 	}
+	string temp;
 	cinema->bron[cinema->broni_number][1] = cinema->id_cinema;
 	cinema->bron[cinema->broni_number][2] = doub;
 	cinema->bron[cinema->broni_number][3] = cinema->films[film - 1].name;
-	cinema->bron[cinema->broni_number][4] = cinema->films[film - 1].time[time - 1 + (day - 1) * 3];
-	cinema->bron[cinema->broni_number][5] = "";			//места
-
+	temp = Time::RetDate(0);
+	temp.erase(0, 3);
+	cinema->bron[cinema->broni_number][4] = temp;	//текущая дата
+	cinema->bron[cinema->broni_number][5] = cinema->films[film - 1].time[time - 1];
+	temp = Time::RetDate(day - 1);
+	temp.erase(0, 3);
+	cinema->bron[cinema->broni_number][6] = temp;			//дата
+	cinema->bron[cinema->broni_number][7] = bronka;			//места
+	cinema->broni_zapis = cinema->broni_zapis + 1;
+	cinema->broni_number = cinema->broni_number + 1;
 	//перезапись файла после бронирования билетов
 	film = 0;
 
@@ -765,8 +781,8 @@ void Order::Check(bool card)
 
 	int cost = atoi(cinema->films[film - 1].price[(day - 1) * 3 + time - 1].c_str());
 	
-	cinema->otchet_today = to_string(atoi(cinema->otchet_today.c_str()) + cost);
-	cinema->otchet_vsego = to_string(atoi(cinema->otchet_vsego.c_str()) + cost);
+	cinema->otchet_today = to_string(atoi(cinema->otchet_today.c_str()) + cost * num);
+	cinema->otchet_vsego = to_string(atoi(cinema->otchet_vsego.c_str()) + cost * num);
 
 	cout << cost - sale << ".00 X " << num << " ШТ";
 
@@ -1214,7 +1230,7 @@ void Order::Tickets()
 		for (int j = 0; j < 39; j++)
 			printf("-");
 	}
-
+	
 	return;
 }
 

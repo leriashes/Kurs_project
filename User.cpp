@@ -198,12 +198,13 @@ void User::Admin(Cinema &cinema, File_O &file_stream)
 							while (true)
 							{
 								cinema.ChangeFilm(0, num_film);
-								menu.items_number = 8;
+								menu.items_number = 9;
 								menu.ChooseItem();
-								if (menu.GetItem() > 0 && menu.GetItem() < 9)
+								if (menu.GetItem() > 0 && menu.GetItem() < 10)
 								{
 									cinema.ChangeFilm(menu.GetItem(), num_film);
 									file_stream.Write(cinema);
+									file_stream.WriteBron(cinema);
 								}
 								else if (menu.GetItem() == 0)
 								{
@@ -369,8 +370,11 @@ void User::Admin(Cinema &cinema, File_O &file_stream)
 							order.Clean();
 						}
 					}
-
+					file_stream.WriteNewBron(cinema);
+					cinema.broni_zapis = 0;
+					//file_stream.WriteBron(cinema);
 					file_stream.Write(cinema);
+					
 					//Аннулирование билета
 					//вывод списка фильмов
 					//вывод даты времени
@@ -415,6 +419,12 @@ void User::Admin(Cinema &cinema, File_O &file_stream)
 					file_stream.Write(cinema);
 				}
 			}
+		}
+		else if (menu.GetItem() == 8)
+		{
+			system("cls");
+			cinema.ListSell();
+			file_stream.Write(cinema);
 		}
 		else if (menu.GetItem() == 0)
 		{

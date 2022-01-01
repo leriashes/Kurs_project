@@ -69,7 +69,7 @@ int main()
 
 					Time::loadingComplete = false;
 					file_stream.Read(cinema);
-					//file_stream.ReadBron(cinema);
+					file_stream.ReadBron(cinema);
 					Time::loadingComplete = true;
 					t.join();
 				}
@@ -168,8 +168,11 @@ int main()
 						//order.ChooseAction();
 						order.Clean();
 						file_stream.Write(cinema);
+						file_stream.WriteNewBron(cinema);
 					}
 				}
+				
+
 			}
 
 		}
@@ -204,7 +207,14 @@ int main()
 			int number = cinema.SearchBron(code);
 			if (number != -1)
 			{
+				//сверка названий фильмов
+				if (cinema.CheckNameBron(number))
+				{
+
+					//сверка дней
+				}
 				
+
 			}
 			else
 			{

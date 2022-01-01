@@ -10,7 +10,8 @@ class File_O
 
 public:
 	void ReadBron(Cinema& cinema);
-	void WriteBron();
+	void WriteBron(Cinema& cinema);
+	void WriteNewBron(Cinema& cinema);
 	int error;
 	int kol_vo_film;	//перенести в кинотеатр?
 	string path;
@@ -22,7 +23,7 @@ public:
 	void Read(Cinema& cinema);
 	bool CheckCompound();	//проверка форматирования файла
 	void Write(Cinema cinema);	//запись всех данных в файл
-	void Clean();
+	void Clean(string pat);
 
 	friend class Menu;
 };
