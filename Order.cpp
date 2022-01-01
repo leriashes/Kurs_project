@@ -474,7 +474,7 @@ void Order::Reserve()
 	cinema->bron[cinema->broni_number][5] = "";			//места
 
 	//перезапись файла после бронирования билетов
-
+	film = 0;
 
 
 }
