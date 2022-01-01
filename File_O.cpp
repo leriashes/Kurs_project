@@ -37,7 +37,6 @@ void File_O::ReadBron(Cinema& cinema) //считывание данных из файла бронировани€
         int i = 0;
         while (!f1.eof())   //узнать количество строк в файле
         {
-
             getline(f1, str);
             i++;
         }
@@ -47,7 +46,7 @@ void File_O::ReadBron(Cinema& cinema) //считывание данных из файла бронировани€
         for (int u = 0; u < i; u++)
         {
             getline(f1, cinema.bron[u][0]);
-            string rez[7];
+            string rez[8];
             //разбор брони на составл€ющие
             string sep = "|";   // строка или символ разделитель
             size_t sep_size = sep.size();
@@ -61,7 +60,7 @@ void File_O::ReadBron(Cinema& cinema) //считывание данных из файла бронировани€
                 {
                     rez[h] = "";
                     rez[h] = tempura;
-                    if (h == 6)
+                    if (h == 7)
                     {
                         if ((rez[1] + "\0") == cinema.id_cinema)
                         {
@@ -84,7 +83,7 @@ void File_O::ReadBron(Cinema& cinema) //считывание данных из файла бронировани€
                 }
             }
         }
-
+        f1.close();
         //cout << "‘айл найден!";
         result = true;
     }
@@ -93,7 +92,7 @@ void File_O::ReadBron(Cinema& cinema) //считывание данных из файла бронировани€
 }
 
 
-void File_O::WriteBron(Cinema cinema)
+void File_O::WriteBron(Cinema& cinema)
 {
     string path_cop = path_bron;
     path_cop.resize(path_cop.size() - 4);
@@ -109,48 +108,35 @@ void File_O::WriteBron(Cinema cinema)
     inFile.close();
     Clean(path_bron);
 
-    ofstream    outFile(path_cop);
+    ofstream    outFiles(path_bron);
     ifstream f1;
-    cinema.broni_number = 0;
-    cinema.broni_zapis = 0;
-
+    int num = 0;
     f1.open(path_cop);
-    string str;
+    string str, write;
     while (!f1.eof())
     {
         getline(f1, str);
+        write = str;
         str.resize(str.size() - 5);
         if (str != cinema.id_cinema)
         {   //запись в новый файл
-
+            if (num != 0)
+            {
+                outFiles << endl;
+            }
+            outFiles << write;
+            num++;
         }
         //обрезать номера 
-
     }
-
-    
-    
-    
-
-    //открыть копию файла, начать его прочитывать и копировать в файл, если номер фильма не совпадает с текущим открытым файлом
-
-    std::ofstream f;                    //создаем поток 
-    f.open(path_bron, std::ios::app);  // открываем файл дл€ записи в конец
-    for (int y = 0; y < cinema.broni_number; y++)
+    if (cinema.broni_number != 0)
     {
-        f << endl;
-        for (int t = 1; t < 7; t++)
-        {
-            f << cinema.bron[y][t];
-            if (t != 6)
-            {
-                f << "|";
-            }
-        }
-        //f << cinema.broni_number;
+        outFiles << endl;
     }
-    //cinema.broni_number = 0;
-    f.close();
+    outFiles.close();
+    f1.close();
+    cinema.broni_zapis = cinema.broni_number;
+    WriteNewBron(cinema);
 }
 
 void File_O::WriteNewBron(Cinema& cinema)
@@ -159,7 +145,10 @@ void File_O::WriteNewBron(Cinema& cinema)
     f.open(path_bron, std::ios::app);  // открываем файл дл€ записи в конец
     for (int y = (cinema.broni_number - cinema.broni_zapis); y < cinema.broni_number; y++)
     {
-        f << endl;
+        if (y != 0)
+        {
+            f << endl;
+        }
         for (int t = 1; t < 8; t++)
         {
             f << cinema.bron[y][t];
@@ -169,6 +158,7 @@ void File_O::WriteNewBron(Cinema& cinema)
             }
         }
     }
+    f.close();
     cinema.broni_zapis = 0;
 }
 
@@ -261,6 +251,7 @@ bool File_O::CheckPath()
     }
     else 
 	{
+        f1.close();
         //cout << "‘айл найден!";
         result = true;
     }
@@ -463,7 +454,6 @@ bool File_O::CheckCompound()        //проверка форматировани€ текстового файла
         kol_vo_film = (i - 10) / 134;
 		result = true;
     }
-    base.close();
 	return result;
 }
 

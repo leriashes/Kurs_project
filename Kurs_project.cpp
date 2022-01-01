@@ -72,8 +72,6 @@ int main()
 					file_stream.ReadBron(cinema);
 					Time::loadingComplete = true;
 					t.join();
-
-					_getch();
 				}
 				else
 				{

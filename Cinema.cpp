@@ -25,6 +25,10 @@ void Cinema::ChangeFilmBron(int num_punkt, string new_znach, string old_znach)
 	{
 		if (bron[y][num_punkt] == old_znach)
 		{
+			cout << "Совпадение найдено!!!";
+			cout << new_znach;
+			cout << old_znach;
+			_getch();
 			bron[y][num_punkt] = new_znach;
 		}
 	}
