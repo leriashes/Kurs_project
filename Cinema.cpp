@@ -76,30 +76,37 @@ bool Cinema::CheckPositionBron(int num)
 						{
 							result = false;
 						}
+						/*
 						else
 						{
 							cout << "3";
 							_getch();
 						}
+						*/
 					}
 				}
+				/*
 				else
 				{
 					cout << "2";
 					_getch();
 				}
+				*/
 			}
 		
 		}
+		/*
 		else
 		{
 			cout << "1";
 			_getch();
 		}
+		*/
 
 	}
 	if (result == true)
 	{
+		//удаление из файла 
 		return true;
 		//продаем билеты. удаляем бронь
 	}
@@ -153,9 +160,11 @@ void Cinema::ChangeTimeFilmBron(string NameFilm, string NewTime, string OldTime)
 			if (bron[y][5] == OldTime)
 			{
 				bron[y][5] = NewTime;
+				/*
 				cout << "НАЙДЕНО!!!";
 				cout << bron[y][5];
 				_getch();
+				*/
 			}
 		}
 	}
@@ -163,6 +172,8 @@ void Cinema::ChangeTimeFilmBron(string NameFilm, string NewTime, string OldTime)
 
 void Cinema::DelBron(int num)
 {
+
+
 	for (int g = num; g < broni_number - 1; g++)
 	{
 		for (int j = 1; j < 8; j++)

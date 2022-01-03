@@ -220,6 +220,12 @@ int main()
 						if (cinema.CheckPositionBron(number))
 						{
 							cout << "ПРОДАЕМ!!! и удаляем из брони";
+							
+									//изменение рассадки в файле
+							cinema.DelBron(number);		//удаление брони из списка
+							file_stream.Write(cinema);
+							file_stream.WriteBron(cinema);
+
 							_getch();
 						}
 					}

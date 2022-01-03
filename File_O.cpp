@@ -114,12 +114,12 @@ void File_O::WriteBron(Cinema& cinema)
     */
 
     if (remove(path_bron.c_str()) != 0)             // удаление файла file.txt
-    {
-        std::cout << "Ошибка удаления файла\n";
+    {   
+        //std::cout << "Ошибка удаления файла\n";
     }
     else
     {
-        std::cout << "Файл успешно удалён\n";
+        //std::cout << "Файл успешно удалён\n";
     }
     //_getch();
 
