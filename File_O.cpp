@@ -452,6 +452,7 @@ void File_O::Read(Cinema& cinema)
     getline(file, old_date);
 
     i = 0;
+    int sdvig = 0;
     //заполнение информации о фильмах
     do
     {
@@ -471,7 +472,7 @@ void File_O::Read(Cinema& cinema)
             {
                 getline(file, cinema.films[i].date[j / 3]);
             }
-            int sdvig = 0;
+            
             if (j == 3)
             {
                 if (old_date == Time::RetDate(0, 1))
@@ -492,8 +493,6 @@ void File_O::Read(Cinema& cinema)
                 else
                 {
                     cout << old_date;
-
-
                     sdvig = 3;
                     cout << "3";
                     cout << Time::RetDate(2, 1);
@@ -511,19 +510,15 @@ void File_O::Read(Cinema& cinema)
                 getline(file, temp);
                 cinema.films[i].mesta[j] = cinema.films[i].mesta[j] + temp;
             }
-            if (sdvig == 0)
+            if (j == 8)
             {
-
-            }
-            else if (sdvig = 1)
-            {
-                if (j == 8)
+                cout << "\n\n" << sdvig;
+                if (sdvig == 1)
                 {
-                    cout << cinema.films[i].mesta[0];
-
+                    //cout << cinema.films[i].mesta[0];
+                    //cout << cinema.films[i].mesta[0];
+                    //_getch();
                     cinema.films[i].mesta[0] = cinema.films[i].mesta[3];
-                    cinema.films[i].mesta[0];
-                    _getch();
                     cinema.films[i].mesta[1] = cinema.films[i].mesta[4];
                     cinema.films[i].mesta[2] = cinema.films[i].mesta[5];
 
@@ -531,38 +526,42 @@ void File_O::Read(Cinema& cinema)
                     cinema.films[i].mesta[4] = cinema.films[i].mesta[7];
                     cinema.films[i].mesta[5] = cinema.films[i].mesta[8];
 
+                    /*
                     for (int k = 6; k < 9; k++)
                     {
                         cinema.films[i].mesta[k] = cinema.NewHall();
                     }
+                    */
                 }
-            }
-            else if (sdvig = 2)
-            {
-                if (j == 8)
+                else if (sdvig == 2)
                 {
                     cinema.films[i].mesta[0] = cinema.films[i].mesta[6];
                     cinema.films[i].mesta[1] = cinema.films[i].mesta[7];
                     cinema.films[i].mesta[2] = cinema.films[i].mesta[8];
-
-                    for(int k = 3; k < 9; k++)
+                    /*
+                    for (int k = 3; k < 9; k++)
                     {
                         cinema.films[i].mesta[k] = cinema.NewHall();
                     }
+                    */
                 }
-            }
-            else if (sdvig == 3)
-            {
-                if (j == 8)
+                /*else if (sdvig == 3)
                 {
                     for (int k = 0; k < 9; k++)
                     {
-                        cout << cinema.films[i].mesta[k];
-                        cinema.films[i].mesta[k] = cinema.NewHall();
-                        cout << cinema.films[i].mesta[k];
+                        //cout << cinema.films[i].mesta[k];
+                        
+                        //cout << cinema.films[i].mesta[k];
                     }
                 }
+                */
+                for (int l = (3 - sdvig) * 3; l < 9; l++)
+                {
+                    cinema.films[i].mesta[l] = cinema.NewHall();
+
+                }
             }
+              
             /*if (cinema.films[i].rand[j][0] == '0' && generate == true)
             {
                 cinema.films[i].mesta[j] = cinema.NewHall();
