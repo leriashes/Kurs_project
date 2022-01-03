@@ -138,8 +138,17 @@ void Menu::Description(Order& order)
 
 			for (int j = 0; j < 3; j++)
 			{
-
-				cout << "\n                " << cinema->films[order.film - 1].time[3 * i + j] << "    " << cinema->films[order.film - 1].price[3 * i + j] << " руб.";
+				if (i == 0)
+				{
+					if (cinema->DeConvert_Time(cinema->films[order.film - 1].time[3 * i + j]) > cinema->DeConvert_Time(Time::RetTime()))
+					{
+						cout << "\n                " << cinema->films[order.film - 1].time[3 * i + j] << "    " << cinema->films[order.film - 1].price[3 * i + j] << " руб.";
+					}
+				}
+				else
+				{
+					cout << "\n                " << cinema->films[order.film - 1].time[3 * i + j] << "    " << cinema->films[order.film - 1].price[3 * i + j] << " руб.";
+				}
 			}
 		}
 
@@ -147,17 +156,44 @@ void Menu::Description(Order& order)
 		{
 
 			cout << "\n\n1) " << Time::RetDate(0, 0) << "\n2) " << Time::RetDate(1, 0) << "\n3) " << Time::RetDate(2, 0) << "\n\nВыберите дату: ";
+			items_number = 3;
 		}
 		else
 		{
 			cout << "\n\n";
+			int k = 0;
 			for (int i = 0; i < 3; i++)
 			{
-				cout << "\n" << (i + 1) << ") " << cinema->films[order.film - 1].time[(order.day - 1) * 3 + i];
+				if (order.day == 1)
+				{
+					if (cinema->DeConvert_Time(cinema->films[order.film - 1].time[(order.day - 1) * 3 + i]) > cinema->DeConvert_Time(Time::RetTime()))
+					{
+						k++;
+						cout << k << ") " << cinema->films[order.film - 1].time[(order.day - 1) * 3 + i] << "\n";
+					}
+					items_number = k;
+				}
+				else
+				{
+					cout << (i + 1) << ") " << cinema->films[order.film - 1].time[(order.day - 1) * 3 + i] << "\n";
+					items_number = k = 3;
+			
+				}
+				//cout << "\n" << (i + 1) << ") " << cinema->films[order.film - 1].time[(order.day - 1) * 3 + i];
 			}
-			cout << "\n\nВыберите время: ";
+			if (k != 0)
+			{
+				cout << "\n\nВыберите время: ";
+			}
+			else
+			{
+				cout << "Сеансы на данный фильм сегодня закончились.\nНажмите \"0\" для возврата в меню выбор даты";
+
+			}
+			
+			
 		}
-		items_number = 3;
+		
 	}
 	else
 	{

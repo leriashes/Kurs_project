@@ -44,7 +44,20 @@ string Time::RetTime()
 {
 	std::time_t t = std::time(0);
 	std::tm* local = std::localtime(&t);
-	return "0";
+
+	string itog;
+	if (to_string(local->tm_hour).size() == 1)
+	{
+		itog = "0";
+	}
+	itog = itog + to_string(local->tm_hour) + ":";
+	if (to_string(local->tm_min).size() == 1)
+	{
+		itog = itog + "0";
+	}
+
+	itog = itog + to_string(local->tm_min);
+	return itog;
 }
 
 

@@ -39,7 +39,6 @@ bool Cinema::CheckPositionBron(int num)
 {
 	//разложить места на порядковые места
 	string temp = bron[num][7];
-	//std::string myText("some-text-to-tokenize");
 	std::istringstream iss(temp);
 	std::string token;
 	int i = 0;
@@ -64,11 +63,11 @@ bool Cinema::CheckPositionBron(int num)
 	//проверка на текущих местах
 	for (int r = 0; r < 3; r++)
 	{
-		if (bron[num][6] == films[q].date[r])
+		if (bron[num][6] == films[q].date[r])	//проверка даты
 		{
 			for (int p = 0; p < 3; p++)
 			{
-				if (films[q].time[p] == bron[num][5])
+				if (films[q].time[p] == bron[num][5])	//проверка времени
 				{
 					for (int f = 0; f < i; f++)
 					{
