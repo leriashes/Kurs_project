@@ -478,24 +478,23 @@ void File_O::Read(Cinema& cinema)
                 if (old_date == Time::RetDate(0, 1))
                 {
                     sdvig = 2;
-                    cout << "2";
+                    //cout << "2";
                 }
                 else if (old_date == Time::RetDate(1, 1))
                 {
                     sdvig = 1;
-                    cout << "1";
+                    //cout << "1";
                 }
                 else if (old_date == Time::RetDate(2, 1))
                 {
                     sdvig = 0;
-                    cout << "0";
+                    //cout << "0";
                 }
                 else
                 {
-                    cout << old_date;
                     sdvig = 3;
-                    cout << "3";
-                    cout << Time::RetDate(2, 1);
+                    //cout << "3";
+                    //cout << Time::RetDate(2, 1);
                 }
             }
             

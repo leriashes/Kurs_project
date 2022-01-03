@@ -161,6 +161,18 @@ void Cinema::ChangeTimeFilmBron(string NameFilm, string NewTime, string OldTime)
 	}
 }
 
+void Cinema::DelBron(int num)
+{
+	for (int g = num; g < broni_number - 1; g++)
+	{
+		for (int j = 1; j < 8; j++)
+		{
+			bron[g][j] = bron[g + 1][j];
+		}
+	}
+	broni_number = broni_number - 1;
+}
+
 int Cinema::SearchBron(string code)	//сверка номеров брони 
 {
 	for (int i = 0; i < broni_number; i++)

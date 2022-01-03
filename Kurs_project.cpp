@@ -65,14 +65,12 @@ int main()
 					f = false;
 					system("cls");
 					cout << "Идёт считывание данных из файла. \n\nОжидайте";
-					//thread t(Time::PrintLoading);
-
+					thread t(Time::PrintLoading);
 					Time::loadingComplete = false;
 					file_stream.Read(cinema);
 					file_stream.ReadBron(cinema);
 					Time::loadingComplete = true;
-					_getch();
-					//t.join();
+					t.join();
 				}
 				else
 				{
@@ -221,7 +219,7 @@ int main()
 						_getch();
 						if (cinema.CheckPositionBron(number))
 						{
-							cout << "ПРОДАЕМ!!!";
+							cout << "ПРОДАЕМ!!! и удаляем из брони";
 							_getch();
 						}
 					}

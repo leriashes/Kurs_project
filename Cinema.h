@@ -41,6 +41,7 @@ public:
 	void BuyBron();		//проверка и выкуп билетов из брони
 	void ChangeNameFilmBron(string new_znach, string old_znach);	//внесение изменений в информацию о фильме, если такие брони были
 	void ChangeTimeFilmBron(string NameFilm, string NewTime, string OldTime);
+	void DelBron(int num);
 
 	int SearchBron(string code);	//поиск брони по номеру
 	void List_bron();	//вывод всех бронирований
