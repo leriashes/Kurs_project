@@ -82,7 +82,9 @@ void File_O::ReadBron(Cinema& cinema) //считывание данных из файла бронировани€
             }
         }
         f1.close();
+        
         //cout << "‘айл найден!";
+        WriteBron(cinema);
         result = true;
     }
 
@@ -114,12 +116,12 @@ void File_O::WriteBron(Cinema& cinema)
     */
 
     if (remove(path_bron.c_str()) != 0)             // удаление файла file.txt
-    {
-        std::cout << "ќшибка удалени€ файла\n";
+    {   
+        //std::cout << "ќшибка удалени€ файла\n";
     }
     else
     {
-        std::cout << "‘айл успешно удалЄн\n";
+        //std::cout << "‘айл успешно удалЄн\n";
     }
     //_getch();
 
@@ -142,18 +144,65 @@ void File_O::WriteBron(Cinema& cinema)
             _getch();
             */
             if (str != cinema.id_cinema)
-            {   //запись в новый файл
-                if (num != 0)
+            {   
+                //проверка на дату сеанса
+                string rez[8];
+                //разбор брони на составл€ющие
+                string sep = "|";   // строка или символ разделитель
+                size_t sep_size = sep.size();
+                string original = write;
+                string tempura;
+                int h = 1;
+                while (true)
                 {
-                    outFiles << endl;
+                    tempura = original.substr(0, original.find(sep));
+                    if (tempura.size() != 0)   // можно добавить доп. проверку дл€ строк из пробелов
+                    {
+                        rez[h] = "";
+                        rez[h] = tempura;
+                        if (h == 7)
+                        {
+                            if (rez[6] == Time::RetDate(0, 1) || rez[6] == Time::RetDate(1, 1) || rez[6] == Time::RetDate(2, 1))
+                            {
+                                //запись в новый файл
+                                if (num != 0)
+                                {
+                                    outFiles << endl;
+                                }
+                                outFiles << write;
+                                num++;
+                            }
+                        }
+                        h++;
+                    }
+                    if (tempura.size() == original.size())
+                    {
+                        break;
+                    }
+                    else
+                    {
+                        original = original.substr(tempura.size() + sep_size);
+                    }
                 }
-                outFiles << write;
-                num++;
             }
-            //обрезать номера 
         }
-        
     }
+    for (int d = 0; d < cinema.broni_number; d++)
+    {
+        if (cinema.bron[d][6] == Time::RetDate(0, 1) || cinema.bron[d][6] == Time::RetDate(1, 1) || cinema.bron[d][6] == Time::RetDate(2, 1))
+        {
+
+        }
+        else
+        {
+            for (int h = 1; h < 8; h++)
+            {
+                cinema.bron[d][h] = cinema.bron[d + 1][h];
+            }
+            cinema.broni_number = cinema.broni_number - 1;
+        }
+    }
+
     if (cinema.broni_number != 0 && num != 0 && (cinema.broni_number - cinema.broni_number != 0))
     {
         if (num != 0)
@@ -186,19 +235,19 @@ void File_O::WriteNewBron(Cinema& cinema)
     }
     for (int y = (cinema.broni_number - cinema.broni_zapis); y < cinema.broni_number; y++)
     {
-        for (int t = 1; t < 8; t++)
-        {
-            f << cinema.bron[y][t];
-            if (t != 7)
+            for (int t = 1; t < 8; t++)
             {
-                f << "|";
+                f << cinema.bron[y][t];
+                if (t != 7)
+                {
+                    f << "|";
+                }
+                //f << "    " << cinema.broni_number;
             }
-            //f << "    " << cinema.broni_number;
-        }
-        if (y < cinema.broni_number - 1)
-        {
-            f << endl;
-        }
+            if (y < cinema.broni_number - 1)
+            {
+                f << endl;
+            }
     }
     f.close();
     cinema.broni_zapis = 0;

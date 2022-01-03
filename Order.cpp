@@ -418,8 +418,19 @@ void Order::Reserve()
 	string kod = "\nЗа 30 минут до сеанса бронь аннулируется. При оплате заказа на кассе назовите код: ";
 	int x;
 	string doub;
-	srand(std::time(0));
-	x = rand() % 1000000 + 1;
+	bool res_good = true;
+	do
+	{
+		srand(std::time(0));
+		x = rand() % 1000000 + 1;
+		for (int n = 0; n < cinema->broni_number; n++)
+		{
+			if (cinema->bron[n][2] == to_string(x))
+			{
+				res_good = false;	//все плохо, надо перегенерироваться
+			}
+		}
+	} while (res_good != true);
 	doub = to_string(x);
 	int k = x, i = 0;
 
@@ -623,7 +634,7 @@ void Order::PayReserve(int number)
 
 					for (int k = 0; k < 3; k++)
 					{
-						if (cinema->films[i].time[j] == cinema->bron[number][5])
+						if (cinema->films[i].time[k] == cinema->bron[number][5])
 						{
 							time = k + 1;
 							break;
@@ -640,7 +651,7 @@ void Order::PayReserve(int number)
 
 	for (int i = 0; i < seats.length(); i++)
 	{
-		if (seats[i] != ' ' && seats[i] >= '0' && seats[i] != '9')
+		if (seats[i] != ' ' && seats[i] >= '0' && seats[i] <= '9')
 		{
 			place_number = place_number * 10 + seats[i] - 48;
 		}

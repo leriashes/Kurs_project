@@ -206,34 +206,24 @@ int main()
 			int number = cinema.SearchBron(code);	//поиск брони с таким номером
 			if (number != -1)
 			{
-				cout << "Бронь найдена!";
-				_getch();
-				//сверка названий фильмов
-				if (cinema.CheckNameBron(number))		//проверка названия фильма в брони и в действительности в прокате
+				//сверка имени фильма в брони с текущим репертуаром
+				if (cinema.CheckBron(number))
 				{
-					cout << "Название фильма в брони соответствует названию в текущем кинотеатра!";
-					_getch();
-					if (cinema.CheckDayBron(number))	//проверка "дня" брони
-					{
-						cout << "Дата реально подходит!";
-						_getch();
-						if (cinema.CheckPositionBron(number))
-						{
-							cout << "ПРОДАЕМ!!! и удаляем из брони";
-							_getch();
-
-							order.PayReserve(number);
-							order.Clean();
-							file_stream.Write(cinema);
-							file_stream.WriteBron(cinema);
-						}
-					}
-					//сверка дней
+					//продаем!
+					order.PayReserve(number);
+					order.Clean();
+					file_stream.Write(cinema);
+					file_stream.WriteBron(cinema);
+				}
+				else
+				{
+					number = -1;
 				}
 			}
-			else
+			if (number == -1)
 			{
-				cout << "Код брони введен неверно!";
+				cout << "\n\nКод брони введен неверно! Нажмите любую клавишу для выхода в меню...";
+				_getch();
 			}
 		}
 		else if (menu.GetItem() == 3 || User::GetAdmin())
