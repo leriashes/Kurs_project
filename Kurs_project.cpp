@@ -221,18 +221,20 @@ int main()
 						{
 							cout << "ПРОДАЕМ!!! и удаляем из брони";
 							_getch();
+
+							order.PayReserve(number);
+							order.Clean();
+							file_stream.Write(cinema);
+							file_stream.WriteBron(cinema);
 						}
 					}
 					//сверка дней
 				}
-				
-
 			}
 			else
 			{
 				cout << "Код брони введен неверно!";
 			}
-
 		}
 		else if (menu.GetItem() == 3 || User::GetAdmin())
 		{

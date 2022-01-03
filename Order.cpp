@@ -212,7 +212,7 @@ int Order::ChooseSeat()
 	return 0;
 }
 
-void Order::Buy()
+void Order::Buy(bool reserved)
 {
 	Menu menu(3);
 	
@@ -226,11 +226,22 @@ void Order::Buy()
 		{
 			while (cinema->films[film - 1].mesta[time - 1 + (day - 1) * 3].find("4") != string::npos)
 			{
-				cinema->films[film - 1].mesta[time - 1 + (day - 1) * 3].replace(cinema->films[film - 1].mesta[time - 1 + (day - 1) * 3].find("4"), 1, "3");
+				if (!reserved)
+				{
+					cinema->films[film - 1].mesta[time - 1 + (day - 1) * 3].replace(cinema->films[film - 1].mesta[time - 1 + (day - 1) * 3].find("4"), 1, "3");
+				}
+				else
+				{
+					cinema->films[film - 1].mesta[time - 1 + (day - 1) * 3].replace(cinema->films[film - 1].mesta[time - 1 + (day - 1) * 3].find("4"), 1, "1");
+				}
 			}
-			cinema->films[film - 1].mesta[time - 1 + (day - 1) * 3] = cinema->films[film - 1].mesta[time - 1 + (day - 1) * 3].substr(0, (row - 1) * 10 + seat - 65) + "0" + cinema->films[film - 1].mesta[time - 1 + (day - 1) * 3].substr((row - 1) * 10 + seat - 64);
 
-			ChooseAction();
+			if (!reserved)
+			{
+				cinema->films[film - 1].mesta[time - 1 + (day - 1) * 3] = cinema->films[film - 1].mesta[time - 1 + (day - 1) * 3].substr(0, (row - 1) * 10 + seat - 65) + "0" + cinema->films[film - 1].mesta[time - 1 + (day - 1) * 3].substr((row - 1) * 10 + seat - 64);
+				ChooseAction();
+			}
+			
 		}
 		else if (menu.GetItem() == 1)
 		{
@@ -388,12 +399,12 @@ void Order::Buy()
 			} while (promokod == "");
 
 			for (int i = 0; i < cinema->promo_number; i++)
-				if (promokod == cinema->promo[i][0])
+				if (promokod == cinema->promo[i + 1][0])
 				{
-					sale = stoi(cinema->films[film - 1].price[(day - 1) * 3 + time - 1]) * stoi(cinema->promo[i][1]) / 100;
+					sale = stoi(cinema->films[film - 1].price[(day - 1) * 3 + time - 1]) * stoi(cinema->promo[i + 1][1]) / 100;
 					break;
 				}
-			Buy();
+			Buy(reserved);
 		}
 	} while (menu.GetItem() < 0);
 
@@ -529,7 +540,7 @@ void Order::ChooseAction()
 				}
 				else if (menu.GetItem() == 1)
 				{
-					Buy();
+					Buy(false);
 				}
 				else if (menu.GetItem() == 2)
 				{
@@ -592,6 +603,58 @@ void Order::ChooseAction()
 		} while (menu.GetItem() < 0);
 		ChoosePlace();
 	}
+
+	return;
+}
+
+void Order::PayReserve(int number)
+{
+	for (int i = 0; i < cinema->films_number; i++)
+	{
+		if (cinema->films[i].name == cinema->bron[number][3])
+		{
+			film = i + 1;
+
+			for (int j = 0; j < 3; j++)
+			{
+				if (cinema->films[i].date[j] == cinema->bron[number][6])
+				{
+					day = j + 1;
+
+					for (int k = 0; k < 3; k++)
+					{
+						if (cinema->films[i].time[j] == cinema->bron[number][5])
+						{
+							time = k + 1;
+							break;
+						}
+					}
+				}
+			}
+		}
+	}
+
+	string seats = cinema->bron[number][7];
+	string place;
+	int place_number = 0;
+
+	for (int i = 0; i < seats.length(); i++)
+	{
+		if (seats[i] != ' ' && seats[i] >= '0' && seats[i] != '9')
+		{
+			place_number = place_number * 10 + seats[i] - 48;
+		}
+		else
+		{
+			cinema->films[film - 1].mesta[time - 1 + (day - 1) * 3] = cinema->films[film - 1].mesta[time - 1 + (day - 1) * 3].substr(0, place_number) + "3" + cinema->films[film - 1].mesta[time - 1 + (day - 1) * 3].substr(place_number + 1);
+			place_number = 0;
+		}
+	}
+	
+	Buy(true);
+
+	if (film == 0)
+		cinema->DelBron(number);
 
 	return;
 }
@@ -672,6 +735,7 @@ void Order::PrintResult()
 
 	return;
 }
+
 void space(int quan)
 {
 	for (int i = 0; i < quan; i++)

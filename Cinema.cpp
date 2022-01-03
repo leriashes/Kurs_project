@@ -165,7 +165,7 @@ void Cinema::DelBron(int num)
 {
 	for (int g = num; g < broni_number - 1; g++)
 	{
-		for (int j = 1; j < 8; j++)
+		for (int j = 0; j < 8; j++)
 		{
 			bron[g][j] = bron[g + 1][j];
 		}
