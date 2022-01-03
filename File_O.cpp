@@ -511,12 +511,20 @@ void File_O::Read(Cinema& cinema)
             }
             if (j == 8)
             {
-                cout << "\n\n" << sdvig;
-                if (sdvig == 1)
+                int o;
+                int d;
+                for (d = 0, o = sdvig * 3; d < (3 - sdvig) * 3; d++, o++)
+                {
+                    cinema.films[i].mesta[d] = cinema.films[i].mesta[o];
+                }
+
+
+                /*if (sdvig == 1)
                 {
                     //cout << cinema.films[i].mesta[0];
                     //cout << cinema.films[i].mesta[0];
                     //_getch();
+
                     cinema.films[i].mesta[0] = cinema.films[i].mesta[3];
                     cinema.films[i].mesta[1] = cinema.films[i].mesta[4];
                     cinema.films[i].mesta[2] = cinema.films[i].mesta[5];
@@ -531,29 +539,31 @@ void File_O::Read(Cinema& cinema)
                         cinema.films[i].mesta[k] = cinema.NewHall();
                     }
                     */
-                }
-                else if (sdvig == 2)
-                {
-                    cinema.films[i].mesta[0] = cinema.films[i].mesta[6];
-                    cinema.films[i].mesta[1] = cinema.films[i].mesta[7];
-                    cinema.films[i].mesta[2] = cinema.films[i].mesta[8];
+                    //}
                     /*
-                    for (int k = 3; k < 9; k++)
+                    else if (sdvig == 2)
                     {
-                        cinema.films[i].mesta[k] = cinema.NewHall();
-                    }
-                    */
-                }
-                /*else if (sdvig == 3)
-                {
-                    for (int k = 0; k < 9; k++)
-                    {
-                        //cout << cinema.films[i].mesta[k];
-                        
-                        //cout << cinema.films[i].mesta[k];
-                    }
-                }
-                */
+                        cinema.films[i].mesta[0] = cinema.films[i].mesta[6];
+                        cinema.films[i].mesta[1] = cinema.films[i].mesta[7];
+                        cinema.films[i].mesta[2] = cinema.films[i].mesta[8];
+                        /*
+                        for (int k = 3; k < 9; k++)
+                        {
+                            cinema.films[i].mesta[k] = cinema.NewHall();
+                        }
+                        */
+                        //}
+
+                        /*else if (sdvig == 3)
+                        {
+                            for (int k = 0; k < 9; k++)
+                            {
+                                //cout << cinema.films[i].mesta[k];
+
+                                //cout << cinema.films[i].mesta[k];
+                            }
+                        }
+                        */
                 for (int l = (3 - sdvig) * 3; l < 9; l++)
                 {
                     cinema.films[i].mesta[l] = cinema.NewHall();

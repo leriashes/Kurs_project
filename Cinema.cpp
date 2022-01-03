@@ -624,20 +624,23 @@ void Cinema::ChangeFilm(int num_punkt, int num_film)
 				cout << "\n\n CHECK: " << check;
 				_getch();
 				*/
-				ChangeTimeFilmBron(films[num_film].name, films[num_film].time[num - 49], films[num_film].time[num - 49 + 6]);
+				ChangeTimeFilmBron(films[num_film].name, Convert_Time(time), films[num_film].time[num - 49 + 6]);
+				/*
 				cout << "Типа переименовали бронь";
 				_getch();
+				*/
 
 				films[num_film].time[num - 49] = films[num_film].time[num - 49 + 3] = films[num_film].time[num - 49 + 6] = Convert_Time(time);
 				good = true;
 			}
 			else
 			{
-				cout << "\n\n\n";
+				/*cout << "\n\n\n";
 				cout << check;
 				cout << "\n\n\n";
 				cout << time;
 				cout << "\n\n\n";
+				*/
 				cout << "\nВремя не удовлетворяет условию.\n\n";
 			}
 		} while (good != true);
