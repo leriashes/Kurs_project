@@ -196,6 +196,59 @@ int Cinema::SearchBron(string code)	//сверка номеров брони
 	return -1;
 }
 
+bool Cinema::CheckBron(int num)
+{
+	bool itog = true;
+	for (int j = 0; j < films_number; j++)
+	{
+		if (films[j].name == bron[num][3]) //проверка названия фильма
+		{
+			cout << "Проверка названия прошла успешно!";
+			for (int r = 0; r < 3; r++)
+			{
+				if (Time::RetDate(0, 1) == bron[num][6] || Time::RetDate(1, 1) == bron[num][6] || Time::RetDate(2, 1) == bron[num][6])	//проверка даты
+				{
+					int l;
+					if (Time::RetDate(0, 1) == bron[num][6])
+					{
+						l = 0;
+					}
+					if (Time::RetDate(1, 1) == bron[num][6])
+					{
+						l = 1;
+					}
+					if (Time::RetDate(2, 1) == bron[num][6])
+					{
+						l = 2;
+					}
+
+					cout << "Проверка даты прошла успешно!";
+					for (int p = 0; p < 3; p++)
+					{
+						if (films[j].time[p] == bron[num][5])	//проверка времени
+						{
+							cout << "Проверка времени прошла успешно!";
+							string temp = bron[num][7];
+							std::istringstream iss(temp);
+							std::string token;
+							while (std::getline(iss, token, ' '))
+							{
+								if (films[j].mesta[(l * 3) + p][atoi(token.c_str())] != '1')
+								{
+									return false;
+								}
+							}
+
+							return true;
+						}
+					}
+				}
+			}
+		}
+		
+	}
+}
+
 void Cinema::List_bron()
 {
 	for (int o = 0; o < broni_number; o++)
