@@ -134,7 +134,7 @@ void Menu::Description(Order& order)
 
 		for (int i = k; i < n; i++)
 		{
-			cout << "\n\n" << Time::RetDate(i) << "   Время   Цена билета";
+			cout << "\n\n" << Time::RetDate(i, 0) << "   Время   Цена билета";
 
 			for (int j = 0; j < 3; j++)
 			{
@@ -146,7 +146,7 @@ void Menu::Description(Order& order)
 		if (order.day == 0)
 		{
 
-			cout << "\n\n1) " << Time::RetDate(0) << "\n2) " << Time::RetDate(1) << "\n3) " << Time::RetDate(2) << "\n\nВыберите дату: ";
+			cout << "\n\n1) " << Time::RetDate(0, 0) << "\n2) " << Time::RetDate(1, 0) << "\n3) " << Time::RetDate(2, 0) << "\n\nВыберите дату: ";
 		}
 		else
 		{

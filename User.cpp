@@ -370,7 +370,7 @@ void User::Admin(Cinema &cinema, File_O &file_stream)
 							order.Clean();
 						}
 					}
-					file_stream.WriteNewBron(cinema);
+					//file_stream.WriteNewBron(cinema);
 					cinema.broni_zapis = 0;
 					//file_stream.WriteBron(cinema);
 					file_stream.Write(cinema);

@@ -479,12 +479,10 @@ void Order::Reserve()
 	cinema->bron[cinema->broni_number][1] = cinema->id_cinema;
 	cinema->bron[cinema->broni_number][2] = doub;
 	cinema->bron[cinema->broni_number][3] = cinema->films[film - 1].name;
-	temp = Time::RetDate(0);
-	temp.erase(0, 3);
+	temp = Time::RetDate(0, 1);
 	cinema->bron[cinema->broni_number][4] = temp;	//òåêóùàÿ äàòà
 	cinema->bron[cinema->broni_number][5] = cinema->films[film - 1].time[time - 1];
-	temp = Time::RetDate(day - 1);
-	temp.erase(0, 3);
+	temp = Time::RetDate(day - 1, 1);
 	cinema->bron[cinema->broni_number][6] = temp;			//äàòà
 	cinema->bron[cinema->broni_number][7] = bronka;			//ìåñòà
 	cinema->broni_zapis = cinema->broni_zapis + 1;
@@ -605,7 +603,7 @@ void Order::PrintInfo()
 	menu.Description(*this);
 
 	if (day != 0)
-		cout << "\n\nÄàòà: " << Time::RetDate(day - 1).erase(0, 3);
+		cout << "\n\nÄàòà: " << Time::RetDate(day - 1, 1);
 
 	if (time != 0)
 	{
@@ -633,7 +631,7 @@ void Order::PrintResult()
 	cout << "0 - íàçàä\n\n";
 
 	cout << "Ôèëüì: " << cinema->films[film - 1].name;
-	cout << "\n\nÄàòà: " << Time::RetDate(day - 1).erase(0, 3);
+	cout << "\n\nÄàòà: " << Time::RetDate(day - 1, 1);
 	cout << "   Âðåìÿ: " << cinema->films[film - 1].time[(day - 1) * 3 + time - 1];
 	cout << "   Öåíà: " << cinema->films[film - 1].price[(day - 1) * 3 + time - 1] << " ðóá.";
 	cout << "   Çàë: " << cinema->films[film - 1].number_zal;
@@ -1222,7 +1220,7 @@ void Order::Tickets()
 		cout << "    ÌÅÑÒÎ " << seat << "       | Ð | ";
 		cout << "\n|                                 | Î |";
 
-		cout << "\n|ÄÀÒÀ " << Time::RetDate(day - 1).erase(0, 3) << "    ÍÀ×ÀËÎ " << cinema->films[film - 1].time[(day - 1) * 3 + time - 1] << "  | Ë |";
+		cout << "\n|ÄÀÒÀ " << Time::RetDate(day - 1, 1) << "    ÍÀ×ÀËÎ " << cinema->films[film - 1].time[(day - 1) * 3 + time - 1] << "  | Ë |";
 		cout << "\n|                                 | Ü |";
 
 		cout << "\n|ÖÅÍÀ ÁÈËÅÒÀ  " << cinema->films[film - 1].price[(day - 1) * 3 + time - 1] << " ðóá.            |   |\n";

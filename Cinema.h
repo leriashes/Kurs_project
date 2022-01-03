@@ -34,9 +34,13 @@ private:
 	Film films[10];
 	
 public:
-	bool CheckNameBron(int num);
+	bool CheckNameBron(int num);	//проверка имени фильма бронирования
+	bool CheckDayBron(int num);	//проверка дня бронирования
+	bool CheckPositionBron(int num);
+
 	void BuyBron();		//проверка и выкуп билетов из брони
-	void ChangeFilmBron(int num_punkt, string new_znach, string old_znach);	//внесение изменений в информацию о фильме, если такие брони были
+	void ChangeNameFilmBron(string new_znach, string old_znach);	//внесение изменений в информацию о фильме, если такие брони были
+	void ChangeTimeFilmBron(string NameFilm, string NewTime, string OldTime);
 
 	int SearchBron(string code);	//поиск брони по номеру
 	void List_bron();	//вывод всех бронирований

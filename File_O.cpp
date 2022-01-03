@@ -17,7 +17,6 @@ void File_O::ReadBron(Cinema& cinema) //считывание данных из файла бронировани€
     ifstream f1;
     cinema.broni_number = 0;
     cinema.broni_zapis = 0;
-
     f1.open(path_bron);
     if (!(f1.is_open()))
     {
@@ -31,10 +30,9 @@ void File_O::ReadBron(Cinema& cinema) //считывание данных из файла бронировани€
     else
     {
         //считывание данных о бронировании в массив или в строку
-
+        int i = 0;
         string str;
         string temp;
-        int i = 0;
         while (!f1.eof())   //узнать количество строк в файле
         {
             getline(f1, str);
@@ -64,7 +62,7 @@ void File_O::ReadBron(Cinema& cinema) //считывание данных из файла бронировани€
                     {
                         if ((rez[1] + "\0") == cinema.id_cinema)
                         {
-                            for (int e = 0; e < 7; e++)
+                            for (int e = 1; e < 8; e++)
                             {
                                 cinema.bron[cinema.broni_number][e] = rez[e];
                             }
@@ -106,32 +104,62 @@ void File_O::WriteBron(Cinema& cinema)
     outFile << inFile.rdbuf();
     outFile.close();
     inFile.close();
-    Clean(path_bron);
+    //Clean(path_bron);
+    //std::ofstream fileStrm(path_bron, std::ios::out);
 
-    ofstream    outFiles(path_bron);
+    /*fstream file;
+    file.open(path_bron, ios::out);
+    file << "";
+    file.close();
+    */
+
+    if (remove(path_bron.c_str()) != 0)             // удаление файла file.txt
+    {
+        std::cout << "ќшибка удалени€ файла\n";
+    }
+    else
+    {
+        std::cout << "‘айл успешно удалЄн\n";
+    }
+    //_getch();
+
+    ofstream outFiles(path_bron);
     ifstream f1;
     int num = 0;
     f1.open(path_cop);
     string str, write;
+    
     while (!f1.eof())
     {
         getline(f1, str);
-        write = str;
-        str.resize(str.size() - 5);
-        if (str != cinema.id_cinema)
-        {   //запись в новый файл
-            if (num != 0)
-            {
-                outFiles << endl;
+        if (str.size() > 5)
+        {
+            write = str;
+            //str.resize(str.size() - 5);
+            str.erase(5, str.size());
+            /*
+            cout << str;
+            _getch();
+            */
+            if (str != cinema.id_cinema)
+            {   //запись в новый файл
+                if (num != 0)
+                {
+                    outFiles << endl;
+                }
+                outFiles << write;
+                num++;
             }
-            outFiles << write;
-            num++;
+            //обрезать номера 
         }
-        //обрезать номера 
+        
     }
-    if (cinema.broni_number != 0)
+    if (cinema.broni_number != 0 && num != 0 && (cinema.broni_number - cinema.broni_number != 0))
     {
-        outFiles << endl;
+        if (num != 0)
+        {
+            outFiles << endl;
+        }
     }
     outFiles.close();
     f1.close();
@@ -143,12 +171,21 @@ void File_O::WriteNewBron(Cinema& cinema)
 {
     std::ofstream f;                    //создаем поток 
     f.open(path_bron, std::ios::app);  // открываем файл дл€ записи в конец
+
+    fstream file_s(path_bron);
+    int size = 0;
+    file_s.seekg(0, std::ios::end);
+    size = file_s.tellg();
+    /*
+    cout << "SIZE:  " << size;
+    _getch();
+    */
+    if (size != 0)
+    {
+        f << endl;
+    }
     for (int y = (cinema.broni_number - cinema.broni_zapis); y < cinema.broni_number; y++)
     {
-        if (y != 0)
-        {
-            f << endl;
-        }
         for (int t = 1; t < 8; t++)
         {
             f << cinema.bron[y][t];
@@ -156,6 +193,11 @@ void File_O::WriteNewBron(Cinema& cinema)
             {
                 f << "|";
             }
+            //f << "    " << cinema.broni_number;
+        }
+        if (y < cinema.broni_number - 1)
+        {
+            f << endl;
         }
     }
     f.close();
@@ -385,7 +427,18 @@ void File_O::Read(Cinema& cinema)
     {
         doub = doub + cinema.otchet_today[i];
     }
-    if (doub == (to_string(da) + '.' + to_string(mo) + '.' + to_string(yea)))
+    string today_d;
+    if (to_string(da).size() == 1)
+    {
+        today_d = "0";
+    }
+    today_d = today_d + to_string(da) + ".";
+    if (to_string(mo).size() == 1)
+    {
+        today_d = today_d + "0";
+    }
+    today_d = today_d + to_string(mo) + "." + to_string(yea);
+    if (doub == today_d)
     {
         generate = false;
         cinema.otchet_today.erase(0, 12);
@@ -395,6 +448,9 @@ void File_O::Read(Cinema& cinema)
         generate = true;
         cinema.otchet_today = "0";
     }
+    string old_date;
+    getline(file, old_date);
+
     i = 0;
     //заполнение информации о фильмах
     do
@@ -411,20 +467,108 @@ void File_O::Read(Cinema& cinema)
         for (j = 0; j < 9; j++)
         {
             getline(file, temp);
+            if (j % 3 == 0)
+            {
+                getline(file, cinema.films[i].date[j / 3]);
+            }
+            int sdvig = 0;
+            if (j == 3)
+            {
+                if (old_date == Time::RetDate(0, 1))
+                {
+                    sdvig = 2;
+                    cout << "2";
+                }
+                else if (old_date == Time::RetDate(1, 1))
+                {
+                    sdvig = 1;
+                    cout << "1";
+                }
+                else if (old_date == Time::RetDate(2, 1))
+                {
+                    sdvig = 0;
+                    cout << "0";
+                }
+                else
+                {
+                    cout << old_date;
+
+
+                    sdvig = 3;
+                    cout << "3";
+                    cout << Time::RetDate(2, 1);
+                }
+            }
+            
             getline(file, cinema.films[i].price[j]);
             getline(file, cinema.films[i].time[j]);
             getline(file, cinema.films[i].rand[j]);
            
+            //string mesta_sdvig;
+
             for (int k = 0; k < 10; k++)
             {
                 getline(file, temp);
                 cinema.films[i].mesta[j] = cinema.films[i].mesta[j] + temp;
             }
-            if (cinema.films[i].rand[j][0] == '0' && generate == true)
+            if (sdvig == 0)
+            {
+
+            }
+            else if (sdvig = 1)
+            {
+                if (j == 8)
+                {
+                    cout << cinema.films[i].mesta[0];
+
+                    cinema.films[i].mesta[0] = cinema.films[i].mesta[3];
+                    cinema.films[i].mesta[0];
+                    _getch();
+                    cinema.films[i].mesta[1] = cinema.films[i].mesta[4];
+                    cinema.films[i].mesta[2] = cinema.films[i].mesta[5];
+
+                    cinema.films[i].mesta[3] = cinema.films[i].mesta[6];
+                    cinema.films[i].mesta[4] = cinema.films[i].mesta[7];
+                    cinema.films[i].mesta[5] = cinema.films[i].mesta[8];
+
+                    for (int k = 6; k < 9; k++)
+                    {
+                        cinema.films[i].mesta[k] = cinema.NewHall();
+                    }
+                }
+            }
+            else if (sdvig = 2)
+            {
+                if (j == 8)
+                {
+                    cinema.films[i].mesta[0] = cinema.films[i].mesta[6];
+                    cinema.films[i].mesta[1] = cinema.films[i].mesta[7];
+                    cinema.films[i].mesta[2] = cinema.films[i].mesta[8];
+
+                    for(int k = 3; k < 9; k++)
+                    {
+                        cinema.films[i].mesta[k] = cinema.NewHall();
+                    }
+                }
+            }
+            else if (sdvig == 3)
+            {
+                if (j == 8)
+                {
+                    for (int k = 0; k < 9; k++)
+                    {
+                        cout << cinema.films[i].mesta[k];
+                        cinema.films[i].mesta[k] = cinema.NewHall();
+                        cout << cinema.films[i].mesta[k];
+                    }
+                }
+            }
+            /*if (cinema.films[i].rand[j][0] == '0' && generate == true)
             {
                 cinema.films[i].mesta[j] = cinema.NewHall();
                 Sleep(100);
             }
+            */
         }
         i++;
     } while (i < kol_vo_film);
@@ -449,9 +593,9 @@ bool File_O::CheckCompound()        //проверка форматировани€ текстового файла
     base.close();
     delete[] str;
 
-    if (((i - 10) % 134 == 0) || ((i - 9) % 134 == 0))            //форматирование верно
+    if (((i - 11) % 137 == 0) || ((i - 10) % 137 == 0))            //форматирование верно
     {
-        kol_vo_film = (i - 10) / 134;
+        kol_vo_film = (i - 11) / 137;
 		result = true;
     }
 	return result;
@@ -518,7 +662,20 @@ void File_O::Write(Cinema cinema)
         /// ѕ≈–≈ƒ≈Ћј“№ «јѕ»—№ ≈∆≈ƒЌ≈¬Ќќ√ќ ќ“„≈“ј
         /// </summary>
         /// <param name="cinema"></param>
-        f << to_string(da) << '.' << to_string(mo) << '.' << to_string(yea) << ": " << cinema.otchet_today << endl;     //запись выручки за сегодн€шний день
+        /// 
+        
+        if (to_string(da).size() == 1)
+        {
+            f << "0" ;
+        }
+        f << to_string(da) << '.';
+        if (to_string(mo).size() == 1)
+        {
+            f << "0";
+        }
+        f << to_string(mo) << '.' << to_string(yea) << ": " << cinema.otchet_today << endl;     //запись выручки за сегодн€шний день
+
+        f << Time::RetDate(2, 1) << endl;
 
         for (int i = 0; i < cinema.films_number; i++)
         {
@@ -534,10 +691,16 @@ void File_O::Write(Cinema cinema)
 
             for (int j = 0; j < 9; j++)
             {
+                if (j % 3 == 0)
+                {
+                    f << Time::RetDate((j / 3), 1) << endl;
+                    //cinema.films[i].date[j / 3] << endl;
+                }
+
                 f << cinema.films[i].price[j] << endl;   //запись стоиомсти билета
                 f << cinema.films[i].time[j] << endl;   //запись времени сеанса
                 f << cinema.films[i].rand[j] << endl;   //запись точки (флажка) генерации
-                    
+
                 for (int o = 0; o < 10; o++)
                 {
                     for (int y = 0; y < 10; y++)

@@ -2,26 +2,30 @@
 
 bool Time::loadingComplete = true;
 
-string Time::RetDate(int n)
+string Time::RetDate(int n, int type)
 {
-	time_t days[3]; //today, tommorow, day after tommorow 
+	time_t days[4]; //today, tommorow, day after tommorow 
 
 	time(&days[0]);
 	days[1] = days[0] + 24 * 3600;
 	days[2] = days[0] + 2 * 24 * 3600;
-
-	return ConvTime(days[n]);
+	days[3] = days[0] + 3 * 24 * 3600;
+	return ConvTime(days[n], type);
 }
 
-string Time::ConvTime(time_t t)
+string Time::ConvTime(time_t t, int type)
 {
 	string week[7] = { "ом", "бр", "яп", "вр", "ор", "яа", "бя" };
 	tm* ptm = gmtime(&t);
-	if (ptm->tm_wday == 0)
+	string result = "";
+	if (type == 0)
 	{
-		ptm->tm_wday = 7;
+		if (ptm->tm_wday == 0)
+		{
+			ptm->tm_wday = 7;
+		}
+		result = week[ptm->tm_wday - 1] + " ";
 	}
-	string result = week[ptm->tm_wday - 1] + " ";
 	if (to_string(ptm->tm_mday).size() == 1)
 	{
 		result = result + "0";

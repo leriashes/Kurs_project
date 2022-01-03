@@ -13,8 +13,8 @@ using namespace std;
 class Time
 {
 public:
-	static string RetDate(int n);
-	static string ConvTime(time_t t);
+	static string RetDate(int n, int type);
+	static string ConvTime(time_t t, int type);
 	static string RetTime();
 
 	static bool loadingComplete;

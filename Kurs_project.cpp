@@ -65,13 +65,14 @@ int main()
 					f = false;
 					system("cls");
 					cout << "Идёт считывание данных из файла. \n\nОжидайте";
-					thread t(Time::PrintLoading);
+					//thread t(Time::PrintLoading);
 
 					Time::loadingComplete = false;
 					file_stream.Read(cinema);
 					file_stream.ReadBron(cinema);
 					Time::loadingComplete = true;
-					t.join();
+					_getch();
+					//t.join();
 				}
 				else
 				{
@@ -168,7 +169,7 @@ int main()
 						//order.ChooseAction();
 						order.Clean();
 						file_stream.Write(cinema);
-						file_stream.WriteNewBron(cinema);
+						file_stream.WriteBron(cinema);
 					}
 				}
 				
@@ -203,14 +204,27 @@ int main()
 					}
 				}
 
-			} while (code.length() < 6);
-			int number = cinema.SearchBron(code);
+			} while (code.length() < 5);
+			int number = cinema.SearchBron(code);	//поиск брони с таким номером
 			if (number != -1)
 			{
+				cout << "Бронь найдена!";
+				_getch();
 				//сверка названий фильмов
-				if (cinema.CheckNameBron(number))
+				if (cinema.CheckNameBron(number))		//проверка названия фильма в брони и в действительности в прокате
 				{
-
+					cout << "Название фильма в брони соответствует названию в текущем кинотеатра!";
+					_getch();
+					if (cinema.CheckDayBron(number))	//проверка "дня" брони
+					{
+						cout << "Дата реально подходит!";
+						_getch();
+						if (cinema.CheckPositionBron(number))
+						{
+							cout << "ПРОДАЕМ!!!";
+							_getch();
+						}
+					}
 					//сверка дней
 				}
 				

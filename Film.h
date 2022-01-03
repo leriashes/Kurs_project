@@ -14,7 +14,7 @@ private:
 	string short_description;	//краткое описание фильма
 	string main_role;	//главные роли
 	string number_zal;	//номер зала для показа
-
+	string date[3];	//дата сеанса
 	//??????????
 	string price[9];	//стоимость билета		//??????????
 	string time[9];	//время сеанса		//??????????
