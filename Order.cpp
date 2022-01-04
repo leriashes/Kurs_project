@@ -763,7 +763,7 @@ void Order::Check(bool card)
 
 	string name_of_film = cinema->films[film - 1].name;
 	name_of_film += (" (" + cinema->films[film - 1].age + ")");
-
+	/*
 	time_t t;
 	std::time(&t);
 
@@ -773,7 +773,7 @@ void Order::Check(bool card)
 	int da = localtime(&t)->tm_mday;
 	int mo = localtime(&t)->tm_mon + 1;
 	int yea = localtime(&t)->tm_year + 1900;
-
+	*/
 	cout << "\n\n|";
 
 	_setmode(_fileno(stdout), _O_U16TEXT);
@@ -789,9 +789,20 @@ void Order::Check(bool card)
 	cout << "|\n|";
 
 	string str;
-
-	str = to_string(da) + '.' + to_string(mo) + '.' + to_string(yea) + "  " + to_string(hour) + ':' + to_string(minute) + ':' + to_string(sec);
-
+	str = Time::RetDate(0, 1) + " " + Time::RetTime(1);
+//	str = to_string(da) + '.' + to_string(mo) + '.' + to_string(yea) + "  " + to_string(hour) + ':' + to_string(minute) + ':' + to_string(sec);
+	/*
+	if (to_string(da).size() == 1)
+	{
+		str = "0";
+	}
+	str = str + to_string(da) + '.';
+	if (to_string(mo).size() == 1)
+	{
+		str = str + "0";
+	}
+	str = str + to_string(mo) + '.' + to_string(yea) + "  " + to_string(hour) + ':' + to_string(minute) + ':' + to_string(sec);
+	*/
 	space(36 - str.length());
 
 	cout << str;
@@ -1122,8 +1133,19 @@ void Order::Check(bool card)
 
 		cout << "\n|";
 
-		str = to_string(da) + '.' + to_string(mo) + '.' + to_string(yea) + "  " + to_string(hour) + ':' + to_string(minute) + ':' + to_string(sec);
-
+		//str = to_string(da) + '.' + to_string(mo) + '.' + to_string(yea) + "  " + to_string(hour) + ':' + to_string(minute) + ':' + to_string(sec);
+		str = Time::RetDate(0, 1) + " " + Time::RetTime(1);
+		/*if (to_string(da).size() == 1)
+		{
+			str = "0";
+		}
+		str = str + to_string(da) + '.';
+		if (to_string(mo).size() == 1)
+		{
+			str = str + "0";
+		}
+		str = str + to_string(mo) + '.' + to_string(yea) + "  " + to_string(hour) + ':' + to_string(minute) + ':' + to_string(sec);
+		*/
 		space(36 - str.length());
 
 		cout << str;

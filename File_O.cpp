@@ -191,7 +191,6 @@ void File_O::WriteBron(Cinema& cinema)
     {
         if (cinema.bron[d][6] == Time::RetDate(0, 1) || cinema.bron[d][6] == Time::RetDate(1, 1) || cinema.bron[d][6] == Time::RetDate(2, 1))
         {
-
         }
         else
         {
@@ -463,12 +462,14 @@ void File_O::Read(Cinema& cinema)
     getline(file, cinema.otchet_vsego);     //чтение выручки за период
     getline(file, cinema.otchet_today);     //чтение выручки за сегодн€шний день
     bool generate = false;
+    /*
     time_t t;
     std::time(&t);
 
     int da = localtime(&t)->tm_mday;
     int mo = localtime(&t)->tm_mon + 1;
     int yea = localtime(&t)->tm_year + 1900;
+    */
     string doub;
     //cout << cinema.otchet_today.size();
     //_getch();
@@ -477,7 +478,8 @@ void File_O::Read(Cinema& cinema)
         doub = doub + cinema.otchet_today[i];
     }
     string today_d;
-    if (to_string(da).size() == 1)
+    today_d = Time::RetDate(0, 1);
+    /*if (to_string(da).size() == 1)
     {
         today_d = "0";
     }
@@ -487,6 +489,7 @@ void File_O::Read(Cinema& cinema)
         today_d = today_d + "0";
     }
     today_d = today_d + to_string(mo) + "." + to_string(yea);
+    */
     if (doub == today_d)
     {
         generate = false;
@@ -660,14 +663,14 @@ bool File_O::CheckCompound()        //проверка форматировани€ текстового файла
 
 void File_O::Write(Cinema cinema)
 {
-
+    /*
     time_t t;
     std::time(&t);
 
     int da = localtime(&t)->tm_mday;
     int mo = localtime(&t)->tm_mon + 1;
     int yea = localtime(&t)->tm_year + 1900;
-
+    */
     string path_cop = path;
     path_cop.resize(path_cop.size() - 4);
     path_cop = path_cop + "_copy.txt\0";
@@ -715,12 +718,8 @@ void File_O::Write(Cinema cinema)
         }
         f << endl;
         f << cinema.otchet_vsego << endl;     //запись выручки за весь период
-        /// <summary>
-        /// ѕ≈–≈ƒ≈Ћј“№ «јѕ»—№ ≈∆≈ƒЌ≈¬Ќќ√ќ ќ“„≈“ј
-        /// </summary>
-        /// <param name="cinema"></param>
-        /// 
-        
+        f << Time::RetDate(0, 1);
+        /*
         if (to_string(da).size() == 1)
         {
             f << "0" ;
@@ -730,9 +729,10 @@ void File_O::Write(Cinema cinema)
         {
             f << "0";
         }
-        f << to_string(mo) << '.' << to_string(yea) << ": " << cinema.otchet_today << endl;     //запись выручки за сегодн€шний день
-
-        f << Time::RetDate(2, 1) << endl;
+        f << to_string(mo) << '.' << to_string(yea) << ": " << cinema.otchet_today << endl;
+        */
+        f << ": " << cinema.otchet_today << endl;     //запись выручки за сегодн€шний день
+        f << Time::RetDate(2, 1) << endl;       //запись крайней даты (техническа€ запись)
 
         for (int i = 0; i < cinema.films_number; i++)
         {

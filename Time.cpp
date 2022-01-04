@@ -40,7 +40,7 @@ string Time::ConvTime(time_t t, int type)
 }
 
 
-string Time::RetTime()
+string Time::RetTime(int fun)
 {
 	std::time_t t = std::time(0);
 	std::tm* local = std::localtime(&t);
@@ -57,6 +57,15 @@ string Time::RetTime()
 	}
 
 	itog = itog + to_string(local->tm_min);
+	if (fun == 1)
+	{ 
+		itog = itog + ":";
+		if (to_string(local->tm_sec).size() == 1)
+		{
+			itog = itog + "0";
+		}
+		itog = itog + to_string(local->tm_sec);
+	}
 	return itog;
 }
 

@@ -15,7 +15,7 @@ class Time
 public:
 	static string RetDate(int n, int type);
 	static string ConvTime(time_t t, int type);
-	static string RetTime();
+	static string RetTime(int fun);
 
 	static bool loadingComplete;
 	static void PrintLoading();
