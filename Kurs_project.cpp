@@ -126,7 +126,6 @@ int main()
 					menu.Description(order);	//ввод даты посещения
 					menu.ChooseItem();
 					order.day = menu.GetItem();
-					order.day = order.day;
 
 					if (order.day == -1)
 					{
@@ -143,11 +142,7 @@ int main()
 					menu.Description(order);	//ввод времени посещения
 					menu.ChooseItem();
 					order.time = menu.GetItem();
-
-					if (menu.items_number < 3)
-					{
-						order.time += 3 - menu.items_number;
-					}
+					
 
 					if (order.time == -1)
 					{
@@ -156,6 +151,10 @@ int main()
 					else if (order.time == 0)
 					{
 						order.day = 0;
+					}
+					else
+					{
+						order.time += 3 - menu.items_number;
 					}
 				}
 

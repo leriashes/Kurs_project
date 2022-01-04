@@ -207,21 +207,6 @@ void Menu::Description(Order& order)
 	}
 	else
 	{
-		int h = 0;
-		/*if (order.day == 1)
-		{
-			for (int i = 0; i < 3; i++)
-			{
-				if (cinema->DeConvert_Time(cinema->films[order.film - 1].time[(order.day - 1) * 3 + i]) > cinema->DeConvert_Time(Time::RetTime(0)))
-				{
-					h++;
-				}
-			}
-			if (h != 3)
-			{
-				order.time = order.time + (3 - h);
-			}
-		}*/
 		cout << "\n\n   A B C D E F G H I J";
 		for (int i = 0; i < 10; i++)
 		{

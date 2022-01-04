@@ -283,7 +283,8 @@ void File_O::New(Cinema &cinema)
     {
         system("cls");
         cout << "Введите название нового файла (без расширения): ";
-        cin >> path;
+        getline(cin, path);
+        //cin >> path;
     } while (path == "");
     path += ".txt";
     string sp;
@@ -317,12 +318,11 @@ void File_O::New(Cinema &cinema)
     else
     {
         system("cls");
-        cout << "Файл " << path << " создан!";
+        //cout << "Файл " << path << " создан!";
         ofstream fout(path); //создание объекта класса ofstream для записи
         fout.close();   //закрытие фалйа
-        _getch();
+        //_getch();
     }
-
     return;
 }
 
@@ -378,13 +378,15 @@ void File_O::Read(Cinema& cinema)
     }
     else     //создание id файла
     {
+        cinema.id_cinema = cinema.NewID();
         cinema.name = temp;
-        string str = "";
+        /*string str = "";
         for (int i = 0; i < 5; ++i)
         {
             str += to_string(rand() % 10);
         }
         cinema.id_cinema = str;
+        */
     }
 
     //заполнение информации о кинотеатре

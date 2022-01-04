@@ -1150,7 +1150,8 @@ void Cinema::InputCashier()
 		getline(cin, full_name);
 		//проверка на существование данного кассира в базе???
 	} while (full_name == "");
-
+	cashiers[cashiers_number + 1] = full_name;
+	cashiers_number = cashiers_number + 1;
 	return;
 }
 
@@ -1217,6 +1218,33 @@ void Cinema::PriceInput(int num_film, int num)
 	films[num_film].price[num + 3] = films[num_film].price[num + 6] = films[num_film].price[num] = yuop;
 
 	return;
+}
+
+void Cinema::NewCinema()
+{
+	InputName();
+	InputAdress();
+	InputCashier();
+	InputINN();
+	InputRNM();
+	id_cinema = NewID();
+	promo[0][0] = "";
+	promo_number = 0;
+	films_number = 0;
+	otchet_today = "0";
+	otchet_vsego = "0";
+}
+
+string Cinema::NewID()
+{
+	srand(time(0));
+	string str = "";
+	for (int i = 0; i < 5; ++i)
+	{
+		str += to_string(rand() % 10);
+	}
+	return str;
+
 }
 
 void Cinema::NameOut()
