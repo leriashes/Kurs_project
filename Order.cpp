@@ -48,7 +48,9 @@ int Order::ChoosePlace()
 		seat = symbol + 48;
 
 		if (symbol > 48 && symbol < 59)
+		{
 			seat -= 32;
+		}
 
 		ChooseRow();
 	}
@@ -58,7 +60,9 @@ int Order::ChoosePlace()
 		ChooseRow();
 	}
 	else if (symbol != 0)
+	{
 		ChoosePlace();
+	}
 
 	static int f = 0;
 	if (row == 0 || seat == 0)
@@ -82,7 +86,9 @@ int Order::ChooseRow()
 {
 	int a = row;
 	if (row == 1)
+	{
 		row = 0;
+	}
 
 	PrintInfo();
 	row = a;
@@ -103,9 +109,13 @@ int Order::ChooseRow()
 			ChooseRow();
 		}
 		else if (symbol == 0)
+		{
 			row = 10;
+		}
 		else if (symbol + 48 == 13)
+		{
 			row = 1;
+		}
 		else
 		{
 			row = 1;
@@ -140,7 +150,9 @@ int Order::ChooseRow()
 			seat = symbol + 48;
 
 			if (symbol > 48 && symbol < 59)
+			{
 				seat -= 32;
+			}
 
 			row = 1;
 			ChooseSeat();
@@ -163,7 +175,9 @@ int Order::ChooseRow()
 			ChooseRow();
 		}
 		else if (symbol == 0)
+		{
 			ChoosePlace();
+		}
 		else
 		{
 			row = symbol;
@@ -171,7 +185,9 @@ int Order::ChooseRow()
 		}
 	}
 	else if (row > 1 && row < 10)
+	{
 		ChooseSeat();
+	}
 	else
 	{
 		row = 0;
@@ -201,12 +217,18 @@ int Order::ChooseSeat()
 			seat = symbol + 48;
 
 			if (symbol > 48 && symbol < 59)
+			{
 				seat -= 32;
+			}
 		}
 		else if (symbol == 0)
+		{
 			ChoosePlace();
+		}
 		else
+		{
 			ChooseSeat();
+		}
 	}
 
 	return 0;
@@ -301,9 +323,13 @@ void Order::Buy(bool reserved)
 						x = _getch();
 
 						if (x == 27)
+						{
 							menu.Escape();
+						}
 						else
+						{
 							x = 1;
+						}
 					} while (x != 1);
 				}
 				else if (sum == num * (cost - sale))
@@ -399,11 +425,13 @@ void Order::Buy(bool reserved)
 			} while (promokod == "");
 
 			for (int i = 0; i < cinema->promo_number; i++)
+			{
 				if (promokod == cinema->promo[i + 1][0])
 				{
 					sale = stoi(cinema->films[film - 1].price[(day - 1) * 3 + time - 1]) * stoi(cinema->promo[i + 1][1]) / 100;
 					break;
 				}
+			}
 			Buy(reserved);
 		}
 	} while (menu.GetItem() < 0);
@@ -418,13 +446,16 @@ void Order::Reserve()
 	string kod = "\nЗа 30 минут до сеанса бронь аннулируется. При оплате заказа на кассе назовите код: ";
 	int x;
 	string doub = "";
-	bool res_good = true;
+	bool res_good;
 	do
 	{
-		for (int i = 0; i < 5; ++i)
+		res_good = true;
+		doub = cinema->NewID();
+		/*for (int i = 0; i < 5; ++i)
 		{
 			doub = doub + to_string(rand() % 10);
 		}
+		*/
 		for (int u = 0; u < cinema->broni_number; u++)
 		{
 			if (cinema->bron[u][2] == doub)
@@ -681,7 +712,9 @@ void Order::PayReserve(int number)
 	Buy(true);
 
 	if (film == 0)
+	{
 		cinema->DelBron(number);
+	}
 
 	return;
 }
@@ -729,7 +762,9 @@ void Order::PrintResult()
 	cout << "\n\nМеста:";
 
 	if (cinema->films[film - 1].mesta[time - 1 + (day - 1) * 3].find("3") != string::npos)
+	{
 		num = 0;
+	}
 
 	int cost = stoi(cinema->films[film - 1].price[(day - 1) * 3 + time - 1]);
 
@@ -744,7 +779,9 @@ void Order::PrintResult()
 	}
 
 	while (cinema->films[film - 1].mesta[time - 1 + (day - 1) * 3].find("5") != string::npos)
+	{
 		cinema->films[film - 1].mesta[time - 1 + (day - 1) * 3].replace(cinema->films[film - 1].mesta[time - 1 + (day - 1) * 3].find("5"), 1, "4");
+	}
 
 	while (cinema->films[film - 1].mesta[time - 1 + (day - 1) * 3].find("3") != string::npos)
 	{
@@ -847,7 +884,9 @@ void Order::Check(bool card)
 	cout << "|Чек №: " << str;
 	
 	for (int i = 0; i < 29 - str.length(); i++)
+	{
 		cout << " ";
+	}
 
 	str = cinema->cashiers[rand() % cinema->cashiers_number + 1];
 	cout << "|\n|Кассир: " << str;
@@ -861,10 +900,13 @@ void Order::Check(bool card)
 	cout << "|\n|Смена: " << d;
 
 	for (k = 0; d > 0; k++)
+	{
 		d /= 10;
-
+	}
 	for (int i = 0; i < 29 - k; i++)
+	{
 		cout << " ";
+	}
 
 	int kassa= (rand() % 5) + 1;
 	cout << "|\n|Касса: " << kassa;
@@ -924,7 +966,9 @@ void Order::Check(bool card)
 	cout << "|\n|ИТОГО";
 
 	for (d = num * (cost - sale), k = 0; d > 0; k++)
+	{
 		d /= 10;
+	}
 
 	space(26 - k);
 	
@@ -941,7 +985,9 @@ void Order::Check(bool card)
 	cout << "|В Т.Ч. НДС 20%";
 
 	for (d = 0.2 * num * (cost - sale), k = 0; d > 0; k++)
+	{
 		d /= 10;
+	}
 
 	space(17 - k);
 	
@@ -1041,17 +1087,23 @@ void Order::Check(bool card)
 	_setmode(_fileno(stdin), _O_U16TEXT);
 
 	for (int i = 0; i < 11; i++)
+	{
 		wcout << L"\u00A0";
+	}
 
 	//вывод верхней полосы для квадрата
 	wcout << L"\u250C";
 	for (int i = 0; i < 12; i++)
+	{
 		wcout << L"\u2500";
+	}
 
 	wcout << L"\u2510";
 
 	for (int i = 0; i < 11; i++)
+	{
 		wcout << L"\u00A0";
+	}
 
 	wcout << L"|\n";
 
@@ -1083,15 +1135,23 @@ void Order::Check(bool card)
 	{
 		wcout << L"|";
 		for (int j = 0; j < 11; j++)
+		{
 			wcout << L"\u00A0";
+		}
 
 		wcout << L"\u2502";
 		for (int j = 0; j < 12; j++, k++)
+		{
 			wcout << text[k];
+		}
+
 		wcout << L"\u2502";
 
 		for (int j = 0; j < 11; j++)
+		{
 			wcout << L"\u00A0";
+		}
+
 		wcout << L"|\n";
 	}
 
@@ -1100,20 +1160,32 @@ void Order::Check(bool card)
 	//вывод нижней полосы
 
 	for (int i = 0; i < 11; i++)
+	{
 		wcout << L"\u00A0";
+	}
+
 	wcout << L"\u2514";
 
 	for (int i = 0; i < 12; i++)
+	{
 		wcout << L"\u2500";
+	}
+
 	wcout << L"\u2518";
 
 	for (int i = 0; i < 11; i++)
+	{
 		wcout << L"\u00A0";
+	}
+
 	wcout << L"|\n";
 	wcout << L"|";
 
 	for (int i = 0; i < 36; i++)
+	{
 		wcout << L"\u00A0";
+	}
+
 	wcout << L"|\n";
 
 	//вывод отреза
@@ -1246,7 +1318,9 @@ void Order::Check(bool card)
 		cout << "|СУММА: " << cost << ".00 RUB";
 
 		for (d = cost, k = 0; d > 0; k++)
+		{
 			d /= 10;
+		}
 
 		space(22 - k);
 
@@ -1298,7 +1372,9 @@ void Order::Tickets()
 
 	cout << "\n";
 	for (int i = 0; i < 39; i++)
+	{
 		cout << "_";
+	}
 
 	for (int i = 0; i < num; i++)
 	{
@@ -1308,27 +1384,38 @@ void Order::Tickets()
 		row = row / 10 + 1;
 
 		cout << "\n|" << cinema->name;
-		for (int j = 0; j < 23 -cinema->name.length(); j++)
+		for (int j = 0; j < 23 - cinema->name.length(); j++)
+		{
 			cout << " ";
+		}
+
 		cout << " кинобилет|   |";
 
 		cout << "\n|" << cinema->address;
 		for (int j = 0; j < 33 - cinema->address.length(); j++)
+		{
 			cout << " ";
+		}
+
 		cout << "| К |";
 
 		cout << "\n|                                 | О |";
 
 		cout << "\n|" << name_of_film;
 		for (int j = 0; j < 33 - n1; j++)
+		{
 			cout << " ";
+		}
+
 		cout << "| Н |";
 
 		cout << "\n|                                 | Т |";
 		cout << "\n|ЗАЛ " << cinema->films[film - 1].number_zal << "    РЯД " << row;
 
 		if (row != 10)
+		{
 			cout << " ";
+		}
 
 		cout << "    МЕСТО " << seat << "       | Р | ";
 		cout << "\n|                                 | О |";
@@ -1339,7 +1426,9 @@ void Order::Tickets()
 		cout << "\n|ЦЕНА БИЛЕТА  " << cinema->films[film - 1].price[(day - 1) * 3 + time - 1] << " руб.            |   |\n";
 
 		for (int j = 0; j < 39; j++)
+		{
 			printf("-");
+		}
 	}
 	
 	return;

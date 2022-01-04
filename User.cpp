@@ -146,6 +146,9 @@ void User::Admin(Cinema &cinema, File_O &file_stream)
 		else if (menu.GetItem() == 3)
 		{
 			file_stream.New(cinema);
+			cinema.NewCinema();
+			file_stream.Write(cinema);
+
 			//создание нового файла
 		}
 		else if (menu.GetItem() == 4)

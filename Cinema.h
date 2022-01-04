@@ -67,12 +67,12 @@ public:
 	string NewPromoName(string message);
 	string NewPromoValue(string message);
 
-	void DelFilm(int num_film);
+	void DelFilm(int num_film);	//удаление фильма из проката
 	void ChangeFilm(int num_punkt, int num_film);
 	int CheckTime(int time, int num_seans, int duration);
 	void TimeAuto(int duration);
 	string Convert_Time(int time);
-	int DeConvert_Time(string time);
+	int DeConvert_Time(string time);	
 	void ListSell();
 
 	void InputName();	//Ввод названия кинотеатра
@@ -82,6 +82,8 @@ public:
 	void InputRNM();		//ввод РНМ
 	void NewHallCinema(int number_film);	//генерация наполненности зала для нового фильма	
 	void PriceInput(int num_film, int num);
+	void NewCinema();
+	string NewID();
 
 	string NewHall();	//генерация зала (посадка)
 
