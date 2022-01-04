@@ -417,8 +417,24 @@ void Order::Reserve()
 
 	string kod = "\nЗа 30 минут до сеанса бронь аннулируется. При оплате заказа на кассе назовите код: ";
 	int x;
-	string doub;
+	string doub = "";
 	bool res_good = true;
+	do
+	{
+		for (int i = 0; i < 5; ++i)
+		{
+			doub = doub + to_string(rand() % 10);
+		}
+		for (int u = 0; u < cinema->broni_number; u++)
+		{
+			if (cinema->bron[u][2] == doub)
+			{
+				res_good = false;	//все плохо, надо перегенерироваться
+			}
+		}
+	} while (res_good != true);
+	x = atoi(doub.c_str());
+	/*
 	do
 	{
 		srand(std::time(0));
@@ -431,7 +447,7 @@ void Order::Reserve()
 			}
 		}
 	} while (res_good != true);
-	doub = to_string(x);
+	*/
 	int k = x, i = 0;
 
 	while (k > 0)
