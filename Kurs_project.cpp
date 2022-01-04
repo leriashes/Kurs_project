@@ -143,7 +143,11 @@ int main()
 					menu.Description(order);	//ввод времени посещения
 					menu.ChooseItem();
 					order.time = menu.GetItem();
-					order.time = order.time;
+
+					if (menu.items_number < 3)
+					{
+						order.time += 3 - menu.items_number;
+					}
 
 					if (order.time == -1)
 					{

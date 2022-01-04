@@ -208,7 +208,7 @@ void Menu::Description(Order& order)
 	else
 	{
 		int h = 0;
-		if (order.day - 1 == 0)
+		/*if (order.day == 1)
 		{
 			for (int i = 0; i < 3; i++)
 			{
@@ -221,7 +221,7 @@ void Menu::Description(Order& order)
 			{
 				order.time = order.time + (3 - h);
 			}
-		}
+		}*/
 		cout << "\n\n   A B C D E F G H I J";
 		for (int i = 0; i < 10; i++)
 		{

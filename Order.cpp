@@ -421,6 +421,7 @@ void Order::Reserve()
 	bool res_good = true;
 	do
 	{
+		res_good = true;
 		for (int i = 0; i < 5; ++i)
 		{
 			doub = doub + to_string(rand() % 10);
