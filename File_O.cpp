@@ -661,7 +661,7 @@ bool File_O::CheckCompound()        //проверка форматировани€ текстового файла
 	return result;
 }
 
-void File_O::Write(Cinema cinema)
+void File_O::Write(Cinema& cinema)
 {
     /*
     time_t t;
