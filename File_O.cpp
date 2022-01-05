@@ -586,7 +586,6 @@ void File_O::Read(Cinema& cinema)
             
             getline(file, cinema.films[i].price[j]);
             getline(file, cinema.films[i].time[j]);
-            getline(file, cinema.films[i].rand[j]);
            
             //string mesta_sdvig;
 
@@ -656,12 +655,6 @@ void File_O::Read(Cinema& cinema)
 
                 }
             }
-              
-            if (cinema.films[i].rand[j][0] == '0' && generate == true)
-            {
-                cinema.films[i].mesta[j] = cinema.NewHall();
-                Sleep(100);
-            }
         }
         //i++;
     }
@@ -687,9 +680,9 @@ bool File_O::CheckCompound()        //проверка форматирования текстового файла
     base.close();
     delete[] str;
 
-    if ((i - 11) % 137 == 0)            //форматирование верно
+    if ((i - 11) % 128 == 0)            //форматирование верно
     {
-        kol_vo_film = (i - 11) / 137;
+        kol_vo_film = (i - 11) / 128;
 		result = true;
     }
 	return result;
@@ -790,7 +783,6 @@ void File_O::Write(Cinema& cinema)
 
                 f << cinema.films[i].price[j] << endl;   //запись стоиомсти билета
                 f << cinema.films[i].time[j] << endl;   //запись времени сеанса
-                f << cinema.films[i].rand[j] << endl;   //запись точки (флажка) генерации
 
                 for (int o = 0; o < 10; o++)
                 {

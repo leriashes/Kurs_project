@@ -1216,11 +1216,8 @@ void Cinema::NewHallCinema(int number_film)
 {
 	for (int i = 0; i < 9; i++)
 	{
-		films[number_film].rand[i] = "0";
 		films[number_film].mesta[i] = NewHall();
-		//Sleep(50);
 	}
-
 	return;
 }
 
