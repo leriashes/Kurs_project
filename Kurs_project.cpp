@@ -78,7 +78,7 @@ int main()
 				}
 			}
 		}
-	} while (menu.GetItem() == -1 || f || menu.GetItem() == 3);
+	} while (menu.GetItem() == -1 || f || file_stream.path == "");
 
 	f = n = true;
 
