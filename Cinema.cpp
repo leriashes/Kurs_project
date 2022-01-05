@@ -210,6 +210,10 @@ bool Cinema::CheckBron(int num)
 							
 							return false;
 						}
+						if (DeConvert_Time(bron[num][5]) < DeConvert_Time(Time::RetTime(0)) + 30)
+						{
+							return false;
+						}
 					}
 					if (Time::RetDate(1, 1) == bron[num][6])
 					{
