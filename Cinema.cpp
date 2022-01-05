@@ -1216,7 +1216,7 @@ void Cinema::NewHallCinema(int number_film)
 	{
 		films[number_film].rand[i] = "0";
 		films[number_film].mesta[i] = NewHall();
-		Sleep(1000);
+		//Sleep(50);
 	}
 
 	return;
@@ -1260,7 +1260,7 @@ void Cinema::NewCinema()
 
 string Cinema::NewID()
 {
-	srand(std::time(0));
+	//srand(std::time(0));
 	string str = "";
 	for (int i = 0; i < 5; ++i)
 	{
@@ -1286,7 +1286,7 @@ void Cinema::NameOut()
 string Cinema::NewHall()
 {
 	string temp;
-	srand(time(NULL));
+	//srand(time(NULL));
 	//srand(time(0));
 	for (int i = 0; i < 100; i++)
 	{
