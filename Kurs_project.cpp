@@ -210,12 +210,10 @@ int main()
 			int number = cinema.SearchBron(code);	//поиск брони с таким номером
 			if (number != -1)
 			{
-				cout << "КОД БРОНИ ВВЕДЕН ВЕРНО!";
 				//сверка имени фильма в брони с текущим репертуаром
 				if (cinema.CheckBron(number))
 				{
 					cout << cinema.broni_number;
-					cout << "ПРОВЕРКА БРОНИ ПРОШЛА УСПЕШНО!";
 					//продаем!
 					order.PayReserve(number);
 					order.Clean();

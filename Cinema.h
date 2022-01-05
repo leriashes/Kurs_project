@@ -40,6 +40,7 @@ public:
 	bool CheckBron(int num);		//проверка всех данных по брони 
 	void DelBron(int num);
 
+
 	//bool CheckNameBron(int num);	//проверка имени фильма бронирования
 	//bool CheckDayBron(int num);	//проверка дня бронирования
 	//bool CheckPositionBron(int num);

@@ -692,9 +692,8 @@ void Order::PayReserve(int number)
 		}
 	}
 
-	cout << "\n\nïðîâåðêà â êëàññå ORDER ïðîéäåíà";
-	cout << "\n\n" << number;
-	_getch();
+	cout << cinema->films[film - 1].date[day];
+	cout << cinema->films[film - 1].time[time];
 	string seats = cinema->bron[number][7];
 	string place;
 	int place_number = 0;
@@ -712,10 +711,8 @@ void Order::PayReserve(int number)
 		}
 	}
 	
-	cout << "ÏÅÐÅÄ ÏÎÊÓÏÊÎÉ!";
 	Buy(true);
 
-	cout << "ÏÎÑËÅ ÏÎÊÓÏÊÈ!";
 	if (film == 0)
 	{
 		cinema->DelBron(number);
