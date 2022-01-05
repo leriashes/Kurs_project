@@ -411,6 +411,7 @@ void File_O::Read(Cinema& cinema)
     cinema.cashiers_number = 0;
     cinema.promo_number = 0;
     getline(file, temp);    //чтение id кинотеатра
+    cinema.id_cinema = "";
     for (int g = 0; g < temp.size(); g++)
     {
         if (g > 3)
