@@ -267,7 +267,7 @@ void Cinema::ChangeName()
 
 void Cinema::ChangeAdress()
 {
-	cout << "Текущий адес кинотеатра: " << address << "";
+	cout << "Текущий адрес кинотеатра: " << address << "";
 	InputAdress();
 	return;
 }
