@@ -505,10 +505,10 @@ void File_O::Read(Cinema& cinema)
     string old_date;
     getline(file, old_date);
 
-    i = 0;
+    //i = 0;
     int sdvig = 0;
     //заполнение информации о фильмах
-    for (int b=0;b<cinema.films_number;b++)
+    for (i = 0; i < kol_vo_film; i++)
     {
         getline(file, temp);
         getline(file, cinema.films[i].name);
@@ -625,12 +625,11 @@ void File_O::Read(Cinema& cinema)
                 }
             }
               
-            /*if (cinema.films[i].rand[j][0] == '0' && generate == true)
+            if (cinema.films[i].rand[j][0] == '0' && generate == true)
             {
                 cinema.films[i].mesta[j] = cinema.NewHall();
                 Sleep(100);
             }
-            */
         }
         //i++;
     }

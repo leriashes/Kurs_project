@@ -6,7 +6,8 @@
 #include <iostream>
 #include <string>
 #include <sstream>
-
+#include <iostream>
+#include <limits>
 
 bool Cinema::CheckNameBron(int num)
 {
@@ -523,6 +524,8 @@ void Cinema::DelFilm(int num_film)
 
 void Cinema::ChangeFilm(int num_punkt, int num_film)
 {
+	cin.clear();
+
 	string old;
 	if (num_punkt == 0)
 	{
@@ -533,15 +536,34 @@ void Cinema::ChangeFilm(int num_punkt, int num_film)
 	else if (num_punkt == 1 || num_punkt == -1)	//название фильма
 	{
 		old = films[num_film].name;
+		bool rez;
 		do
 		{
-			if (num_punkt == 1)
+			do
 			{
-				NameOut();
-				cout << "Текущее название фильма: " << films[num_film].name << "\n";
-			}
-			cout << "Название фильма: ";
-			getline(cin, films[num_film].name);
+				rez = true;
+				if (num_punkt == 1)
+				{
+					NameOut();
+					cout << "Текущее название фильма: " << films[num_film].name << "\n";
+				}
+				cout << "Название фильма: ";
+				getline(cin, films[num_film].name);
+				for (int u = 0; u < films_number; u++)		//проверка уникальности названия фильма
+				{
+					if (num_film != u)
+					{
+						if (films[num_film].name == films[u].name)
+						{
+							rez = false;
+						}
+					}
+				}
+				if (rez == false)
+				{
+					cout << "Фильм с таким названием уже существует. Повторите попытку ввода\n";
+				}
+			} while (rez != true);
 		} while (films[num_film].name == "");
 		/*cout << "переход в изменение брони";
 		_getch();
@@ -1194,6 +1216,7 @@ void Cinema::NewHallCinema(int number_film)
 	{
 		films[number_film].rand[i] = "0";
 		films[number_film].mesta[i] = NewHall();
+		Sleep(1000);
 	}
 
 	return;
@@ -1237,7 +1260,7 @@ void Cinema::NewCinema()
 
 string Cinema::NewID()
 {
-	srand(time(0));
+	srand(std::time(0));
 	string str = "";
 	for (int i = 0; i < 5; ++i)
 	{
@@ -1264,6 +1287,7 @@ string Cinema::NewHall()
 {
 	string temp;
 	srand(time(NULL));
+	//srand(time(0));
 	for (int i = 0; i < 100; i++)
 	{
 		int num = rand() % 3;

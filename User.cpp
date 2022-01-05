@@ -247,7 +247,7 @@ void User::Admin(Cinema &cinema, File_O &file_stream)
 
 						//cout << "drop";
 						//добавление зала и времени сеансов со стоимостью
-						cinema.films_number++;
+						cinema.films_number = cinema.films_number + 1;
 						file_stream.Write(cinema);
 						cinema.NameOut();
 						cout << "\nДанные успешно записаны!";
