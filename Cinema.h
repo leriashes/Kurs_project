@@ -34,27 +34,29 @@ private:
 	Film films[10];
 	
 public:
+	void NameOut();	//вывод названия кинотеатра
+
 	int SearchBron(string code);	//поиск брони по номеру
 	bool CheckBron(int num);		//проверка всех данных по брони 
-
-	bool CheckNameBron(int num);	//проверка имени фильма бронирования
-	bool CheckDayBron(int num);	//проверка дня бронирования
-	bool CheckPositionBron(int num);
-
-
-	void BuyBron();		//проверка и выкуп билетов из брони
-	void ChangeNameFilmBron(string new_znach, string old_znach);	//внесение изменений в информацию о фильме, если такие брони были
-	void ChangeTimeFilmBron(string NameFilm, string NewTime, string OldTime);
 	void DelBron(int num);
 
+	//bool CheckNameBron(int num);	//проверка имени фильма бронирования
+	//bool CheckDayBron(int num);	//проверка дня бронирования
+	//bool CheckPositionBron(int num);
+	//void BuyBron();		//проверка и выкуп билетов из брони
+
+
+	void ChangeNameFilmBron(string new_znach, string old_znach);	//внесение изменений в информацию о фильме, если такие брони были
+	void ChangeTimeFilmBron(string NameFilm, string NewTime, string OldTime);
 	
-	void List_bron();	//вывод всех бронирований
+	
+	//void List_bron();	//вывод всех бронирований
 	void ChangeName();	//измение названия кинотеатра
 	void ChangeAdress();	//измение адреса кинотеатра
 	void ChangeINN();		//изменение ИНН кинотеатра
 	void ChangeRNM();		//изменение РНМ кинотеатра
-
 	void ChangeCashier();	//изменение кассиров
+
 	void ListCashier(int k);	//вывод кассиров
 
 	/// 
@@ -73,7 +75,7 @@ public:
 	void TimeAuto(int duration);
 	string Convert_Time(int time);
 	int DeConvert_Time(string time);	
-	void ListSell();
+	
 
 	void InputName();	//Ввод названия кинотеатра
 	void InputCashier();	//ввод ФИО кассира
@@ -87,7 +89,9 @@ public:
 
 	string NewHall();	//генерация зала (посадка)
 
-	void NameOut();	//вывод названия кинотеатра
+	
+
+	void ListSell();		//вывод отчетов
 
 	friend class File_O;
 	friend class Menu;

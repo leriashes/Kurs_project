@@ -8,7 +8,7 @@
 #include <sstream>
 #include <iostream>
 #include <limits>
-
+/*
 bool Cinema::CheckNameBron(int num)
 {
 	for (int u = 0; u < films_number; u++)
@@ -26,7 +26,9 @@ bool Cinema::CheckNameBron(int num)
 	}
 	return false;
 }
+*/
 
+/*
 bool Cinema::CheckDayBron(int num)
 {
 	if (Time::RetDate(0, 1) == bron[num][6] || Time::RetDate(1, 1) == bron[num][6] || Time::RetDate(2, 1) == bron[num][6])
@@ -35,7 +37,9 @@ bool Cinema::CheckDayBron(int num)
 	}
 	return false;
 }
+*/
 
+/*
 bool Cinema::CheckPositionBron(int num)
 {
 	//разложить места на порядковые места
@@ -83,8 +87,8 @@ bool Cinema::CheckPositionBron(int num)
 							_getch();
 						}
 						*/
-					}
-				}
+					//}
+//				}
 				/*
 				else
 				{
@@ -92,16 +96,15 @@ bool Cinema::CheckPositionBron(int num)
 					_getch();
 				}
 				*/
-			}
+		//	}
 		
-		}
+//		}
 		/*
 		else
 		{
 			cout << "1";
 			_getch();
 		}
-		*/
 
 	}
 	if (result == true)
@@ -114,20 +117,9 @@ bool Cinema::CheckPositionBron(int num)
 
 
 	_getch();
-	/*
-	char * str1 = (bron[num][7]).c_str();
-	char* pch = strtok(str, " ,.-"); // во втором параметре указаны разделитель (пробел, запятая, точка, тире)
-
-	while (pch != NULL)                         // пока есть лексемы
-	{
-		std::cout << pch << "n";
-		pch = strtok(NULL, " ,.-");
-	}
-	if ()
-	*/
 	return false;
 }
-
+*/
 
 void Cinema::ChangeNameFilmBron(string new_znach, string old_znach)
 {
@@ -256,6 +248,7 @@ bool Cinema::CheckBron(int num)
 	}
 }
 
+/*
 void Cinema::List_bron()
 {
 	for (int o = 0; o < broni_number; o++)
@@ -263,6 +256,7 @@ void Cinema::List_bron()
 		cout << bron[o][1] << bron[o][2];
 	}
 }
+*/
 
 void Cinema::ChangeName()
 {
@@ -304,7 +298,7 @@ void Cinema::ChangeCashier()
 		cout << "\n\n0) Назад\n\n1) Добавить кассира\n2) Удалить кассира\n";
 		menu.ChooseItem();
 		func = menu.GetItem();
-	} while (func < 0 || func > promo_number);
+	} while (func < 0 || func > 2);
 	
 	if (func == 1)
 	{
@@ -1143,7 +1137,7 @@ void Cinema::ListSell()
 		system("cls");
 		cout << "Прибыль за сегодня: " << otchet_today;
 		cout << "\nПрибыль за все время: " << otchet_vsego;
-		cout << "\n\n1) Обнулить прибыль за сегодня\n2) Обнулись прибыль за все время\n\n0) Назад";
+		cout << "\n\n1) Обнулить прибыль за сегодня\n2) Обнулить прибыль за все время\n\n0) Назад";
 		do
 		{
 			func = _getch();

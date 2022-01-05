@@ -869,11 +869,13 @@ void Order::Check(bool card)
 	}
 	cout << "|\n|Êèíîòåàòð '" << str << "'";
 	//for (int i = 0; i < 24 - cinema->name.length(); i++)
+	space(24 - str.length());
+	/*
 	for (int i = 0; i < 24 - str.length(); i++)
 	{
 		cout << " ";
 	}
-
+	*/
 	str = cinema->address;
 	if (str.size() > 24)
 	{
@@ -883,10 +885,13 @@ void Order::Check(bool card)
 	//cout << "|\n|" << cinema->address;
 
 	//for (int i = 0; i < 36 - cinema->address.length(); i++)
+	space(36 - str.length());
+	/*
 	for (int i = 0; i < 36 - str.length(); i++)
 	{
 		cout << " ";
 	}
+	*/
 	cout << "|\n|           ÊÀÑÑÎÂÛÉ  ×ÅÊ            |\n";
 
 	/*str = "";
@@ -899,10 +904,13 @@ void Order::Check(bool card)
 
 	cout << "|×åê ¹: " << str;
 	
+	space(29 - str.length());
+	/*
 	for (int i = 0; i < 29 - str.length(); i++)
 	{
 		cout << " ";
 	}
+	*/
 
 	str = cinema->cashiers[rand() % cinema->cashiers_number + 1];
 	if (str.size() > 23)
@@ -911,10 +919,12 @@ void Order::Check(bool card)
 	}
 	cout << "|\n|Êàññèð: " << str;
 
-	for (int i = 0; i < 28 - str.length(); i++)
+	space(28 - str.length());
+	/*for (int i = 0; i < 28 - str.length(); i++)
 	{
 		cout << " ";
 	}
+	*/
 
 	d = rand() % 365 + 1;
 	cout << "|\n|Ñìåíà: " << d;
@@ -923,17 +933,18 @@ void Order::Check(bool card)
 	{
 		d /= 10;
 	}
+	space(29 - k);
+	/*
 	for (int i = 0; i < 29 - k; i++)
 	{
 		cout << " ";
 	}
+	*/
 
-	int kassa= (rand() % 5) + 1;
+	int kassa = (rand() % 5) + 1;
 	cout << "|\n|Êàññà: " << kassa;
 
 	space(28);
-
-	
 
 	str = name_of_film;
 	if (str.size() > 24)
@@ -1111,10 +1122,13 @@ void Order::Check(bool card)
 	}
 	cout << str;
 
+	space(31 - str.length());
+	/*
 	for (int i = 0; i < 31 - str.length(); i++)
 	{
 		cout << " ";
 	}
+	*/
 	cout << "|\n|ÈÍÍ: ";
 	str = cinema->inn;
 	if (str.size() > 24)
@@ -1122,11 +1136,13 @@ void Order::Check(bool card)
 		str.erase(23, str.size());
 	}
 	cout << str;
-
+	space(31 - str.length());
+	/*
 	for (int i = 0; i < 31 - str.length(); i++)
 	{
 		cout << " ";
 	}
+	*/
 	cout << "|\n|Ñàéò ÔÍÑ:                   nalog.ru|";
 	cout << "\n|ÎÔÄ:            ÎÎÎ \"ßðóñ\" (\"ÎÔÄ-ß\")|";
 	cout << "\n|Ñàéò ÎÔÄ:              www.nfd-ya.ru|";
@@ -1297,11 +1313,13 @@ void Order::Check(bool card)
 			str.erase(23, str.size());
 		}
 		cout << str;
-
+		space(31 - str.length());
+		/*
 		for (int i = 0; i < 31 - str.length(); i++)
 		{
 			cout << " ";
 		}
+		*/
 		cout << "|\n|ÔÍ: 9285000123456782                |\n";
 		
 		/*str = "";
@@ -1313,10 +1331,13 @@ void Order::Check(bool card)
 		str = cinema->NewID();
 		cout << "|×åê ¹: " << str;
 
+		space(29 - str.length());
+		/*
 		for (int i = 0; i < 29 - str.length(); i++)
 		{
 			cout << " ";
 		}
+		*/
 
 		int iRand = (rand() % (cinema->cashiers_number)) + 1;
 		str = cinema->cashiers[iRand];
@@ -1327,10 +1348,13 @@ void Order::Check(bool card)
 		//str = cinema->cashiers[rand() % (cinema->cashiers_number - 1) + 1];
 		cout << "|\n|Êàññèð: " << str;
 
+		space(28 - str.length());
+		/*
 		for (int i = 0; i < 28 - str.length(); i++)
 		{
 			cout << " ";
 		}
+		*/
 
 
 		printf("|");
@@ -1347,11 +1371,13 @@ void Order::Check(bool card)
 		//ñout << "\n|" << cinema->address;
 		cout << str;
 		//for (int i = 0; i < 36 - cinema->address.length(); i++)
+		space(36 - str.length());
+		/*
 		for (int i = 0; i < 36 - str.length(); i++)
 		{
 			cout << " ";
 		}
-
+		*/
 
 		string bank[3] = { "ÑÁÅÐÁÀÍÊ", "ÏÐÎÌÑÂßÇÜÁÀÍÊ", "ÂÒÁ" };
 		random_shuffle(begin(bank), end(bank));
@@ -1441,7 +1467,6 @@ void Order::Tickets()
 
 	int n1 = name_of_film.length();
 
-
 	cout << "\n";
 	for (int i = 0; i < 39; i++)
 	{
@@ -1456,28 +1481,37 @@ void Order::Tickets()
 		row = row / 10 + 1;
 
 		cout << "\n|" << cinema->name;
+		space(23 - cinema->name.length());
+		/*
 		for (int j = 0; j < 23 - cinema->name.length(); j++)
 		{
 			cout << " ";
 		}
+		*/
 
 		cout << " êèíîáèëåò|   |";
 
 		cout << "\n|" << cinema->address;
+		space(33 - cinema->address.length());
+		/*
 		for (int j = 0; j < 33 - cinema->address.length(); j++)
 		{
 			cout << " ";
 		}
+		*/
 
 		cout << "| Ê |";
 
 		cout << "\n|                                 | Î |";
 
 		cout << "\n|" << name_of_film;
+		space(33 - n1);
+		/*
 		for (int j = 0; j < 33 - n1; j++)
 		{
 			cout << " ";
 		}
+		*/
 
 		cout << "| Í |";
 
