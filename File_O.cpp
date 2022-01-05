@@ -278,37 +278,19 @@ void File_O::WriteNewBron(Cinema& cinema)
     }
     for (int y = (cinema.broni_number - cinema.broni_zapis); y < cinema.broni_number; y++)
     {
-        if (cinema.bron[y][6] == Time::RetDate(0, 1))
+        
+        for (int t = 1; t < 8; t++)
         {
-
-            if (cinema.DeConvert_Time(cinema.bron[y][5]) + 30 > cinema.DeConvert_Time(Time::RetTime(0)))
+            f << cinema.bron[y][t];
+            if (t != 7)
             {
-                writes = true;
+                f << "|";
             }
-            else
-            {
-                writes = false;
-            }
+            //f << "    " << cinema.broni_number;
         }
-        else
+        if (y < cinema.broni_number - 1)
         {
-            writes = true;
-        }
-        if (writes == true) 
-        {
-            for (int t = 1; t < 8; t++)
-            {
-                f << cinema.bron[y][t];
-                if (t != 7)
-                {
-                    f << "|";
-                }
-                //f << "    " << cinema.broni_number;
-            }
-            if (y < cinema.broni_number - 1)
-            {
-                f << endl;
-            }
+            f << endl;
         }
     }
     f.close();
