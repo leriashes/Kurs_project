@@ -204,46 +204,52 @@ bool Cinema::CheckBron(int num)
 	{
 		if (films[j].name == bron[num][3]) //проверка названи€ фильма
 		{
-			cout << "ѕроверка названи€ прошла успешно!";
-			for (int r = 0; r < 3; r++)
-			{
-				if (Time::RetDate(0, 1) == bron[num][6] || Time::RetDate(1, 1) == bron[num][6] || Time::RetDate(2, 1) == bron[num][6])	//проверка даты
+			
+				//cout << "ѕроверка названи€ прошла успешно!";
+				for (int r = 0; r < 3; r++)
 				{
-					int l;
-					if (Time::RetDate(0, 1) == bron[num][6])
+					if (Time::RetDate(0, 1) == bron[num][6] || Time::RetDate(1, 1) == bron[num][6] || Time::RetDate(2, 1) == bron[num][6])	//проверка даты
 					{
-						l = 0;
-					}
-					if (Time::RetDate(1, 1) == bron[num][6])
-					{
-						l = 1;
-					}
-					if (Time::RetDate(2, 1) == bron[num][6])
-					{
-						l = 2;
-					}
-
-					cout << "ѕроверка даты прошла успешно!";
-					for (int p = 0; p < 3; p++)
-					{
-						if (films[j].time[p] == bron[num][5])	//проверка времени
+						int l;
+						if (Time::RetDate(0, 1) == bron[num][6])
 						{
-							cout << "ѕроверка времени прошла успешно!";
-							string temp = bron[num][7];
-							std::istringstream iss(temp);
-							std::string token;
-							while (std::getline(iss, token, ' '))
+							l = 0;
+							if (DeConvert_Time(bron[num][5]) > DeConvert_Time(Time::RetTime(0)))
 							{
-								if (films[j].mesta[(l * 3) + p][atoi(token.c_str())] != '1')
-								{
-									return false;
-								}
+								return false;
 							}
+						}
+						if (Time::RetDate(1, 1) == bron[num][6])
+						{
+							l = 1;
+						}
+						if (Time::RetDate(2, 1) == bron[num][6])
+						{
+							l = 2;
+						}
 
-							return true;
+						//cout << "ѕроверка даты прошла успешно!";
+						for (int p = 0; p < 3; p++)
+						{
+							if (films[j].time[p] == bron[num][5])	//проверка времени
+							{
+								//cout << "ѕроверка времени прошла успешно!";
+								string temp = bron[num][7];
+								std::istringstream iss(temp);
+								std::string token;
+								while (std::getline(iss, token, ' '))
+								{
+									if (films[j].mesta[(l * 3) + p][atoi(token.c_str())] != '1')
+									{
+										return false;
+									}
+								}
+
+								return true;
+							}
 						}
 					}
-				}
+				
 			}
 		}
 		
@@ -524,7 +530,7 @@ void Cinema::DelFilm(int num_film)
 
 void Cinema::ChangeFilm(int num_punkt, int num_film)
 {
-	cin.clear();
+	//cin.clear();
 
 	string old;
 	if (num_punkt == 0)

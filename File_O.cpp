@@ -260,7 +260,8 @@ void File_O::InputPath()
         {
 			system("cls");
             cout << "0 - возврат в меню\n\nВведите путь к файлу с информацией о кинотеатре: ";
-            cin >> path;
+            getline(cin, path);
+            //cin >> path;
         } while (path == "");
 
         if (path == "0")
@@ -364,30 +365,15 @@ void File_O::Read(Cinema& cinema)
     string temp;
     cinema.cashiers_number = 0;
     cinema.promo_number = 0;
-    getline(file, temp);    //чтение id кинотеатра (если имеется)
-    if (temp[0] == 'i' && temp[1] == 'd' && temp[2] == ':')
+    getline(file, temp);    //чтение id кинотеатра
+    for (int g = 0; g < temp.size(); g++)
     {
-        for (int g = 0; g < temp.size(); g++)
+        if (g > 3)
         {
-            if (g > 3)
-            {
-                cinema.id_cinema = cinema.id_cinema + temp[g];
-            }
+            cinema.id_cinema = cinema.id_cinema + temp[g];
         }
-        getline(file, cinema.name); //чтение названия кинотеатра
     }
-    else     //создание id файла
-    {
-        cinema.id_cinema = cinema.NewID();
-        cinema.name = temp;
-        /*string str = "";
-        for (int i = 0; i < 5; ++i)
-        {
-            str += to_string(rand() % 10);
-        }
-        cinema.id_cinema = str;
-        */
-    }
+    getline(file, cinema.name); //чтение названия кинотеатра
 
     //заполнение информации о кинотеатре
         
@@ -655,7 +641,7 @@ bool File_O::CheckCompound()        //проверка форматирования текстового файла
     base.close();
     delete[] str;
 
-    if (((i - 11) % 137 == 0) || ((i - 10) % 137 == 0))            //форматирование верно
+    if ((i - 11) % 137 == 0)            //форматирование верно
     {
         kol_vo_film = (i - 11) / 137;
 		result = true;

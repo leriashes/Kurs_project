@@ -860,26 +860,42 @@ void Order::Check(bool card)
 
 	cout << str;
 
-	cout << "|\n|Êèíîòåàòð '" << cinema->name << "'";
-
-	for (int i = 0; i < 24 - cinema->name.length(); i++)
+	//cout << "|\n|Êèíîòåàòð '" << cinema->name << "'";
+	
+	str = cinema->name;
+	if (str.size() > 24)
+	{
+		str.erase(23, str.size());
+	}
+	cout << "|\n|Êèíîòåàòð '" << str << "'";
+	//for (int i = 0; i < 24 - cinema->name.length(); i++)
+	for (int i = 0; i < 24 - str.length(); i++)
 	{
 		cout << " ";
 	}
 
-	cout << "|\n|" << cinema->address;
+	str = cinema->address;
+	if (str.size() > 24)
+	{
+		str.erase(23, str.size());
+	}
+	cout << "|\n|" << str;
+	//cout << "|\n|" << cinema->address;
 
-	for (int i = 0; i < 36 - cinema->address.length(); i++)
+	//for (int i = 0; i < 36 - cinema->address.length(); i++)
+	for (int i = 0; i < 36 - str.length(); i++)
 	{
 		cout << " ";
 	}
 	cout << "|\n|           ÊÀÑÑÎÂÛÉ  ×ÅÊ            |\n";
 
-	str = "";
+	/*str = "";
 	for (int i = 0; i < 5; ++i)
 	{
 		str += to_string(rand() % 10);
 	}
+	*/
+	str = cinema->NewID();
 
 	cout << "|×åê ¹: " << str;
 	
@@ -889,6 +905,10 @@ void Order::Check(bool card)
 	}
 
 	str = cinema->cashiers[rand() % cinema->cashiers_number + 1];
+	if (str.size() > 23)
+	{
+		str.resize(23, str.size());
+	}
 	cout << "|\n|Êàññèð: " << str;
 
 	for (int i = 0; i < 28 - str.length(); i++)
@@ -913,11 +933,17 @@ void Order::Check(bool card)
 
 	space(28);
 
-	cout << "|\n|";
+	
 
-	cout << name_of_film;
+	str = name_of_film;
+	if (str.size() > 24)
+	{
+		str.erase(23, str.size());
+	}
+	cout << "|\n|" << str;
+	//cout << name_of_film;
 
-	space(36 - name_of_film.length());
+	space(36 - str.length());
 
 	cout << "|\n|";
 
@@ -1076,9 +1102,32 @@ void Order::Check(bool card)
 		cout << cost << " ÐÓÁ|";
 	}
 
-	cout << "\n|ÐÍÌ: 0000985218595136               |";
-	cout << "\n|ÈÍÍ: 2223486316                     |";
-	cout << "\n|Ñàéò ÔÍÑ:                   nalog.ru|";
+	//cout << "\n|ÐÍÌ: 0000985218595136               |";
+	cout << "\n|ÐÍÌ: ";
+	str = cinema->rnm;
+	if (str.size() > 24)
+	{
+		str.erase(23, str.size());
+	}
+	cout << str;
+
+	for (int i = 0; i < 31 - str.length(); i++)
+	{
+		cout << " ";
+	}
+	cout << "|\n|ÈÍÍ: ";
+	str = cinema->inn;
+	if (str.size() > 24)
+	{
+		str.erase(23, str.size());
+	}
+	cout << str;
+
+	for (int i = 0; i < 31 - str.length(); i++)
+	{
+		cout << " ";
+	}
+	cout << "|\n|Ñàéò ÔÍÑ:                   nalog.ru|";
 	cout << "\n|ÎÔÄ:            ÎÎÎ \"ßðóñ\" (\"ÎÔÄ-ß\")|";
 	cout << "\n|Ñàéò ÎÔÄ:              www.nfd-ya.ru|";
 	cout << "\n|                                    |\n|";
@@ -1241,14 +1290,27 @@ void Order::Check(bool card)
 		cout << "|\n|ÐÍ ÊÊÒ: 0009865161651698            |\n";
 		cout << "|ÇÍ ÊÊÒ: 0287619841532168            |\n";
 		cout << "|Íåôèñêàëüíûé äîêóìåíò               |\n";
-		cout << "|ÈÍÍ: 2223486316                     |\n";
-		cout << "|ÔÍ: 9285000123456782                |\n";
-		str = "";
+		cout << "|ÈÍÍ: ";
+		str = cinema->inn;
+		if (str.size() > 24)
+		{
+			str.erase(23, str.size());
+		}
+		cout << str;
+
+		for (int i = 0; i < 31 - str.length(); i++)
+		{
+			cout << " ";
+		}
+		cout << "|\n|ÔÍ: 9285000123456782                |\n";
+		
+		/*str = "";
 		for (int i = 0; i < 5; ++i)
 		{
 			str += to_string(rand() % 10);
 		}
-
+		*/
+		str = cinema->NewID();
 		cout << "|×åê ¹: " << str;
 
 		for (int i = 0; i < 29 - str.length(); i++)
@@ -1258,6 +1320,10 @@ void Order::Check(bool card)
 
 		int iRand = (rand() % (cinema->cashiers_number)) + 1;
 		str = cinema->cashiers[iRand];
+		if (str.size() > 24)
+		{
+			str.erase(23, str.size());
+		}
 		//str = cinema->cashiers[rand() % (cinema->cashiers_number - 1) + 1];
 		cout << "|\n|Êàññèð: " << str;
 
@@ -1271,11 +1337,17 @@ void Order::Check(bool card)
 
 		cout << "\n|Ñàéò ÔÍÑ:                   nalog.ru|";
 		cout << "\n|ÎÔÄ:            ÎÎÎ \"ßðóñ\" (\"ÎÔÄ-ß\")|";
-		cout << "\n|Ñàéò ÎÔÄ:              www.nfd-ya.ru|";
+		cout << "\n|Ñàéò ÎÔÄ:              www.nfd-ya.ru|\n|";
 
-		cout << "\n|" << cinema->address;
-
-		for (int i = 0; i < 36 - cinema->address.length(); i++)
+		str = cinema->address;
+		if (str.size() > 24)
+		{
+			str.erase(23, str.size());
+		}
+		//ñout << "\n|" << cinema->address;
+		cout << str;
+		//for (int i = 0; i < 36 - cinema->address.length(); i++)
+		for (int i = 0; i < 36 - str.length(); i++)
 		{
 			cout << " ";
 		}
