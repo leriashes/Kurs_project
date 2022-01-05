@@ -508,7 +508,7 @@ void File_O::Read(Cinema& cinema)
     i = 0;
     int sdvig = 0;
     //заполнение информации о фильмах
-    do
+    for (int b=0;b<cinema.films_number;b++)
     {
         getline(file, temp);
         getline(file, cinema.films[i].name);
@@ -632,8 +632,9 @@ void File_O::Read(Cinema& cinema)
             }
             */
         }
-        i++;
-    } while (i < kol_vo_film);
+        //i++;
+    }
+    //} while (i < kol_vo_film);
 	cinema.films_number = i;
     file.close();
     Write(cinema);
