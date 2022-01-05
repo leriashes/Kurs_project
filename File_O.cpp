@@ -39,7 +39,7 @@ void File_O::ReadBron(Cinema& cinema) //считывание данных из файла бронирования
             i++;
         }
 
-        
+        bool reads;
         f1.seekg(0, std::ios::beg);     //переход в начало файла
         for (int u = 0; u < i; u++)
         {
@@ -62,11 +62,30 @@ void File_O::ReadBron(Cinema& cinema) //считывание данных из файла бронирования
                     {
                         if ((rez[1] + "\0") == cinema.id_cinema)
                         {
-                            for (int e = 1; e < 8; e++)
+                            if (rez[6] == Time::RetDate(0, 1))
                             {
-                                cinema.bron[cinema.broni_number][e] = rez[e];
+                                if (cinema.DeConvert_Time(rez[5]) + 30 > cinema.DeConvert_Time(Time::RetTime(0)))
+                                {
+                                    reads = true;
+                                
+                                }
+                                else
+                                {
+                                    reads = false;
+                                }
                             }
-                            cinema.broni_number++;
+                            else
+                            {
+                                reads = true;
+                            }
+                            if (reads == true)
+                            {
+                                for (int e = 1; e < 8; e++)
+                                {
+                                    cinema.bron[cinema.broni_number][e] = rez[e];
+                                }
+                                cinema.broni_number++;
+                            }
                         }
                     }
                     h++;
@@ -130,7 +149,7 @@ void File_O::WriteBron(Cinema& cinema)
     int num = 0;
     f1.open(path_cop);
     string str, write;
-    
+    bool writes;
     while (!f1.eof())
     {
         getline(f1, str);
@@ -164,13 +183,36 @@ void File_O::WriteBron(Cinema& cinema)
                         {
                             if (rez[6] == Time::RetDate(0, 1) || rez[6] == Time::RetDate(1, 1) || rez[6] == Time::RetDate(2, 1))
                             {
-                                //запись в новый файл
-                                if (num != 0)
+                                if (rez[6] == Time::RetDate(0, 1))
                                 {
-                                    outFiles << endl;
+                                    if (cinema.DeConvert_Time(rez[5]) + 30 > cinema.DeConvert_Time(Time::RetTime(0)))       //проверка для 30-ти минутного аннулирования брони
+                                    {
+
+                                        cout << cinema.DeConvert_Time(rez[5]);
+                                        cout << "\n\n";
+                                        cout << cinema.DeConvert_Time(Time::RetTime(0));
+                                        _getch();
+                                        writes = true;
+                                    }
+                                    else
+                                    {
+                                        writes = false;
+                                    }
                                 }
-                                outFiles << write;
-                                num++;
+                                else
+                                {
+                                    writes = true;
+                                }
+                                if (writes == true)
+                                {
+                                    //запись в новый файл
+                                    if (num != 0)
+                                    {
+                                        outFiles << endl;
+                                    }
+                                    outFiles << write;
+                                    num++;
+                                }
                             }
                         }
                         h++;
@@ -228,12 +270,32 @@ void File_O::WriteNewBron(Cinema& cinema)
     cout << "SIZE:  " << size;
     _getch();
     */
-    if (size != 0)
+
+    bool writes;
+    if (size != 0 && cinema.broni_number != 0)
     {
         f << endl;
     }
     for (int y = (cinema.broni_number - cinema.broni_zapis); y < cinema.broni_number; y++)
     {
+        if (cinema.bron[y][6] == Time::RetDate(0, 1))
+        {
+
+            if (cinema.DeConvert_Time(cinema.bron[y][5]) + 30 > cinema.DeConvert_Time(Time::RetTime(0)))
+            {
+                writes = true;
+            }
+            else
+            {
+                writes = false;
+            }
+        }
+        else
+        {
+            writes = true;
+        }
+        if (writes == true) 
+        {
             for (int t = 1; t < 8; t++)
             {
                 f << cinema.bron[y][t];
@@ -247,6 +309,7 @@ void File_O::WriteNewBron(Cinema& cinema)
             {
                 f << endl;
             }
+        }
     }
     f.close();
     cinema.broni_zapis = 0;
