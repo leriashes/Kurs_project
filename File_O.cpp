@@ -134,6 +134,8 @@ void File_O::WriteBron(Cinema& cinema)
     file.close();
     */
 
+    
+    /*
     if (remove(path_bron.c_str()) != 0)             // удаление файла file.txt
     {   
         //std::cout << "Ошибка удаления файла\n";
@@ -142,6 +144,7 @@ void File_O::WriteBron(Cinema& cinema)
     {
         //std::cout << "Файл успешно удалён\n";
     }
+    */
     //_getch();
 
     ofstream outFiles(path_bron);
@@ -187,11 +190,12 @@ void File_O::WriteBron(Cinema& cinema)
                                 {
                                     if (cinema.DeConvert_Time(rez[5]) + 30 > cinema.DeConvert_Time(Time::RetTime(0)))       //проверка для 30-ти минутного аннулирования брони
                                     {
-
+                                        /*
                                         cout << cinema.DeConvert_Time(rez[5]);
                                         cout << "\n\n";
                                         cout << cinema.DeConvert_Time(Time::RetTime(0));
                                         _getch();
+                                        */
                                         writes = true;
                                     }
                                     else
@@ -253,6 +257,7 @@ void File_O::WriteBron(Cinema& cinema)
     }
     outFiles.close();
     f1.close();
+    remove(path_cop.c_str());
     cinema.broni_zapis = cinema.broni_number;
     WriteNewBron(cinema);
 }
@@ -771,6 +776,7 @@ void File_O::Write(Cinema& cinema)
             f << cinema.films[i].main_role << endl;  //запись главных актеров фильма
             f << cinema.films[i].rejisser << endl;   //запись режиссеров фильма
             f << cinema.films[i].number_zal << endl;   //запись номер зала
+            
             f << endl;  //пустая строка
 
             for (int j = 0; j < 9; j++)
