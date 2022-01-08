@@ -1112,7 +1112,7 @@ void Order::Check(bool card)
 		_setmode(_fileno(stdout), O_TEXT);
 		_setmode(_fileno(stdin), O_TEXT);
 
-		cout << cost << " ÐÓÁ|";
+		cout << cost * num - sale * num << " ÐÓÁ|";
 	}
 
 	//cout << "\n|ÐÍÌ: 0000985218595136               |";
@@ -1398,26 +1398,12 @@ void Order::Check(bool card)
 			cout << " ";
 		}
 
-		str = "";
-		for (int i = 0; i < 5; ++i)
-		{
-			str += to_string(rand() % 10);
-		}
-
-		cout << "|\n|×åê ¹: " << str;
-
-
-		for (d = atoi(str.c_str()), k = 0; d > 0; k++)
-		{
-			d /= 10;
-		}
-		space(29 - k);
 
 		cout << "|\n|               Îïëàòà               |\n";
 		cout << "|              ÎÄÎÁÐÅÍÎ              |\n";
-		cout << "|ÑÓÌÌÀ: " << cost << ".00 RUB";
+		cout << "|ÑÓÌÌÀ: " << cost * num - sale * num << ".00 RUB";
 
-		for (d = cost, k = 0; d > 0; k++)
+		for (d = cost * num - sale * num, k = 0; d > 0; k++)
 		{
 			d /= 10;
 		}
