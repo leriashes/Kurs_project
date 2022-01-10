@@ -203,7 +203,6 @@ void Cinema::RedPromo()
 	NameOut();
 	ListPromo(1);		//вывод всех промокодов
 	cout << "Номер промокода для редактирования: ";
-	//функция возврата в меню
 	Menu menu(promo_number);
 
 	do
@@ -310,8 +309,6 @@ string Cinema::NewPromoValue(string message)
 
 void Cinema::DelFilm(int num_film)
 {
-	//сдвиг всех фильмов через цикл, начиная от удаляемого
-
 	for (int i = num_film; i < films_number - 1; i++)
 	{
 		films[i] = films[i + 1];
@@ -568,71 +565,6 @@ void Cinema::ChangeFilm(int num_punkt, int num_film)
 					}
 				}
 			}
-			
-
-			/*
-			cout << "\n\nВведите время первого сеанса (пример: 12:40): ";
-			bool time = false;
-			string temp;
-			getline(cin, temp);
-			int minutes;
-			int hours;
-			//проверка на правильность ввода
-			if (temp.length() == 4 || temp.length() == 5)	//первая проверка на правильность ввода времени
-			{
-				if (temp[1] == ':' || temp[2] == ':')
-				{
-					int k;
-					int o;
-					if (temp[1] == ':')
-					{
-						k = 2;
-						o = 0;
-					}
-					else
-					{
-						k = 3;
-						o = 1;
-					}
-					if (isdigit(int(temp[0])) && isdigit(int(temp[o])) && isdigit(int(temp[k])) && isdigit(int(temp[k + 1])))			//проверка на принадлежность всех элементов к цифрам
-					{
-						minutes = (int(temp[k]) - 48) * 10 + (int(temp[k + 1]) - 48);
-						if (temp[2] == ':')
-						{
-							hours = (int(temp[0]) - 48) * 600 + (int(temp[1]) - 48) * 60;
-						}
-						else
-						{
-							hours = (int(temp[0]) - 48) * 60;
-						}
-						cout << "\n\n" << hours << "\n\n" << minutes << "\n\n" << int(temp[0]);
-						if ((hours > 8 * 60  && hours < 60 * 21)  && minutes < 60)
-						{
-							cout << "хорошее время!";
-							time = true;
-						}
-					}
-				}
-				if (time)
-				{
-					cout << "Введите время второго сеанса: ";
-					_getch();
-				}
-			}
-			/*if (temp.length() == 4 || temp.length() == 5)	//первая проверка на правильность ввода времени
-			{
-				if (temp[1] == ':' || temp[2] == ':')	//вторая проверка на правильность ввода времени
-				{
-					if (temp[0] = )
-				}
-
-			}
-			for (int u = 0; u < temp.length(); u++)
-			{
-				if ()
-			}
-			films[num_film].duration;
-			*/
 		}
 	}
 	else if (num_punkt == 8 || num_punkt == -8)	//стоимость сеансов
@@ -657,8 +589,6 @@ void Cinema::ChangeFilm(int num_punkt, int num_film)
 			{
 				num = _getch();
 			} while (num < '0' && num >'3');
-			/*system("cls");
-			cout << "Текущая стоимость: " << films[num_film].price[num - 49] << "\n\n";*/
 			PriceInput(num_film, num - 49);
 		}
 
@@ -730,7 +660,6 @@ int Cinema::CheckTime(int time, int num_seans, int duration)
 		if (num_seans == 1)
 		{
 			cout << "\n\nВведите время первого сеанса (пример: 12:40): ";
-			//TimeAuto(duration);
 		}
 		else if (num_seans == 2)
 		{
@@ -743,7 +672,6 @@ int Cinema::CheckTime(int time, int num_seans, int duration)
 		getline(cin, temp);
 		int minutes;
 		int hours;
-		//проверка на правильность ввода
 		if (temp.length() == 4 || temp.length() == 5)	//первая проверка на правильность ввода времени
 		{
 			if (temp[1] == ':' || temp[2] == ':')
@@ -835,8 +763,6 @@ void Cinema::TimeAuto(int duration)
 			}
 		}
 	}
-	
-	//_getch();
 	return;
 }
 
@@ -844,7 +770,6 @@ string Cinema::Convert_Time(int time)
 {
 	int temp;
 	string ret;
-	//конвертация в часы и минуты с помощью деления, добавления знака :
 	ret = to_string(time / 60);
 	if (atoi(ret.c_str()) < 10)
 	{
@@ -911,7 +836,6 @@ void Cinema::InputCashier()
 	{
 		cout << "\n\nВведите ФИО кассира: ";
 		getline(cin, full_name);
-		//проверка на существование данного кассира в базе???
 	} while (full_name == "");
 
 	return;
@@ -968,7 +892,7 @@ void Cinema::PriceInput(int num_film, int num)
 	{
 		NameOut();
 		cout << "Введите стоимость билета для сеанса в " << films[num_film].time[num] << ": ";
-		getline(cin, temp);	//Проверка на правильность ввода ???? заменить на ввод int
+		getline(cin, temp);
 		for (int y = 0; y < temp.size(); y++)
 		{
 			if (isdigit(temp[y]))
