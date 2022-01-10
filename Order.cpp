@@ -1163,6 +1163,7 @@ void Order::Check(bool card)
 		cout << "|----------------------------        |\n";
 		cout << "|     Подпись кассира                |\n";
 
+		//Вывод отреза
 		wcout << L"\u00A0";
 		for (int i = 0; i < 18; i++)
 		{
@@ -1238,3 +1239,5 @@ void Order::Clean()
 	day = time = film = row = seat = 0;
 	return;
 }
+
+

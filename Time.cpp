@@ -4,7 +4,7 @@ bool Time::loadingComplete = true;
 
 string Time::RetDate(int n)
 {
-	time_t days[3];
+	time_t days[3]; //today, tommorow, day after tommorow 
 
 	time(&days[0]);
 	days[1] = days[0] + 24 * 3600;

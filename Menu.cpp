@@ -78,6 +78,7 @@ void Menu::ChooseItem()
 	return;
 }
 
+// ПЕРЕНЕСТИ ВЫВОД СПИСКА В КИНОТЕАТР?
 void Menu::FilmList()
 {
 	cout << "0) Возврат в меню\n\n";
@@ -88,7 +89,7 @@ void Menu::FilmList()
 		{
 			cout << i + 1 << ") " << cinema->films[i].name << " (" << cinema->films[i].age << ")\n";
 		}
-		cout << "\n\nВыберите фильм (введите номер): ";
+		cout << "\n\nВыберите фильм (введите номер): ";		//????? НАДО ЛИ
 		items_number = cinema->films_number;
 	}
 	else
@@ -238,3 +239,5 @@ int Menu::GetItem()
 {
     return item;
 }
+
+

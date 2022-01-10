@@ -45,6 +45,10 @@ void User::AdminLogIn()
 
 		} while (symbol != 13);
 
+		//code(parol);
+
+		//Проверка правильности пароля
+		//Если пароль введён неверно
 		if (password != parol)
 		{
 			Menu menu;
@@ -88,6 +92,10 @@ void User::Admin(Cinema &cinema, File_O &file_stream)
 
 	while (admin)
 	{
+		//администратор
+		//ввод пароля администратора
+
+		// сделать выход из режима администратора
 		admin = true;
 
 		menu.Admin(file_stream);
@@ -109,6 +117,11 @@ void User::Admin(Cinema &cinema, File_O &file_stream)
 				Time::loadingComplete = true;
 				t.join();
 			}
+			/*
+			else
+			{
+				error = "Файл \"" + file_stream.path + "\" не удовлетворяет условиям форматирования.\n";
+			}*/
 		}
 		else if (menu.GetItem() == 2)
 		{
@@ -124,10 +137,16 @@ void User::Admin(Cinema &cinema, File_O &file_stream)
 				Time::loadingComplete = true;
 				t.join();
 			}
+			/*
+			else
+			{
+				error = "Файл \"" + file_stream.path + "\" не удовлетворяет условиям форматирования.\n";
+			}*/
 		}
 		else if (menu.GetItem() == 3)
 		{
 			file_stream.New(cinema);
+			//создание нового файла
 		}
 		else if (menu.GetItem() == 4)
 		{
@@ -153,6 +172,7 @@ void User::Admin(Cinema &cinema, File_O &file_stream)
 						cout << "Фильм был успешно удален!";
 						file_stream.Write(cinema);
 						_getch();
+						//нужно ли подтверждение удаления???
 					}
 
 				}
@@ -222,6 +242,8 @@ void User::Admin(Cinema &cinema, File_O &file_stream)
 						Time::loadingComplete = true;
 						t.join();
 
+						//cout << "drop";
+						//добавление зала и времени сеансов со стоимостью
 						cinema.films_number++;
 						file_stream.Write(cinema);
 						cinema.NameOut();
@@ -239,6 +261,14 @@ void User::Admin(Cinema &cinema, File_O &file_stream)
 				}
 				else if (menu.GetItem() == 0)
 					break;
+
+				//добавление или удаление фильма
+				//вывод списка фильмов
+				//выбор
+				//Редактирование информации о фильме
+				//вывод списка фильмов
+				//выбор фильма для редактирования информации о нем
+				//вывод пунктов для редактирования
 			}
 		}
 		else if (menu.GetItem() == 5)
@@ -264,7 +294,7 @@ void User::Admin(Cinema &cinema, File_O &file_stream)
 					cinema.NewPromo();
 				}
 				file_stream.Write(cinema);
-			} while (menu.GetItem() != 0);
+			} while (menu.GetItem() != 0);	//???? изменить условие ????
 			
 		}
 		else if (menu.GetItem() == 6)
@@ -336,12 +366,19 @@ void User::Admin(Cinema &cinema, File_O &file_stream)
 						}
 						else
 						{
+							//order.ChooseAction();
 							order.Clean();
 						}
 					}
 					file_stream.WriteNewBron(cinema);
 					cinema.broni_zapis = 0;
+					//file_stream.WriteBron(cinema);
 					file_stream.Write(cinema);
+					
+					//Аннулирование билета
+					//вывод списка фильмов
+					//вывод даты времени
+					//выбор места для аннулирования
 				}
 			}
 		}

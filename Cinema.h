@@ -35,6 +35,7 @@ private:
 	
 public:
 	bool CheckNameBron(int num);
+	void BuyBron();		//проверка и выкуп билетов из брони
 	void ChangeFilmBron(int num_punkt, string new_znach, string old_znach);	//внесение изменений в информацию о фильме, если такие брони были
 
 	int SearchBron(string code);	//поиск брони по номеру
@@ -46,6 +47,10 @@ public:
 
 	void ChangeCashier();	//изменение кассиров
 	void ListCashier(int k);	//вывод кассиров
+
+	/// 
+	/// Перенести в класс USER
+	/// 
 	void ListPromo(int k);	//вывод списка промокодов
 	void DelPromo();		//удаление промокода
 	void RedPromo();		//редактирование информации о промокоде
