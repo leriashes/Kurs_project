@@ -19,7 +19,5 @@ public:
 
 	static bool loadingComplete;
 	static void PrintLoading();
-
-
 };
 

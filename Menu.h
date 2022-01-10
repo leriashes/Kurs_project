@@ -22,9 +22,9 @@ public:
 	void Admin(File_O fileo);
 
 	void ChooseItem();
-	void File();	//перенести в файл?  убрать k?
-	void FilmList();	//в фильм
-	void Description(Order& order);	//в фильм или в заказ?
+	void File();
+	void FilmList();
+	void Description(Order& order);
 
 	void Escape();
 	void ChangeProkat();

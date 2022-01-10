@@ -9,22 +9,22 @@ class File_O
 {
 
 public:
-	void ReadBron(Cinema& cinema);	//чтение файла с забронированными билетами
-	void WriteBron(Cinema& cinema);	//запись в файл с забронированными билетами
-	void WriteNewBron(Cinema& cinema);	//запись в файл из массива данного кинотеатра
+	void ReadBron(Cinema& cinema);	
+	void WriteBron(Cinema& cinema);	
+	void WriteNewBron(Cinema& cinema);
 
 	int error;
-	int kol_vo_film;	//перенести в кинотеатр?
-	string path;	//путь к файлу с кинотеатром
-	string path_bron = "bronirovanie.txt";	//путь к файлу с забронированными билетами
+	int kol_vo_film;
+	string path;
+	string path_bron = "bronirovanie.txt";	
 
-	void InputPath();		//ввод пути для файла
-	void New(Cinema& cinema);	//создание нового файла
-	bool CheckPath();	//проверка на сущестование
-	void Read(Cinema& cinema);	//чтение всех данных из файла кинотеатра
-	bool CheckCompound();	//проверка форматирования файла
-	void Write(Cinema& cinema);	//запись всех данных в файл
-	void Clean(string path);		//очистка файла по пути path
+	void InputPath();
+	void New(Cinema& cinema);
+	bool CheckPath();
+	void Read(Cinema& cinema);
+	bool CheckCompound();
+	void Write(Cinema& cinema);
+	void Clean(string path);
 
 	friend class Menu;
 };

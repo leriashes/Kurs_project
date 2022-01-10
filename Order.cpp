@@ -451,11 +451,6 @@ void Order::Reserve()
 	{
 		res_good = true;
 		doub = cinema->NewID();
-		/*for (int i = 0; i < 5; ++i)
-		{
-			doub = doub + to_string(rand() % 10);
-		}
-		*/
 		for (int u = 0; u < cinema->broni_number; u++)
 		{
 			if (cinema->bron[u][2] == doub)
@@ -465,20 +460,6 @@ void Order::Reserve()
 		}
 	} while (res_good != true);
 	x = atoi(doub.c_str());
-	/*
-	do
-	{
-		srand(std::time(0));
-		x = rand() % 1000000 + 1;
-		for (int n = 0; n < cinema->broni_number; n++)
-		{
-			if (cinema->bron[n][2] == to_string(x))
-			{
-				res_good = false;	//все плохо, надо перегенерироваться
-			}
-		}
-	} while (res_good != true);
-	*/
 	int k = x, i = 0;
 
 	while (k > 0)
@@ -556,7 +537,6 @@ void Order::Reserve()
 	cinema->bron[cinema->broni_number][7] = bronka;			//места
 	cinema->broni_zapis = cinema->broni_zapis + 1;
 	cinema->broni_number = cinema->broni_number + 1;
-	//перезапись файла после бронирования билетов
 	film = 0;
 
 
@@ -843,19 +823,6 @@ void Order::Check(bool card)
 
 	string str;
 	str = Time::RetDate(0, 1) + " " + Time::RetTime(1);
-//	str = to_string(da) + '.' + to_string(mo) + '.' + to_string(yea) + "  " + to_string(hour) + ':' + to_string(minute) + ':' + to_string(sec);
-	/*
-	if (to_string(da).size() == 1)
-	{
-		str = "0";
-	}
-	str = str + to_string(da) + '.';
-	if (to_string(mo).size() == 1)
-	{
-		str = str + "0";
-	}
-	str = str + to_string(mo) + '.' + to_string(yea) + "  " + to_string(hour) + ':' + to_string(minute) + ':' + to_string(sec);
-	*/
 	space(36 - str.length());
 
 	cout << str;
@@ -944,8 +911,6 @@ void Order::Check(bool card)
 	}
 	space(22 - k);
 	
-
-	//для специального символа (3 полосы для знака равно
 	_setmode(_fileno(stdout), _O_U16TEXT);
 	_setmode(_fileno(stdin), _O_U16TEXT);
 
@@ -1220,20 +1185,7 @@ void Order::Check(bool card)
 		_setmode(_fileno(stdin), O_TEXT);
 
 		cout << "\n|";
-
-		//str = to_string(da) + '.' + to_string(mo) + '.' + to_string(yea) + "  " + to_string(hour) + ':' + to_string(minute) + ':' + to_string(sec);
 		str = Time::RetDate(0, 1) + " " + Time::RetTime(1);
-		/*if (to_string(da).size() == 1)
-		{
-			str = "0";
-		}
-		str = str + to_string(da) + '.';
-		if (to_string(mo).size() == 1)
-		{
-			str = str + "0";
-		}
-		str = str + to_string(mo) + '.' + to_string(yea) + "  " + to_string(hour) + ':' + to_string(minute) + ':' + to_string(sec);
-		*/
 		space(36 - str.length());
 
 		cout << str;
@@ -1258,7 +1210,6 @@ void Order::Check(bool card)
 
 		int iRand = (rand() % (cinema->cashiers_number)) + 1;
 		str = cinema->cashiers[iRand];
-		//str = cinema->cashiers[rand() % (cinema->cashiers_number - 1) + 1];
 		cout << "|\n|Кассир: " << str;
 
 		for (int i = 0; i < 28 - str.length(); i++)
@@ -1283,9 +1234,7 @@ void Order::Check(bool card)
 
 		string bank[3] = { "СБЕРБАНК", "ПРОМСВЯЗЬБАНК", "ВТБ" };
 		random_shuffle(begin(bank), end(bank));
-		//для длины строки
 		int len = bank[0].length();
-		//(28- len) / 2 - отступить с каждой стороны
 		cout << "|\n|";
 		space((29 - len) / 2);
 

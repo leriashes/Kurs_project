@@ -57,7 +57,6 @@ int main()
 			}
 
 			f = true;
-			//происходит проверка где-то тут!
 			if (file_stream.path != "0" && file_stream.CheckPath())
 			{
 				if (file_stream.CheckCompound())		//проверка файла на внутренее форматирование
@@ -173,10 +172,7 @@ int main()
 						file_stream.WriteBron(cinema);
 					}
 				}
-				
-
 			}
-
 		}
 		else if (menu.GetItem() == 2 && !User::GetAdmin())
 		{
@@ -209,10 +205,8 @@ int main()
 			int number = cinema.SearchBron(code);	//поиск брони с таким номером
 			if (number != -1)
 			{
-				//сверка имени фильма в брони с текущим репертуаром
 				if (cinema.CheckBron(number))
 				{
-					//продаем!
 					order.PayReserve(number);
 					order.Clean();
 					file_stream.Write(cinema);
