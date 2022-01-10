@@ -48,7 +48,9 @@ int Order::ChoosePlace()
 		seat = symbol + 48;
 
 		if (symbol > 48 && symbol < 59)
+		{
 			seat -= 32;
+		}
 
 		ChooseRow();
 	}
@@ -58,7 +60,9 @@ int Order::ChoosePlace()
 		ChooseRow();
 	}
 	else if (symbol != 0)
+	{
 		ChoosePlace();
+	}
 
 	static int f = 0;
 	if (row == 0 || seat == 0)
@@ -82,7 +86,9 @@ int Order::ChooseRow()
 {
 	int a = row;
 	if (row == 1)
+	{
 		row = 0;
+	}
 
 	PrintInfo();
 	row = a;
@@ -103,9 +109,13 @@ int Order::ChooseRow()
 			ChooseRow();
 		}
 		else if (symbol == 0)
+		{
 			row = 10;
+		}
 		else if (symbol + 48 == 13)
+		{
 			row = 1;
+		}
 		else
 		{
 			row = 1;
@@ -140,7 +150,9 @@ int Order::ChooseRow()
 			seat = symbol + 48;
 
 			if (symbol > 48 && symbol < 59)
+			{
 				seat -= 32;
+			}
 
 			row = 1;
 			ChooseSeat();
@@ -163,7 +175,9 @@ int Order::ChooseRow()
 			ChooseRow();
 		}
 		else if (symbol == 0)
+		{
 			ChoosePlace();
+		}
 		else
 		{
 			row = symbol;
@@ -171,7 +185,9 @@ int Order::ChooseRow()
 		}
 	}
 	else if (row > 1 && row < 10)
+	{
 		ChooseSeat();
+	}
 	else
 	{
 		row = 0;
@@ -201,18 +217,24 @@ int Order::ChooseSeat()
 			seat = symbol + 48;
 
 			if (symbol > 48 && symbol < 59)
+			{
 				seat -= 32;
+			}
 		}
 		else if (symbol == 0)
+		{
 			ChoosePlace();
+		}
 		else
+		{
 			ChooseSeat();
+		}
 	}
 
 	return 0;
 }
 
-void Order::Buy()
+void Order::Buy(bool reserved)
 {
 	Menu menu(3);
 	
@@ -226,11 +248,22 @@ void Order::Buy()
 		{
 			while (cinema->films[film - 1].mesta[time - 1 + (day - 1) * 3].find("4") != string::npos)
 			{
-				cinema->films[film - 1].mesta[time - 1 + (day - 1) * 3].replace(cinema->films[film - 1].mesta[time - 1 + (day - 1) * 3].find("4"), 1, "3");
+				if (!reserved)
+				{
+					cinema->films[film - 1].mesta[time - 1 + (day - 1) * 3].replace(cinema->films[film - 1].mesta[time - 1 + (day - 1) * 3].find("4"), 1, "3");
+				}
+				else
+				{
+					cinema->films[film - 1].mesta[time - 1 + (day - 1) * 3].replace(cinema->films[film - 1].mesta[time - 1 + (day - 1) * 3].find("4"), 1, "1");
+				}
 			}
-			cinema->films[film - 1].mesta[time - 1 + (day - 1) * 3] = cinema->films[film - 1].mesta[time - 1 + (day - 1) * 3].substr(0, (row - 1) * 10 + seat - 65) + "0" + cinema->films[film - 1].mesta[time - 1 + (day - 1) * 3].substr((row - 1) * 10 + seat - 64);
 
-			ChooseAction();
+			if (!reserved)
+			{
+				cinema->films[film - 1].mesta[time - 1 + (day - 1) * 3] = cinema->films[film - 1].mesta[time - 1 + (day - 1) * 3].substr(0, (row - 1) * 10 + seat - 65) + "0" + cinema->films[film - 1].mesta[time - 1 + (day - 1) * 3].substr((row - 1) * 10 + seat - 64);
+				ChooseAction();
+			}
+			
 		}
 		else if (menu.GetItem() == 1)
 		{
@@ -290,9 +323,13 @@ void Order::Buy()
 						x = _getch();
 
 						if (x == 27)
+						{
 							menu.Escape();
+						}
 						else
+						{
 							x = 1;
+						}
 					} while (x != 1);
 				}
 				else if (sum == num * (cost - sale))
@@ -388,12 +425,14 @@ void Order::Buy()
 			} while (promokod == "");
 
 			for (int i = 0; i < cinema->promo_number; i++)
-				if (promokod == cinema->promo[i][0])
+			{
+				if (promokod == cinema->promo[i + 1][0])
 				{
-					sale = stoi(cinema->films[film - 1].price[(day - 1) * 3 + time - 1]) * stoi(cinema->promo[i][1]) / 100;
+					sale = stoi(cinema->films[film - 1].price[(day - 1) * 3 + time - 1]) * stoi(cinema->promo[i + 1][1]) / 100;
 					break;
 				}
-			Buy();
+			}
+			Buy(reserved);
 		}
 	} while (menu.GetItem() < 0);
 
@@ -406,10 +445,40 @@ void Order::Reserve()
 
 	string kod = "\nЗа 30 минут до сеанса бронь аннулируется. При оплате заказа на кассе назовите код: ";
 	int x;
-	string doub;
-	srand(std::time(0));
-	x = rand() % 1000000 + 1;
-	doub = to_string(x);
+	string doub = "";
+	bool res_good;
+	do
+	{
+		res_good = true;
+		doub = cinema->NewID();
+		/*for (int i = 0; i < 5; ++i)
+		{
+			doub = doub + to_string(rand() % 10);
+		}
+		*/
+		for (int u = 0; u < cinema->broni_number; u++)
+		{
+			if (cinema->bron[u][2] == doub)
+			{
+				res_good = false;	//все плохо, надо перегенерироваться
+			}
+		}
+	} while (res_good != true);
+	x = atoi(doub.c_str());
+	/*
+	do
+	{
+		srand(std::time(0));
+		x = rand() % 1000000 + 1;
+		for (int n = 0; n < cinema->broni_number; n++)
+		{
+			if (cinema->bron[n][2] == to_string(x))
+			{
+				res_good = false;	//все плохо, надо перегенерироваться
+			}
+		}
+	} while (res_good != true);
+	*/
 	int k = x, i = 0;
 
 	while (k > 0)
@@ -479,12 +548,10 @@ void Order::Reserve()
 	cinema->bron[cinema->broni_number][1] = cinema->id_cinema;
 	cinema->bron[cinema->broni_number][2] = doub;
 	cinema->bron[cinema->broni_number][3] = cinema->films[film - 1].name;
-	temp = Time::RetDate(0);
-	temp.erase(0, 3);
+	temp = Time::RetDate(0, 1);
 	cinema->bron[cinema->broni_number][4] = temp;	//текущая дата
 	cinema->bron[cinema->broni_number][5] = cinema->films[film - 1].time[time - 1];
-	temp = Time::RetDate(day - 1);
-	temp.erase(0, 3);
+	temp = Time::RetDate(day - 1, 1);
 	cinema->bron[cinema->broni_number][6] = temp;			//дата
 	cinema->bron[cinema->broni_number][7] = bronka;			//места
 	cinema->broni_zapis = cinema->broni_zapis + 1;
@@ -531,7 +598,7 @@ void Order::ChooseAction()
 				}
 				else if (menu.GetItem() == 1)
 				{
-					Buy();
+					Buy(false);
 				}
 				else if (menu.GetItem() == 2)
 				{
@@ -598,6 +665,60 @@ void Order::ChooseAction()
 	return;
 }
 
+void Order::PayReserve(int number)
+{
+	for (int i = 0; i < cinema->films_number; i++)
+	{
+		if (cinema->films[i].name == cinema->bron[number][3])
+		{
+			film = i + 1;
+
+			for (int j = 0; j < 3; j++)
+			{
+				if (cinema->films[i].date[j] == cinema->bron[number][6])
+				{
+					day = j + 1;
+
+					for (int k = 0; k < 3; k++)
+					{
+						if (cinema->films[i].time[k] == cinema->bron[number][5])
+						{
+							time = k + 1;
+							break;
+						}
+					}
+				}
+			}
+		}
+	}
+
+	string seats = cinema->bron[number][7];
+	string place;
+	int place_number = 0;
+
+	for (int i = 0; i < seats.length(); i++)
+	{
+		if (seats[i] != ' ' && seats[i] >= '0' && seats[i] <= '9')
+		{
+			place_number = place_number * 10 + seats[i] - 48;
+		}
+		else
+		{
+			cinema->films[film - 1].mesta[time - 1 + (day - 1) * 3] = cinema->films[film - 1].mesta[time - 1 + (day - 1) * 3].substr(0, place_number) + "3" + cinema->films[film - 1].mesta[time - 1 + (day - 1) * 3].substr(place_number + 1);
+			place_number = 0;
+		}
+	}
+	
+	Buy(true);
+
+	if (film == 0)
+	{
+		cinema->DelBron(number);
+	}
+
+	return;
+}
+
 void Order::PrintInfo()
 {
 	Menu menu;
@@ -605,7 +726,7 @@ void Order::PrintInfo()
 	menu.Description(*this);
 
 	if (day != 0)
-		cout << "\n\nДата: " << Time::RetDate(day - 1).erase(0, 3);
+		cout << "\n\nДата: " << Time::RetDate(day - 1, 1);
 
 	if (time != 0)
 	{
@@ -633,7 +754,7 @@ void Order::PrintResult()
 	cout << "0 - назад\n\n";
 
 	cout << "Фильм: " << cinema->films[film - 1].name;
-	cout << "\n\nДата: " << Time::RetDate(day - 1).erase(0, 3);
+	cout << "\n\nДата: " << Time::RetDate(day - 1, 1);
 	cout << "   Время: " << cinema->films[film - 1].time[(day - 1) * 3 + time - 1];
 	cout << "   Цена: " << cinema->films[film - 1].price[(day - 1) * 3 + time - 1] << " руб.";
 	cout << "   Зал: " << cinema->films[film - 1].number_zal;
@@ -641,7 +762,9 @@ void Order::PrintResult()
 	cout << "\n\nМеста:";
 
 	if (cinema->films[film - 1].mesta[time - 1 + (day - 1) * 3].find("3") != string::npos)
+	{
 		num = 0;
+	}
 
 	int cost = stoi(cinema->films[film - 1].price[(day - 1) * 3 + time - 1]);
 
@@ -656,7 +779,9 @@ void Order::PrintResult()
 	}
 
 	while (cinema->films[film - 1].mesta[time - 1 + (day - 1) * 3].find("5") != string::npos)
+	{
 		cinema->films[film - 1].mesta[time - 1 + (day - 1) * 3].replace(cinema->films[film - 1].mesta[time - 1 + (day - 1) * 3].find("5"), 1, "4");
+	}
 
 	while (cinema->films[film - 1].mesta[time - 1 + (day - 1) * 3].find("3") != string::npos)
 	{
@@ -674,6 +799,7 @@ void Order::PrintResult()
 
 	return;
 }
+
 void space(int quan)
 {
 	for (int i = 0; i < quan; i++)
@@ -690,7 +816,7 @@ void Order::Check(bool card)
 
 	string name_of_film = cinema->films[film - 1].name;
 	name_of_film += (" (" + cinema->films[film - 1].age + ")");
-
+	/*
 	time_t t;
 	std::time(&t);
 
@@ -700,7 +826,7 @@ void Order::Check(bool card)
 	int da = localtime(&t)->tm_mday;
 	int mo = localtime(&t)->tm_mon + 1;
 	int yea = localtime(&t)->tm_year + 1900;
-
+	*/
 	cout << "\n\n|";
 
 	_setmode(_fileno(stdout), _O_U16TEXT);
@@ -716,9 +842,20 @@ void Order::Check(bool card)
 	cout << "|\n|";
 
 	string str;
-
-	str = to_string(da) + '.' + to_string(mo) + '.' + to_string(yea) + "  " + to_string(hour) + ':' + to_string(minute) + ':' + to_string(sec);
-
+	str = Time::RetDate(0, 1) + " " + Time::RetTime(1);
+//	str = to_string(da) + '.' + to_string(mo) + '.' + to_string(yea) + "  " + to_string(hour) + ':' + to_string(minute) + ':' + to_string(sec);
+	/*
+	if (to_string(da).size() == 1)
+	{
+		str = "0";
+	}
+	str = str + to_string(da) + '.';
+	if (to_string(mo).size() == 1)
+	{
+		str = str + "0";
+	}
+	str = str + to_string(mo) + '.' + to_string(yea) + "  " + to_string(hour) + ':' + to_string(minute) + ':' + to_string(sec);
+	*/
 	space(36 - str.length());
 
 	cout << str;
@@ -747,7 +884,9 @@ void Order::Check(bool card)
 	cout << "|Чек №: " << str;
 	
 	for (int i = 0; i < 29 - str.length(); i++)
+	{
 		cout << " ";
+	}
 
 	str = cinema->cashiers[rand() % cinema->cashiers_number + 1];
 	cout << "|\n|Кассир: " << str;
@@ -761,10 +900,13 @@ void Order::Check(bool card)
 	cout << "|\n|Смена: " << d;
 
 	for (k = 0; d > 0; k++)
+	{
 		d /= 10;
-
+	}
 	for (int i = 0; i < 29 - k; i++)
+	{
 		cout << " ";
+	}
 
 	int kassa= (rand() % 5) + 1;
 	cout << "|\n|Касса: " << kassa;
@@ -824,7 +966,9 @@ void Order::Check(bool card)
 	cout << "|\n|ИТОГО";
 
 	for (d = num * (cost - sale), k = 0; d > 0; k++)
+	{
 		d /= 10;
+	}
 
 	space(26 - k);
 	
@@ -841,7 +985,9 @@ void Order::Check(bool card)
 	cout << "|В Т.Ч. НДС 20%";
 
 	for (d = 0.2 * num * (cost - sale), k = 0; d > 0; k++)
+	{
 		d /= 10;
+	}
 
 	space(17 - k);
 	
@@ -941,17 +1087,23 @@ void Order::Check(bool card)
 	_setmode(_fileno(stdin), _O_U16TEXT);
 
 	for (int i = 0; i < 11; i++)
+	{
 		wcout << L"\u00A0";
+	}
 
 	//вывод верхней полосы для квадрата
 	wcout << L"\u250C";
 	for (int i = 0; i < 12; i++)
+	{
 		wcout << L"\u2500";
+	}
 
 	wcout << L"\u2510";
 
 	for (int i = 0; i < 11; i++)
+	{
 		wcout << L"\u00A0";
+	}
 
 	wcout << L"|\n";
 
@@ -983,15 +1135,23 @@ void Order::Check(bool card)
 	{
 		wcout << L"|";
 		for (int j = 0; j < 11; j++)
+		{
 			wcout << L"\u00A0";
+		}
 
 		wcout << L"\u2502";
 		for (int j = 0; j < 12; j++, k++)
+		{
 			wcout << text[k];
+		}
+
 		wcout << L"\u2502";
 
 		for (int j = 0; j < 11; j++)
+		{
 			wcout << L"\u00A0";
+		}
+
 		wcout << L"|\n";
 	}
 
@@ -1000,20 +1160,32 @@ void Order::Check(bool card)
 	//вывод нижней полосы
 
 	for (int i = 0; i < 11; i++)
+	{
 		wcout << L"\u00A0";
+	}
+
 	wcout << L"\u2514";
 
 	for (int i = 0; i < 12; i++)
+	{
 		wcout << L"\u2500";
+	}
+
 	wcout << L"\u2518";
 
 	for (int i = 0; i < 11; i++)
+	{
 		wcout << L"\u00A0";
+	}
+
 	wcout << L"|\n";
 	wcout << L"|";
 
 	for (int i = 0; i < 36; i++)
+	{
 		wcout << L"\u00A0";
+	}
+
 	wcout << L"|\n";
 
 	//вывод отреза
@@ -1049,8 +1221,19 @@ void Order::Check(bool card)
 
 		cout << "\n|";
 
-		str = to_string(da) + '.' + to_string(mo) + '.' + to_string(yea) + "  " + to_string(hour) + ':' + to_string(minute) + ':' + to_string(sec);
-
+		//str = to_string(da) + '.' + to_string(mo) + '.' + to_string(yea) + "  " + to_string(hour) + ':' + to_string(minute) + ':' + to_string(sec);
+		str = Time::RetDate(0, 1) + " " + Time::RetTime(1);
+		/*if (to_string(da).size() == 1)
+		{
+			str = "0";
+		}
+		str = str + to_string(da) + '.';
+		if (to_string(mo).size() == 1)
+		{
+			str = str + "0";
+		}
+		str = str + to_string(mo) + '.' + to_string(yea) + "  " + to_string(hour) + ':' + to_string(minute) + ':' + to_string(sec);
+		*/
 		space(36 - str.length());
 
 		cout << str;
@@ -1135,7 +1318,9 @@ void Order::Check(bool card)
 		cout << "|СУММА: " << cost << ".00 RUB";
 
 		for (d = cost, k = 0; d > 0; k++)
+		{
 			d /= 10;
+		}
 
 		space(22 - k);
 
@@ -1187,7 +1372,9 @@ void Order::Tickets()
 
 	cout << "\n";
 	for (int i = 0; i < 39; i++)
+	{
 		cout << "_";
+	}
 
 	for (int i = 0; i < num; i++)
 	{
@@ -1197,38 +1384,51 @@ void Order::Tickets()
 		row = row / 10 + 1;
 
 		cout << "\n|" << cinema->name;
-		for (int j = 0; j < 23 -cinema->name.length(); j++)
+		for (int j = 0; j < 23 - cinema->name.length(); j++)
+		{
 			cout << " ";
+		}
+
 		cout << " кинобилет|   |";
 
 		cout << "\n|" << cinema->address;
 		for (int j = 0; j < 33 - cinema->address.length(); j++)
+		{
 			cout << " ";
+		}
+
 		cout << "| К |";
 
 		cout << "\n|                                 | О |";
 
 		cout << "\n|" << name_of_film;
 		for (int j = 0; j < 33 - n1; j++)
+		{
 			cout << " ";
+		}
+
 		cout << "| Н |";
 
 		cout << "\n|                                 | Т |";
 		cout << "\n|ЗАЛ " << cinema->films[film - 1].number_zal << "    РЯД " << row;
 
 		if (row != 10)
+		{
 			cout << " ";
+		}
 
 		cout << "    МЕСТО " << seat << "       | Р | ";
 		cout << "\n|                                 | О |";
 
-		cout << "\n|ДАТА " << Time::RetDate(day - 1).erase(0, 3) << "    НАЧАЛО " << cinema->films[film - 1].time[(day - 1) * 3 + time - 1] << "  | Л |";
+		cout << "\n|ДАТА " << Time::RetDate(day - 1, 1) << "    НАЧАЛО " << cinema->films[film - 1].time[(day - 1) * 3 + time - 1] << "  | Л |";
 		cout << "\n|                                 | Ь |";
 
 		cout << "\n|ЦЕНА БИЛЕТА  " << cinema->films[film - 1].price[(day - 1) * 3 + time - 1] << " руб.            |   |\n";
 
 		for (int j = 0; j < 39; j++)
+		{
 			printf("-");
+		}
 	}
 	
 	return;

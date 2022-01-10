@@ -3,36 +3,184 @@
 #include "File_O.h"
 #include "Time.h"
 #include "Menu.h"
-
+#include <iostream>
+#include <string>
+#include <sstream>
 
 
 bool Cinema::CheckNameBron(int num)
 {
 	for (int u = 0; u < films_number; u++)
 	{
-		if (films[u].name == bron[num][4])
+		if (films[u].name == bron[num][3])
 		{
-
-			return true;
+			for (int p = 0; p < 3; p++)
+			{
+				if (films[u].time[p] == bron[num][5])
+				{
+					return true;
+				}
+			}
 		}
 	}
 	return false;
 }
 
-void Cinema::ChangeFilmBron(int num_punkt, string new_znach, string old_znach)
+bool Cinema::CheckDayBron(int num)
 {
+	if (Time::RetDate(0, 1) == bron[num][6] || Time::RetDate(1, 1) == bron[num][6] || Time::RetDate(2, 1) == bron[num][6])
+	{
+		return true;
+	}
+	return false;
+}
+
+bool Cinema::CheckPositionBron(int num)
+{
+	//разложить места на порядковые места
+	string temp = bron[num][7];
+	std::istringstream iss(temp);
+	std::string token;
+	int i = 0;
+	string mesta[4];
+	while (std::getline(iss, token, ' '))
+	{
+		mesta[i] = token;
+		std::cout << token << std::endl;
+		i++;
+	}
+	int q;
+	int u;		//номер фильма в кинотеатру
+	for (u = 0; u < films_number; u++)
+	{
+		if (films[u].name == bron[num][3])
+		{
+			q = u;
+		}
+	}
+
+	bool result = true;
+	//проверка на текущих местах
+	for (int r = 0; r < 3; r++)
+	{
+		if (bron[num][6] == films[q].date[r])	//проверка даты
+		{
+			for (int p = 0; p < 3; p++)
+			{
+				if (films[q].time[p] == bron[num][5])	//проверка времени
+				{
+					for (int f = 0; f < i; f++)
+					{
+						if (films[q].mesta[p][atoi(mesta[f].c_str())] != '1')
+						{
+							result = false;
+						}
+						/*
+						else
+						{
+							cout << "3";
+							_getch();
+						}
+						*/
+					}
+				}
+				/*
+				else
+				{
+					cout << "2";
+					_getch();
+				}
+				*/
+			}
+		
+		}
+		/*
+		else
+		{
+			cout << "1";
+			_getch();
+		}
+		*/
+
+	}
+	if (result == true)
+	{
+		//удаление из файла 
+		return true;
+		//продаем билеты. удаляем бронь
+	}
+	return false;
+
+
+	_getch();
+	/*
+	char * str1 = (bron[num][7]).c_str();
+	char* pch = strtok(str, " ,.-"); // во втором параметре указаны разделитель (пробел, запятая, точка, тире)
+
+	while (pch != NULL)                         // пока есть лексемы
+	{
+		std::cout << pch << "n";
+		pch = strtok(NULL, " ,.-");
+	}
+	if ()
+	*/
+	return false;
+}
+
+
+void Cinema::ChangeNameFilmBron(string new_znach, string old_znach)
+{
+	/*
+	cout << "запустились";
+	_getch();
+	*/
 	for (int y = 0; y < broni_number; y++)
 	{
-		if (bron[y][num_punkt] == old_znach)
+		if (bron[y][3] == old_znach)
 		{
+			/*
 			cout << "Совпадение найдено!!!";
 			cout << new_znach;
 			cout << old_znach;
 			_getch();
-			bron[y][num_punkt] = new_znach;
+			*/
+			bron[y][3] = new_znach;
 		}
 	}
 	
+}
+
+void Cinema::ChangeTimeFilmBron(string NameFilm, string NewTime, string OldTime)
+{
+	for (int y = 0; y < broni_number; y++)
+	{
+		if (bron[y][3] == NameFilm)
+		{
+			if (bron[y][5] == OldTime)
+			{
+				bron[y][5] = NewTime;
+				/*
+				cout << "НАЙДЕНО!!!";
+				cout << bron[y][5];
+				_getch();
+				*/
+			}
+		}
+	}
+}
+
+void Cinema::DelBron(int num)
+{
+
+
+	for (int g = num; g < broni_number - 1; g++)
+	{
+		for (int j = 0; j < 8; j++)
+		{
+			bron[g][j] = bron[g + 1][j];
+		}
+	}
+	broni_number = broni_number - 1;
 }
 
 int Cinema::SearchBron(string code)	//сверка номеров брони 
@@ -46,6 +194,59 @@ int Cinema::SearchBron(string code)	//сверка номеров брони
 	}
 	
 	return -1;
+}
+
+bool Cinema::CheckBron(int num)
+{
+	bool itog = true;
+	for (int j = 0; j < films_number; j++)
+	{
+		if (films[j].name == bron[num][3]) //проверка названия фильма
+		{
+			cout << "Проверка названия прошла успешно!";
+			for (int r = 0; r < 3; r++)
+			{
+				if (Time::RetDate(0, 1) == bron[num][6] || Time::RetDate(1, 1) == bron[num][6] || Time::RetDate(2, 1) == bron[num][6])	//проверка даты
+				{
+					int l;
+					if (Time::RetDate(0, 1) == bron[num][6])
+					{
+						l = 0;
+					}
+					if (Time::RetDate(1, 1) == bron[num][6])
+					{
+						l = 1;
+					}
+					if (Time::RetDate(2, 1) == bron[num][6])
+					{
+						l = 2;
+					}
+
+					cout << "Проверка даты прошла успешно!";
+					for (int p = 0; p < 3; p++)
+					{
+						if (films[j].time[p] == bron[num][5])	//проверка времени
+						{
+							cout << "Проверка времени прошла успешно!";
+							string temp = bron[num][7];
+							std::istringstream iss(temp);
+							std::string token;
+							while (std::getline(iss, token, ' '))
+							{
+								if (films[j].mesta[(l * 3) + p][atoi(token.c_str())] != '1')
+								{
+									return false;
+								}
+							}
+
+							return true;
+						}
+					}
+				}
+			}
+		}
+		
+	}
 }
 
 void Cinema::List_bron()
@@ -342,7 +543,10 @@ void Cinema::ChangeFilm(int num_punkt, int num_film)
 			cout << "Название фильма: ";
 			getline(cin, films[num_film].name);
 		} while (films[num_film].name == "");
-		ChangeFilmBron(4, films[num_film].name, old);
+		/*cout << "переход в изменение брони";
+		_getch();
+		*/
+		ChangeNameFilmBron(films[num_film].name, old);
 	}
 	else if (num_punkt == 2 || num_punkt == -2)	//продожительность фильма
 	{
@@ -464,14 +668,14 @@ void Cinema::ChangeFilm(int num_punkt, int num_film)
 			}
 			else
 			{
-				temp = DeConvert_Time(films[num_film].time[num - 49]);
+				temp = DeConvert_Time(films[num_film].time[num - 50]);
 			}
 
-			time = CheckTime(temp, num - 49, atoi(films[num_film].duration.c_str()));
+			time = CheckTime(temp, num - 48, atoi(films[num_film].duration.c_str()));
 			int check;
 			if (num - 48 < 3)
 			{
-				check = DeConvert_Time(films[num_film].time[num - 49]);
+				check = DeConvert_Time(films[num_film].time[num - 48]);
 			}
 			else
 			{
@@ -479,14 +683,27 @@ void Cinema::ChangeFilm(int num_punkt, int num_film)
 			}
 			if (time + atoi(films[num_film].duration.c_str()) + 15 <= check)
 			{
-				cout << "time = " << time;
+				/*cout << "time = " << time;
 				cout << "\n\n CHECK: " << check;
 				_getch();
+				*/
+				ChangeTimeFilmBron(films[num_film].name, Convert_Time(time), films[num_film].time[num - 49 + 6]);
+				/*
+				cout << "Типа переименовали бронь";
+				_getch();
+				*/
+
 				films[num_film].time[num - 49] = films[num_film].time[num - 49 + 3] = films[num_film].time[num - 49 + 6] = Convert_Time(time);
 				good = true;
 			}
 			else
 			{
+				/*cout << "\n\n\n";
+				cout << check;
+				cout << "\n\n\n";
+				cout << time;
+				cout << "\n\n\n";
+				*/
 				cout << "\nВремя не удовлетворяет условию.\n\n";
 			}
 		} while (good != true);
@@ -505,10 +722,14 @@ void Cinema::ChangeFilm(int num_punkt, int num_film)
 			cout << "\nСамое позднее время для первого сеанса: ";
 			
 			if (h < 10)
+			{
 				cout << 0;
+			}
 			cout << h << ":";
 			if (m < 10)
+			{
 				cout << 0;
+			}
 			cout << m;
 			
 			//TimeAuto(atoi(films[num_film].duration.c_str()));
@@ -520,20 +741,28 @@ void Cinema::ChangeFilm(int num_punkt, int num_film)
 				m = (first_time + 15 + (atoi(films[num_film].duration.c_str()))) % 60;
 				cout << "\n\nСамое раннее время для второго сеанса: ";
 				if (h < 10)
+				{
 					cout << 0;
+				}
 				cout << h << ":";
 				if (m < 10)
+				{
 					cout << 0;
+				}
 				cout << m << "\n";
 
 				h = (21 * 60 - 15 - 2 * (atoi(films[num_film].duration.c_str()))) / 60;
 				m = (21 * 60 - 15 - 2 * (atoi(films[num_film].duration.c_str()))) % 60;
 				cout << "\nСамое позднее время для второго сеанса: ";
 				if (h < 10)
-						cout << 0;
+				{
+					cout << 0;
+				}
 				cout << h << ":";
 				if (m < 10)
+				{
 					cout << 0;
+				}
 				cout << m << "\n";
 
 				second_time = CheckTime(first_time, 2, atoi(films[num_film].duration.c_str()));	//
@@ -543,20 +772,28 @@ void Cinema::ChangeFilm(int num_punkt, int num_film)
 					m = (second_time + 15 + (atoi(films[num_film].duration.c_str()))) % 60;
 					cout << "\n\nСамое раннее время для третьего сеанса: ";
 					if (h < 10)
+					{
 						cout << 0;
+					}
 					cout << h << ":";
 					if (m < 10)
+					{
 						cout << 0;
+					}
 					cout << m << "\n";
 
 					h = (21 * 60 - (atoi(films[num_film].duration.c_str()))) / 60;
 					m = (21 * 60 - (atoi(films[num_film].duration.c_str()))) % 60;
 					cout << "\nСамое позднее время для третьего сеанса: ";
 					if (h < 10)
+					{
 						cout << 0;
+					}
 					cout << h << ":";
 					if (m < 10)
+					{
 						cout << 0;
+					}
 					cout << m << "\n";
 
 					third_time = CheckTime(second_time, 3, atoi(films[num_film].duration.c_str()));	//
@@ -799,17 +1036,17 @@ int Cinema::CheckTime(int time, int num_seans, int duration)
 				}
 				else
 				{
-					cout << "Неверное формтирование. Повторите попытку";
+					cout << "Неверное форматирование. Повторите попытку";
 				}
 			}
 			else
 			{
-				cout << "Неверное формтирование. Повторите попытку";
+				cout << "Неверное форматирование. Повторите попытку";
 			}
 		}
 		else
 		{
-			cout << "Неверное формтирование. Повторите попытку";
+			cout << "Неверное форматирование. Повторите попытку";
 		}
 		cout << "\n\n";
 	} while (true);
@@ -913,7 +1150,8 @@ void Cinema::InputCashier()
 		getline(cin, full_name);
 		//проверка на существование данного кассира в базе???
 	} while (full_name == "");
-
+	cashiers[cashiers_number + 1] = full_name;
+	cashiers_number = cashiers_number + 1;
 	return;
 }
 
@@ -980,6 +1218,33 @@ void Cinema::PriceInput(int num_film, int num)
 	films[num_film].price[num + 3] = films[num_film].price[num + 6] = films[num_film].price[num] = yuop;
 
 	return;
+}
+
+void Cinema::NewCinema()
+{
+	InputName();
+	InputAdress();
+	InputCashier();
+	InputINN();
+	InputRNM();
+	id_cinema = NewID();
+	promo[0][0] = "";
+	promo_number = 0;
+	films_number = 0;
+	otchet_today = "0";
+	otchet_vsego = "0";
+}
+
+string Cinema::NewID()
+{
+	srand(time(0));
+	string str = "";
+	for (int i = 0; i < 5; ++i)
+	{
+		str += to_string(rand() % 10);
+	}
+	return str;
+
 }
 
 void Cinema::NameOut()

@@ -34,11 +34,20 @@ private:
 	Film films[10];
 	
 public:
-	bool CheckNameBron(int num);
-	void BuyBron();		//проверка и выкуп билетов из брони
-	void ChangeFilmBron(int num_punkt, string new_znach, string old_znach);	//внесение изменений в информацию о фильме, если такие брони были
-
 	int SearchBron(string code);	//поиск брони по номеру
+	bool CheckBron(int num);		//проверка всех данных по брони 
+
+	bool CheckNameBron(int num);	//проверка имени фильма бронирования
+	bool CheckDayBron(int num);	//проверка дня бронирования
+	bool CheckPositionBron(int num);
+
+
+	void BuyBron();		//проверка и выкуп билетов из брони
+	void ChangeNameFilmBron(string new_znach, string old_znach);	//внесение изменений в информацию о фильме, если такие брони были
+	void ChangeTimeFilmBron(string NameFilm, string NewTime, string OldTime);
+	void DelBron(int num);
+
+	
 	void List_bron();	//вывод всех бронирований
 	void ChangeName();	//измение названия кинотеатра
 	void ChangeAdress();	//измение адреса кинотеатра
@@ -58,12 +67,12 @@ public:
 	string NewPromoName(string message);
 	string NewPromoValue(string message);
 
-	void DelFilm(int num_film);
+	void DelFilm(int num_film);	//удаление фильма из проката
 	void ChangeFilm(int num_punkt, int num_film);
 	int CheckTime(int time, int num_seans, int duration);
 	void TimeAuto(int duration);
 	string Convert_Time(int time);
-	int DeConvert_Time(string time);
+	int DeConvert_Time(string time);	
 	void ListSell();
 
 	void InputName();	//Ввод названия кинотеатра
@@ -73,6 +82,8 @@ public:
 	void InputRNM();		//ввод РНМ
 	void NewHallCinema(int number_film);	//генерация наполненности зала для нового фильма	
 	void PriceInput(int num_film, int num);
+	void NewCinema();
+	string NewID();
 
 	string NewHall();	//генерация зала (посадка)
 

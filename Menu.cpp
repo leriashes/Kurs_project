@@ -28,9 +28,13 @@ Menu::~Menu()
 void Menu::Cashier() 
 {
 	if (cinema != NULL && cinema->name != "")
+	{
 		cinema->NameOut();
+	}
 	else
+	{
 		system("cls");
+	}
 	cout << "1) Просмотр списка фильмов\n2) Оплата забронированных билетов\n3) Вход в режим администратора\n\nESC - Выход";
 	items_number = 3;
 
@@ -41,9 +45,13 @@ void Menu::Admin(File_O fileo)
 {
 	items_number = 3;
 	if (cinema != NULL && cinema->name != "")
+	{
 		cinema->NameOut();
+	}
 	else
+	{
 		system("cls");
+	}
 	cout << "0) Выход из режима администратора\n\n1) Открыть файл по умолчанию в домашнем каталоге (\"kino_v_teatre\")\n2) Открыть файл по заданному пути\n3) Создание нового файла\n";
 	if (fileo.path != "" && fileo.path != "0")
 	{
@@ -105,9 +113,11 @@ void Menu::Description(Order& order)
 {
 	cinema->NameOut();
 	cout << "0 - назад\n";
+	/*
 	const time_t tm = time(nullptr);
 	std::tm* now = localtime(&tm);
-	
+	*/
+
 	cout << "\nНазвание: " << cinema->films[order.film - 1].name;
 	cout << "\n\nОписание: " << cinema->films[order.film - 1].short_description;
 	cout << "\n\nПродолжительность (мин.): " << cinema->films[order.film - 1].duration;
@@ -134,30 +144,66 @@ void Menu::Description(Order& order)
 
 		for (int i = k; i < n; i++)
 		{
-			cout << "\n\n" << Time::RetDate(i) << "   Время   Цена билета";
+			cout << "\n\n" << Time::RetDate(i, 0) << "   Время   Цена билета";
 
 			for (int j = 0; j < 3; j++)
 			{
-
-				cout << "\n                " << cinema->films[order.film - 1].time[3 * i + j] << "    " << cinema->films[order.film - 1].price[3 * i + j] << " руб.";
+				if (i == 0)
+				{
+					if (cinema->DeConvert_Time(cinema->films[order.film - 1].time[3 * i + j]) > cinema->DeConvert_Time(Time::RetTime(0)))
+					{
+						cout << "\n                " << cinema->films[order.film - 1].time[3 * i + j] << "    " << cinema->films[order.film - 1].price[3 * i + j] << " руб.";
+					}
+				}
+				else
+				{
+					cout << "\n                " << cinema->films[order.film - 1].time[3 * i + j] << "    " << cinema->films[order.film - 1].price[3 * i + j] << " руб.";
+				}
 			}
 		}
 
 		if (order.day == 0)
 		{
 
-			cout << "\n\n1) " << Time::RetDate(0) << "\n2) " << Time::RetDate(1) << "\n3) " << Time::RetDate(2) << "\n\nВыберите дату: ";
+			cout << "\n\n1) " << Time::RetDate(0, 0) << "\n2) " << Time::RetDate(1, 0) << "\n3) " << Time::RetDate(2, 0) << "\n\nВыберите дату: ";
+			items_number = 3;
 		}
 		else
 		{
 			cout << "\n\n";
+			int k = 0;
 			for (int i = 0; i < 3; i++)
 			{
-				cout << "\n" << (i + 1) << ") " << cinema->films[order.film - 1].time[(order.day - 1) * 3 + i];
+				if (order.day == 1)
+				{
+					if (cinema->DeConvert_Time(cinema->films[order.film - 1].time[(order.day - 1) * 3 + i]) > cinema->DeConvert_Time(Time::RetTime(0)))
+					{
+						k++;
+						cout << k << ") " << cinema->films[order.film - 1].time[(order.day - 1) * 3 + i] << "\n";
+					}
+					items_number = k;
+				}
+				else
+				{
+					cout << (i + 1) << ") " << cinema->films[order.film - 1].time[(order.day - 1) * 3 + i] << "\n";
+					items_number = k = 3;
+			
+				}
+				//cout << "\n" << (i + 1) << ") " << cinema->films[order.film - 1].time[(order.day - 1) * 3 + i];
 			}
-			cout << "\n\nВыберите время: ";
+			if (k != 0)
+			{
+				cout << "\n\nВыберите время: ";
+			}
+			else
+			{
+				cout << "Сеансы на данный фильм сегодня закончились.\nНажмите \"0\" для возврата в меню выбор даты";
+
+			}
+			
+			
 		}
-		items_number = 3;
+		
 	}
 	else
 	{
@@ -207,21 +253,27 @@ void Menu::Escape()
 	{
 		system("cls");
 	}
-	cout << "\nПрибыль за сегодня: " << cinema->otchet_today;
+	cout << "\nПрибыль за сегодня: " << cinema->otchet_today << "рублей.";
 	
 	cout << "\n\nВы уверены что хотите выйти? \nДа - esc, нет - любая клавиша.";
 	char choice = _getch();
 	if (choice == 27)
+	{
 		exit(0);
+	}
 	return;
 }
 
 void Menu::ChangeProkat()
 {
 	if (cinema != NULL && cinema->name != "")
+	{
 		cinema->NameOut();
+	}
 	else
+	{
 		system("cls");
+	}
 	cout << "0) Назад\n\n1) Удаление фильма из проката\n2) Редактирование информации о фильме\n3) Добавление фильма в прокат";
 	items_number = 3;
 	return;

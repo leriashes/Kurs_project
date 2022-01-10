@@ -28,9 +28,10 @@ public:
 	int ChoosePlace();
 	int ChooseRow();
 	int ChooseSeat();
-	void Buy();
+	void Buy(bool reserved);
 	void Reserve();
 	void ChooseAction();
+	void PayReserve(int number);
 
 	void PrintInfo();
 	void PrintResult();

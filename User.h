@@ -13,4 +13,5 @@ public:
 	static void AdminLogIn();
 	static void AdminLogOut();
 	static void Admin(Cinema& cinema, File_O& file_stream);
+	static void Code(string& word);
 };

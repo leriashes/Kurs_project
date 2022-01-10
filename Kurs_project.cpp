@@ -66,7 +66,6 @@ int main()
 					system("cls");
 					cout << "Идёт считывание данных из файла. \n\nОжидайте";
 					thread t(Time::PrintLoading);
-
 					Time::loadingComplete = false;
 					file_stream.Read(cinema);
 					file_stream.ReadBron(cinema);
@@ -79,7 +78,7 @@ int main()
 				}
 			}
 		}
-	} while (menu.GetItem() == -1 || f || menu.GetItem() == 3);
+	} while (menu.GetItem() == -1 || f || file_stream.path == "");
 
 	f = n = true;
 
@@ -127,7 +126,6 @@ int main()
 					menu.Description(order);	//ввод даты посещения
 					menu.ChooseItem();
 					order.day = menu.GetItem();
-					order.day = order.day;
 
 					if (order.day == -1)
 					{
@@ -144,7 +142,7 @@ int main()
 					menu.Description(order);	//ввод времени посещения
 					menu.ChooseItem();
 					order.time = menu.GetItem();
-					order.time = order.time;
+					
 
 					if (order.time == -1)
 					{
@@ -153,6 +151,10 @@ int main()
 					else if (order.time == 0)
 					{
 						order.day = 0;
+					}
+					else
+					{
+						order.time += 3 - menu.items_number;
 					}
 				}
 
@@ -168,7 +170,7 @@ int main()
 						//order.ChooseAction();
 						order.Clean();
 						file_stream.Write(cinema);
-						file_stream.WriteNewBron(cinema);
+						file_stream.WriteBron(cinema);
 					}
 				}
 				
@@ -203,24 +205,29 @@ int main()
 					}
 				}
 
-			} while (code.length() < 6);
-			int number = cinema.SearchBron(code);
+			} while (code.length() < 5);
+			int number = cinema.SearchBron(code);	//поиск брони с таким номером
 			if (number != -1)
 			{
-				//сверка названий фильмов
-				if (cinema.CheckNameBron(number))
+				//сверка имени фильма в брони с текущим репертуаром
+				if (cinema.CheckBron(number))
 				{
-
-					//сверка дней
+					//продаем!
+					order.PayReserve(number);
+					order.Clean();
+					file_stream.Write(cinema);
+					file_stream.WriteBron(cinema);
 				}
-				
-
+				else
+				{
+					number = -1;
+				}
 			}
-			else
+			if (number == -1)
 			{
-				cout << "Код брони введен неверно!";
+				cout << "\n\nКод брони введен неверно! Нажмите любую клавишу для выхода в меню...";
+				_getch();
 			}
-
 		}
 		else if (menu.GetItem() == 3 || User::GetAdmin())
 		{

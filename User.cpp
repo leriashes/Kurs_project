@@ -5,7 +5,7 @@
 #include "User.h"
 
 bool User::admin = false;
-string User::password = "Kino12345";
+string User::password = "Zfz\n\\S\";!";
 string User::parol = "";
 
 bool User::GetAdmin()
@@ -45,7 +45,7 @@ void User::AdminLogIn()
 
 		} while (symbol != 13);
 
-		//code(parol);
+		Code(parol);
 
 		//Проверка правильности пароля
 		//Если пароль введён неверно
@@ -146,6 +146,9 @@ void User::Admin(Cinema &cinema, File_O &file_stream)
 		else if (menu.GetItem() == 3)
 		{
 			file_stream.New(cinema);
+			cinema.NewCinema();
+			file_stream.Write(cinema);
+
 			//создание нового файла
 		}
 		else if (menu.GetItem() == 4)
@@ -370,7 +373,7 @@ void User::Admin(Cinema &cinema, File_O &file_stream)
 							order.Clean();
 						}
 					}
-					file_stream.WriteNewBron(cinema);
+					//file_stream.WriteNewBron(cinema);
 					cinema.broni_zapis = 0;
 					//file_stream.WriteBron(cinema);
 					file_stream.Write(cinema);
@@ -430,6 +433,22 @@ void User::Admin(Cinema &cinema, File_O &file_stream)
 		{
 			AdminLogOut();
 		}
+	}
+
+	return;
+}
+
+void User::Code(string& word)
+{
+	char codename[] = { 17, 15, 20, 101, 109, 97 };
+	int a = 0, b = 0;
+
+	while (a < word.length())
+	{
+		if (b == 6)
+			b = 0;
+
+		word[a++] ^= codename[b++];
 	}
 
 	return;
